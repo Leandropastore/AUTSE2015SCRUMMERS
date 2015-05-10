@@ -8,7 +8,7 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <title>Page's title</title>
+        <title>Upload Article</title>
 
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 
@@ -20,7 +20,7 @@
     <body>
         <div align="center" id="layout">
 
-            <div style="border:1px solid black;text-align:center;width:700px;">
+            <div  id="bodytopbottombox">
                 <div>
                     <form>
 

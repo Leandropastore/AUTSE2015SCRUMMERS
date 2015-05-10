@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <title>Page's title</title>
+        <title>Upload Article</title>
 
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 
@@ -12,25 +12,25 @@
     </head>
     <body>
         <div align="center" id="layout">
-            <div style="border:1px solid black;text-align:center;width:700px;">
+            <div id="bodytopbottombox">
                 <h1>Amazing Agile</h1>
             </div>
-            <div style="border:1px solid black;text-align:center;width:700px;">
+            <div id="bodytopbottombox">
                 <p>
                     <a href="home_page.html">Home</a>&emsp;&emsp;&emsp;
                     <a href="login.html">Login</a>&emsp;&emsp;&emsp;
                     <a href="sign_up.html">Create Account</a>&emsp;&emsp;&emsp;
                     <a href="DisplayAll">Articles</a></p>
             </div>
-            <div style="border:1px solid black;text-align:center;width:700px;">
+            <div id="bodycontentbox">
                 <div>
                     <form ACTION="UploadServlet">
                         <fieldset>
 
                             <div style="text-align: justify">
-                                <label title="lbl_article_link">Article Title: </label><br />
+                                <label title="lbl_article_link">Article Title: </label>
                                 <input type="text" name="title" value=""/><br /><br />
-                                <label title="lbl_article_link">Article Link: </label><br />
+                                <label title="lbl_article_link">Article Link: </label>
                                 <input type="text" name="location" value=""/><br /><br />
                             </div>
                             <div style="text-align: center">
@@ -38,7 +38,7 @@
 
                                 <input type="submit" name="btnSend" value="Send"/>&nbsp;
                                 <button type="reset" name="btnClean">Clean</button>
-                                </FORM>
+                                </form>
 
                             </div>
 
@@ -46,7 +46,7 @@
                     </form>
                 </div>
 
-                <div style="border:1px solid black;text-align:center;width:700px;">
+                <div id="bodytopbottombox">
                     <p>
                         <a href="about_us.html">About Us</a>&emsp;&emsp;&emsp;
                         <a href="contact_us.html">Contact Us</a>
