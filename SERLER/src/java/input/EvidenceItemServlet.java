@@ -19,7 +19,7 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author Andy Li
  */
-public class ConfidenceServlet extends HttpServlet {
+public class EvidenceItemServlet extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -30,32 +30,44 @@ public class ConfidenceServlet extends HttpServlet {
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
      */
-    
     private PreparedStatement stmt;
+
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+
         String id = request.getParameter("id");
         String item = request.getParameter("item");
-        String rater = request.getParameter("name");
-        String rating = request.getParameter("rating");
-        String reason = request.getParameter("reason");
-        
-        
-        MyDatabase myDB = new MyDatabase();
+        String benefit = request.getParameter("benefit");
+        String who = request.getParameter("who");
+        String what = request.getParameter("what");
+        String where = request.getParameter("where");
+        String when = request.getParameter("when");
+        String how = request.getParameter("how");
+        String why = request.getParameter("why");
+        String result = request.getParameter("result");
+        String integrity = request.getParameter("integrity");
 
+        MyDatabase myDB = new MyDatabase();
         try {
-            stmt = myDB.getConn().prepareStatement("INSERT INTO ConfidenceTable "
-                    + "VALUES (?, ?, ?, ?, ?)");
+            stmt = myDB.getConn().prepareStatement("INSERT INTO EvidenceItemTable "
+                    + "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
             stmt.setString(1, id);
             stmt.setString(2, item);
-            stmt.setString(3, rater);
-            stmt.setString(4, rating);
-            stmt.setString(5, reason);
+            stmt.setString(3, benefit);
+            stmt.setString(4, who);
+            stmt.setString(5, what);
+            stmt.setString(6, where);
+            stmt.setString(7, when);
+            stmt.setString(8, how);
+            stmt.setString(9, why);
+            stmt.setString(10, result);
+            stmt.setString(11, integrity);
             System.out.println(stmt);
             stmt.executeUpdate();
         } catch (SQLException ex) {
             System.err.println(ex.getMessage());
         }
+
         try (PrintWriter out = response.getWriter()) {
             /* TODO output your page here. You may use following sample code. */
             out.println("<!DOCTYPE html>");
@@ -85,7 +97,7 @@ public class ConfidenceServlet extends HttpServlet {
             out.println("<div style=\"border:1px solid black;text-align:left;width:700px;\">");
             out.println("<br /><br /><br /><br /><br /><br />");
 
-            out.println("Your rating is add into the system.");
+            out.println("Your Evidence Item is add into the system.");
 
             out.println("<br /><br /><br /><br /><br /><br />");
             out.println("</div>");

@@ -66,7 +66,7 @@ public class DisplayAll extends HttpServlet {
             out.println("<a href=\"home_page.html\">Home</a>&emsp;&emsp;&emsp;");
             out.println("<a href=\"login.html\">Login</a>&emsp;&emsp;&emsp;");
             out.println("<a href=\"sign_up.html\">Create Account</a>&emsp;&emsp;&emsp;");
-            out.println("<a href=\"articles.html\">Articles</a></p>");
+            out.println("<a href=\"DisplayAll\">Articles</a></p>");
             out.println("</div>");
             out.println("<div style=\"border:1px solid black;text-align:left;width:700px;\">");
             out.println("<br /><br /><br /><br /><br /><br />");
@@ -77,6 +77,7 @@ public class DisplayAll extends HttpServlet {
             
             // adding links for testing
             addArticle(out);
+            addEvidenceItem(out);
             ConfidenceRating(out);
             
             
@@ -170,6 +171,10 @@ public class DisplayAll extends HttpServlet {
     
     private void addArticle(PrintWriter out) {
         out.println("<a href=\"upload_article.html\">Upload A article</a>");
+        out.println("<br /><br />");
+    }
+        private void addEvidenceItem(PrintWriter out) {
+        out.println("<a href=\"evidence_item.html\">Add an Evidence Item</a>");
         out.println("<br /><br />");
     }
         private void ConfidenceRating(PrintWriter out) {

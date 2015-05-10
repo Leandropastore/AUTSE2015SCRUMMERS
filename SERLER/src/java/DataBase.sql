@@ -110,11 +110,13 @@ CREATE TABLE EvidenceItemTable
 (
     ArticleID int NOT NULL,
     ItemName varchar(255) NOT NULL,
-    Benifit varchar(4000) DEFAULT "",
+    Benefit varchar(4000) DEFAULT "",
     I_Who varchar(255) DEFAULT "",
     I_What varchar(255) DEFAULT "",
     I_Where varchar(255) DEFAULT "",
-    I_When date,
+    I_When varchar(255) DEFAULT "",
+    I_How varchar(255) DEFAULT "",
+    I_Why varchar(255) DEFAULT "",
     I_result varchar(4000) DEFAULT "",
     I_Integrity varchar(4000) DEFAULT "",
     PRIMARY KEY (ArticleID, ItemName)
@@ -129,6 +131,8 @@ INSERT INTO EvidenceItemTable VALUES
     "something",
     "somewhere",
     "2009-01-01",
+    "somehow",
+    "somewhy",
     "Some results",
     "Some integrity"
 

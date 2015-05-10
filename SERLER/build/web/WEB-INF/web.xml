@@ -16,6 +16,10 @@
         <servlet-name>ConfidenceServlet</servlet-name>
         <servlet-class>input.ConfidenceServlet</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>EvidenceItemServlet</servlet-name>
+        <servlet-class>input.EvidenceItemServlet</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>UploadServlet</servlet-name>
         <url-pattern>/UploadServlet</url-pattern>
@@ -31,6 +35,10 @@
     <servlet-mapping>
         <servlet-name>ConfidenceServlet</servlet-name>
         <url-pattern>/ConfidenceServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>EvidenceItemServlet</servlet-name>
+        <url-pattern>/EvidenceItemServlet</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>
