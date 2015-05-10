@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Confidence Rating</title>
+
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+        <link type="text/css" href="css/ui-lightness/jquery-ui-1.8.23.custom.css" rel="stylesheet" />
+        <link type="text/css" href="css/common.css" rel="stylesheet"/>
+
+
+    </head>
+    <body>
+        <div align="center" id="layout">
+            <div style="border:1px solid black;text-align:center;width:700px;">
+                <h1>Amazing Agile</h1>
+            </div>
+            <div style="border:1px solid black;text-align:center;width:700px;">
+                <p>
+                    <a href="home_page.html">Home</a>&emsp;&emsp;&emsp;
+                    <a href="login.html">Login</a>&emsp;&emsp;&emsp;
+                    <a href="sign_up.html">Create Account</a>&emsp;&emsp;&emsp;
+                    <a href="DisplayAll">Articles</a></p>
+            </div>
+            <div style="border:1px solid black;text-align:center;width:700px;">
+                <div>
+                    <form action="ConfidenceServlet">
+                        <fieldset>
+
+                            <div style="text-align: justify">
+                                <label>Article ID: </label>
+                                <input type="text" name="id" value=""/><br /><br />
+                                <label>Evidence Item: </label>
+                                <input type="text" name="item" value=""/><br /><br />
+                                <label>Your Name: </label>
+                                <input type="text" name="name" value=""/><br /><br />
+                                <label>Your Rating: </label>
+                                <input type="number" name="rating" value="3" min="1" max="5"><br /><br />
+                                <label>Your Reason: </label>
+                                <input type="text" name="reason" value=""/><br /><br />
+                            </div>
+                            <div style="text-align: center">
+                                <br />
+
+                                <input type="submit" name="btnSend" value="Rate"/>
+                                </FORM>
+
+                            </div>
+
+                        </fieldset>
+                    </form>
+                </div>
+
+                <div style="border:1px solid black;text-align:center;width:700px;">
+                    <p>
+                        <a href="about_us.html">About Us</a>&emsp;&emsp;&emsp;
+                        <a href="contact_us.html">Contact Us</a>
+                    </p>
+                </div>
+            </div>
+    </body>
+</html>
