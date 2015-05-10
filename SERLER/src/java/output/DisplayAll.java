@@ -149,18 +149,17 @@ public class DisplayAll extends HttpServlet {
 //                        rs.getString("Location"));
                 out.println("<style>table, th, td {border: 1px solid black;}</style>");
             out.println("<table>");
-            out.println("<tr><th>ID</th><th>Title</th><th>Link</th><th>Status</th></tr>");
+            out.println("<tr><th>&emsp;ID</th><th>&emsp;Title</th><th>&emsp;Status</th></tr>");
             while (rs.next()) {
                 System.out.println(stmt+"-----has rs");
                 String id = rs.getString("A_ID");
                 String title = rs.getString("Title");
                 String location = rs.getString("Location");
                 String status = rs.getString("Status");
-                out.println("<tr><th>" + id
-                        + "</th><th>" + title
-                        + "</th><th>" + location
-                        + "</th><th>" + status 
-                        + "</th></tr>");
+                out.println("<tr><th>&emsp;" + id
+                        + "&emsp;</th><th>" + "&emsp;<a href=\""+location+"\">"+title+"</a>&emsp;"
+                        + "&emsp;</th><th>&emsp;" + status 
+                        + "&emsp;</th></tr>");
             }
             out.println("</table>");
 
