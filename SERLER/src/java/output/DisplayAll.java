@@ -70,7 +70,7 @@ public class DisplayAll extends HttpServlet {
             out.println("</div>");
             out.println("<div style=\"border:1px solid black;text-align:left;width:700px;\">");
             out.println("<br /><br /><br /><br /><br /><br />");
-            out.println("Insert content here!");
+//            out.println("Insert content here!");
             printContent(out);
 
             out.println("<br /><br /><br /><br /><br /><br />");
@@ -146,12 +146,20 @@ public class DisplayAll extends HttpServlet {
 //                        rs.getString("Title"),
 //                        rs.getString("Status"),
 //                        rs.getString("Location"));
-//                out.println("<style>table, th, td {border: 1px solid black;}</style>");
+                out.println("<style>table, th, td {border: 1px solid black;}</style>");
             out.println("<table>");
-            out.println("<tr><th>ID</th><th>Title</th>Status</tr>");
+            out.println("<tr><th>ID</th><th>Title</th><th>Link</th><th>Status</th></tr>");
             while (rs.next()) {
                 System.out.println(stmt+"-----has rs");
-                out.println("<tr><th>" + rs.getString("A_ID") + "</th><th>" + rs.getString("Title") + "</th><th>" + rs.getString("Status") + "</th></tr>");
+                String id = rs.getString("A_ID");
+                String title = rs.getString("Title");
+                String location = rs.getString("Location");
+                String status = rs.getString("Status");
+                out.println("<tr><th>" + id
+                        + "</th><th>" + title
+                        + "</th><th>" + location
+                        + "</th><th>" + status 
+                        + "</th></tr>");
             }
             out.println("</table>");
 

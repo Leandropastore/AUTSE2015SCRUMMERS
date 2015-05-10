@@ -8,12 +8,12 @@ CREATE TABLE AllArticles
     PRIMARY KEY (A_Id)
 );
 
-INSERT INTO AllArticles (Title, Status, Location)
+INSERT INTO AllArticles (Title, Location, Status)
 VALUES ("Empirical investigation of refactoring effect on software quality",
 "http://www.sciencedirect.com/science/article/pii/S095058490900038X",
 "released");
 
-INSERT INTO AllArticles (Title, Status, Location)
+INSERT INTO AllArticles (Title, Location, Status)
 VALUES ("I am a FAKE acticle",
 "http://www.google.co.nz",
 "new");

@@ -45,7 +45,7 @@ public class UploadServlet extends HttpServlet {
         
         try {
             stmt = myDB.getConn().prepareStatement("");
-            stmt = myDB.getConn().prepareStatement("INSERT INTO AllArticles (Title, Status, Location)"
+            stmt = myDB.getConn().prepareStatement("INSERT INTO AllArticles (Title, Location, Status)"
                     + "VALUES (?, ?, ?)");
             stmt.setString(1, title);
             stmt.setString(2, location);
