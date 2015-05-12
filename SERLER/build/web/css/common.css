@@ -25,10 +25,6 @@ input[type="password"]{
     width: 300px;
 }
 
-input[type="submit"]{
-    padding: 6px;
-}
-
 fieldset{
     padding: 20px;
     font: 80%/1 sans-serif;
@@ -66,4 +62,16 @@ select{
     left: 50%;
     margin-left: -250px;
     position: absolute;
+}
+
+#bodycontentbox{
+    border:1px solid black;
+    text-align:left;
+    width:800px;
+}
+
+#bodytopbottombox{
+    border:1px solid black;
+    text-align:center;
+    width:800px;
 }
