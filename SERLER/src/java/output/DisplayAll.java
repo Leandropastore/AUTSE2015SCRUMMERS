@@ -169,7 +169,7 @@ public class DisplayAll extends HttpServlet {
     }
     
     private void addArticle(PrintWriter out) {
-        out.println("<a href=\"upload_article.html\">Upload A article</a>");
+        out.println("<a href=\"upload_article.html\">Upload an Article</a>");
         out.println("<br /><br />");
     }
         private void addEvidenceItem(PrintWriter out) {

@@ -10,9 +10,6 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -83,7 +80,8 @@ public class UploadServlet extends HttpServlet {
             out.println("</div>");
             out.println("<div style=\"border:1px solid black;text-align:left;width:700px;\">");
             out.println("<br /><br /><br /><br /><br /><br />");
-            out.println("Your article is add into the system.");
+            
+            out.println("Your article is added into the system.");
 
             out.println("<br /><br /><br /><br /><br /><br />");
             out.println("</div>");

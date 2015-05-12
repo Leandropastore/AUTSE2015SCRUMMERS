@@ -97,7 +97,7 @@ public class EvidenceItemServlet extends HttpServlet {
             out.println("<div style=\"border:1px solid black;text-align:left;width:700px;\">");
             out.println("<br /><br /><br /><br /><br /><br />");
 
-            out.println("Your Evidence Item is add into the system.");
+            out.println("Your Evidence Item is added into the system.");
 
             out.println("<br /><br /><br /><br /><br /><br />");
             out.println("</div>");

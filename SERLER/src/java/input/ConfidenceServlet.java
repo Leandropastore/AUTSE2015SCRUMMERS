@@ -85,7 +85,7 @@ public class ConfidenceServlet extends HttpServlet {
             out.println("<div style=\"border:1px solid black;text-align:left;width:700px;\">");
             out.println("<br /><br /><br /><br /><br /><br />");
 
-            out.println("Your rating is add into the system.");
+            out.println("Your rating is added into the system.");
 
             out.println("<br /><br /><br /><br /><br /><br />");
             out.println("</div>");
