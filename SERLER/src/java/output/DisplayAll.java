@@ -7,6 +7,7 @@ package output;
 
 import classes.GeneralArticle;
 import classes.MyDatabase;
+import classes.MyServlet;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.PreparedStatement;
@@ -16,7 +17,6 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.servlet.ServletException;
-import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -24,7 +24,7 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author Andy Li
  */
-public class DisplayAll extends HttpServlet {
+public class DisplayAll extends MyServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -45,32 +45,9 @@ public class DisplayAll extends HttpServlet {
 
         try (PrintWriter out = response.getWriter()) {
             /* TODO output your page here. You may use following sample code. */
-            out.println("<!DOCTYPE html>");
-            out.println("<html>");
-            out.println("<head>");
-            out.println("<title>All Articles</title>");
-            out.println("<meta http-equiv=\"Content-Type\" content=\"text/html; charset=UTF-8\">");
 
-            out.println("<link type=\"text/css\" href=\"css/ui-lightness/jquery-ui-1.8.23.custom.css\" rel=\"stylesheet\" />");
-            out.println("<link type=\"text/css\" href=\"css/common.css\" rel=\"stylesheet\"/>");
+            printBeforeContent(out);
 
-            out.println("</head>");
-            out.println("<body>");
-
-            out.println("<div align=\"center\" id=\"layout\">");
-            out.println("<div style=\"border:1px solid black;text-align:center;width:700px;\">");
-            out.println("<h1>Amazing Agile</h1>");
-            out.println("</div>");
-            out.println("<div style=\"border:1px solid black;text-align:center;width:700px;\">");
-            out.println("<p>");
-            out.println("<a href=\"home_page.html\">Home</a>&emsp;&emsp;&emsp;");
-            out.println("<a href=\"login.html\">Login</a>&emsp;&emsp;&emsp;");
-            out.println("<a href=\"sign_up.html\">Create Account</a>&emsp;&emsp;&emsp;");
-            out.println("<a href=\"DisplayAll\">Articles</a></p>");
-            out.println("</div>");
-            out.println("<div style=\"border:1px solid black;text-align:left;width:700px;\">");
-            out.println("<br /><br /><br /><br /><br /><br />");
-//            out.println("Insert content here!");
             printContent(out);
 
             out.println("<br /><br /><br /><br /><br /><br />");
@@ -80,18 +57,8 @@ public class DisplayAll extends HttpServlet {
             addEvidenceItem(out);
             ConfidenceRating(out);
             
-            
-            out.println("</div>");
-            out.println("<div style=\"border:1px solid black;text-align:center;width:700px;\">");
-            out.println("<p>");
-            out.println("<a href=\"about_us.html\">About Us</a>&emsp;&emsp;&emsp;");
-            out.println("<a href=\"contact_us.html\">Contact Us</a>");
-            out.println("</p>");
-            out.println("</div>");
-            out.println("</div>");
 
-            out.println("</body>");
-            out.println("</html>");
+            printAfterContent(out);
         }
     }
 
@@ -181,4 +148,5 @@ public class DisplayAll extends HttpServlet {
         out.println("<br /><br />");
     }
 
+    
 }

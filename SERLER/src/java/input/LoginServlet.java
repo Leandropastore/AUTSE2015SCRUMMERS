@@ -10,6 +10,7 @@ import classes.MyServlet;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -19,7 +20,7 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author Andy Li
  */
-public class UploadServlet extends MyServlet {
+public class LoginServlet extends MyServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -32,31 +33,46 @@ public class UploadServlet extends MyServlet {
      */
     private PreparedStatement stmt;
     private MyDatabase myDB;
-
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        
+        String name = request.getParameter("name");
+        String password = request.getParameter("password");
+        MyDatabase myDB = new MyDatabase();
+        
+        boolean customerFound;
+            boolean correctPassword = false;
+            try {
+                synchronized (this) // synchronize access to stmt
+                {
+                    stmt = myDB.getConn().prepareStatement("SELECT * FROM ACCOUNTS WHERE accountName = ?");
+                    stmt.setString(1, name);
+                    System.out.println(stmt);
+                    ResultSet rs = stmt.executeQuery();
+                    customerFound = rs.next();//true if there is a record
+                    if (customerFound) {
+                        correctPassword = (password.equals(rs.getString("password")));
+                    }
+                }
+            } catch (SQLException e) {
+                System.err.println("SQL Exception during query: " + e);
+                customerFound = false;
+            }
         response.setContentType("text/html;charset=UTF-8");
-        String title = request.getParameter("title");
-        String location = request.getParameter("location");
-
-        myDB = new MyDatabase();
-
-        try {
-            stmt = myDB.getConn().prepareStatement("");
-            stmt = myDB.getConn().prepareStatement("INSERT INTO AllArticles (Title, Location, Status)"
-                    + "VALUES (?, ?, ?)");
-            stmt.setString(1, title);
-            stmt.setString(2, location);
-            stmt.setString(3, "new");
-            System.out.println(stmt);
-            stmt.executeUpdate();
-        } catch (SQLException ex) {
-            System.err.println(ex.getMessage());
-        }
         try (PrintWriter out = response.getWriter()) {
             /* TODO output your page here. You may use following sample code. */
             printBeforeContent(out);
-            out.println("Your article is added into the system.");
+
+            if(!customerFound){
+                out.println("You are not registed yet, please create your account");
+            }else{
+                if(correctPassword){
+                    out.println("Welcome back " + name + ".");
+                }else{
+                    out.println("Wrong password, try again");
+                }
+            }
+
             printAfterContent(out);
         }
     }
@@ -99,5 +115,6 @@ public class UploadServlet extends MyServlet {
     public String getServletInfo() {
         return "Short description";
     }// </editor-fold>
+
 
 }

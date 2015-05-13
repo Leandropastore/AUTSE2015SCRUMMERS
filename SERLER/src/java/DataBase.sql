@@ -1,3 +1,22 @@
+DROP TABLE IF EXISTS Accounts;
+CREATE TABLE Accounts
+(
+    AccountName varchar(255) NOT NULL UNIQUE,
+    Password varchar(255),
+    Email varchar(255),
+    AccountType varchar(255),
+    PRIMARY KEY (AccountName)
+);
+
+INSERT INTO Accounts VALUES
+(
+    "admin",
+    "admin",
+    "admin@email.com",
+    "administrator"
+);
+
+
 DROP TABLE IF EXISTS AllArticles;
 CREATE TABLE AllArticles
 (
