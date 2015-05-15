@@ -9,8 +9,8 @@ CREATE TABLE AllArticles
 );
 
 -- Create this table for the analysed articles
-DROP TABLE IF EXISTS PorcessedDetails;
-CREATE TABLE PorcessedDetails
+DROP TABLE IF EXISTS ProcessedDetails;
+CREATE TABLE ProcessedDetails
 (
     Title varchar(255) NOT NULL,
     AuthorT varchar(255),
@@ -69,7 +69,7 @@ CREATE TABLE EvidenceItemT
     CondidenceT varchar(255),
     PRIMARY KEY (ItemName)
 );
-    CREATE TABLE CondidenceT
+    CREATE TABLE ConfidenceT
 (
     Rater varchar(255) NOT NULL,
     Rating int,
@@ -77,7 +77,7 @@ CREATE TABLE EvidenceItemT
 )
 
 
-CREATE TABLE ReserchDesignT
+CREATE TABLE ResearchDesignT
 (
     R_Name varchar(255) NOT NULL,
     Queation varchar(255),
