@@ -148,8 +148,8 @@ public class DisplayAll extends MyServlet {
         out.println("<br /><br />");
     }
         private void ResearchDesign(PrintWriter out) {
-        out.println("a href=\"research_design.html\">Add Research Design</a>");
-        out.println("br /><br />");
+        out.println("<a href=\"research_design.html\">Add Research Design</a>");
+        out.println("<br /><br />");
     }
 
     
