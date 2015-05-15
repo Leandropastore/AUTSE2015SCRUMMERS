@@ -19,7 +19,7 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author Andy Li
  */
-public class ResearchServlet extends MyServlet {
+public class ResearchServ extends MyServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -35,10 +35,10 @@ public class ResearchServlet extends MyServlet {
     
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        String id = request.getParameter("question");
-        String item = request.getParameter("method");
-        String rater = request.getParameter("metrics");
-        String rating = request.getParameter("participants");
+        String question = request.getParameter("question");
+        String method = request.getParameter("method");
+        String metrics = request.getParameter("metrics");
+        String participants = request.getParameter("participants");
         
         
         myDB = new MyDatabase();
