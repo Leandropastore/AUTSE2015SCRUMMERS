@@ -19,7 +19,7 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author Andy Li
  */
-public class ConfidenceServlet extends MyServlet {
+public class ResearchServlet extends MyServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -60,7 +60,7 @@ public class ConfidenceServlet extends MyServlet {
 
             printBeforeContent(out);
 
-            out.println("Your rating is added into the system.");
+            out.println("Your research design is added to the system.");
 
             printAfterContent(out);
         }
