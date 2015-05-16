@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <title>Confidence Rating</title>
+        <title>Research Design</title>
 
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 
@@ -17,25 +17,25 @@
             </div>
             <div id="bodytopbottombox">
                 <p>
-                    <a href="home_page.html">Logoff</a>&emsp;&emsp;&emsp;
+                    <a href="home_page.html">Home</a>&emsp;&emsp;&emsp;
+                    <a href="login.html">Login</a>&emsp;&emsp;&emsp;
+                    <a href="sign_up.html">Create Account</a>&emsp;&emsp;&emsp;
                     <a href="DisplayAll">Articles</a></p>
             </div>
             <div id="bodycontentbox">
                 <div>
-                    <form action="ConfidenceServlet">
+                    <form action="ResearchServlet">
                         <fieldset>
 
                             <div style="text-align: justify">
-                                <label>Article ID: </label>
-                                <input type="text" name="id" value=""/><br /><br />
-                                <label>Evidence Item: </label>
-                                <input type="text" name="item" value=""/><br /><br />
-                                <label>Your Name: </label>
-                                <input type="text" name="name" value=""/><br /><br />
-                                <label>Your Rating: </label>
-                                <input type="number" name="rating" value="3" min="1" max="5"><br /><br />
-                                <label>Your Reason: </label>
-                                <input type="text" name="reason" value=""/><br /><br />
+                                <label>Question: </label>
+                                <input type="text" name="question" value=""/><br /><br />
+                                <label>Method: </label>
+                                <textarea rows="5" cols="50" name="method" form="form0"> What method was being used for the research?</textarea><br /><br />
+                                <label>Metrics: </label>
+                                <textarea rows="5" cols="50" name="metrics" form="form0"> What were the metrics of the research?</textarea><br /><br />
+                                <label>Participants: </label>
+                                <textarea rows="5" cols="50" name="participants" form="form0"> Who was involved in the research?</textarea><br /><br />
                             </div>
                             <div style="text-align: center">
                                 <br />

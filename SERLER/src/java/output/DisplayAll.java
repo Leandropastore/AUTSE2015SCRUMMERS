@@ -120,12 +120,12 @@ public class DisplayAll extends MyServlet {
             out.println("<tr><th>&emsp;ID</th><th>&emsp;Title</th><th>&emsp;Status</th></tr>");
             while (rs.next()) {
                 System.out.println(stmt+"-----has rs");
-                String id = rs.getString("A_ID");
+                String id = rs.getString("ArticleId");
                 String title = rs.getString("Title");
                 String location = rs.getString("Location");
                 String status = rs.getString("Status");
-                out.println("<tr><th>&emsp;" + id
-                        + "&emsp;</th><th>" + "&emsp;<a href=\""+location+"\">"+title+"</a>&emsp;"
+                out.println("<tr><th>&emsp;" + "<a href=\"ShowArticleDetail?id="+id+"\">"+id
+                        + "</a>&emsp;</th><th>" + "&emsp;<a href=\""+location+"\">"+title+"</a>&emsp;"
                         + "&emsp;</th><th>&emsp;" + status 
                         + "&emsp;</th></tr>");
             }

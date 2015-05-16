@@ -6,12 +6,14 @@
 package output;
 
 import classes.MyDatabase;
+import classes.MyServlet;
 import input.UploadServlet;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.text.DecimalFormat;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.servlet.ServletException;
@@ -23,7 +25,7 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author Andy Li
  */
-public class ShowArticleDetail extends HttpServlet {
+public class ShowArticleDetail extends MyServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -41,67 +43,32 @@ public class ShowArticleDetail extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         id = request.getParameter("id");
-        title = request.getParameter("title");
+        System.out.println("id = " + id);
+//        title = request.getParameter("title");
         myDB = new MyDatabase();
 
         try (PrintWriter out = response.getWriter()) {
             /* TODO output your page here. You may use following sample code. */
-            out.println("<!DOCTYPE html>");
-            out.println("<html>");
-            out.println("<head>");
-            out.println("<title>Article Details</title>");
-            out.println("<meta http-equiv=\"Content-Type\" content=\"text/html; charset=UTF-8\">");
-//            out.println("<meta http-equiv=\"refresh\" content=\"5; url = http://localhost:8080/SERLER/DisplayAll\"/>");            
-
-            out.println("<link type=\"text/css\" href=\"css/ui-lightness/jquery-ui-1.8.23.custom.css\" rel=\"stylesheet\" />");
-            out.println("<link type=\"text/css\" href=\"css/common.css\" rel=\"stylesheet\"/>");
-
-            out.println("</head>");
-            out.println("<body>");
-
-            out.println("<div align=\"center\" id=\"layout\">");
-            out.println("<div style=\"border:1px solid black;text-align:center;width:700px;\">");
-            out.println("<h1>Amazing Agile</h1>");
-            out.println("</div>");
-            out.println("<div style=\"border:1px solid black;text-align:center;width:700px;\">");
-            out.println("<p>");
-            out.println("<a href=\"home_page.html\">Home</a>&emsp;&emsp;&emsp;");
-            out.println("<a href=\"login.html\">Login</a>&emsp;&emsp;&emsp;");
-            out.println("<a href=\"sign_up.html\">Create Account</a>&emsp;&emsp;&emsp;");
-            out.println("<a href=\"DisplayAll\">Articles</a></p>");
-            out.println("</div>");
-            out.println("<div style=\"border:1px solid black;text-align:left;width:700px;\">");
-            out.println("<br /><br />");
-            out.println("<br /><br />Basic Info:<br />");
+            printBeforeContent(out);
+            out.println("<h3>Basic Info:</h3><br />");
             printBasic(out);
-            out.println("<br /><br />Credibility:<br />");
+            out.println("<br /><br /><h3>Credibility:</h3><br />");
             printCredibility(out);
 
-            out.println("<br /><br />Methodology:<br />");
+            out.println("<br /><br /><h3>Methodology:</h3><br />");
             printMethodology(out);
 
-            out.println("<br /><br />Practice:<br />");
+            out.println("<br /><br /><h3>Practice:</h3><br />");
             printPractice(out);
 
-            out.println("<br /><br />Evidence Item:<br />");
+            out.println("<br /><br /><h3>Evidence Item:</h3><br />");
             printItem(out);
 
-            out.println("<br /><br />Research Design:<br />");
+            out.println("<br /><br /><h3>Research Design:</h3><br />");
             printResearch(out);
 
 //            out.println("<br /><br />Practice:<br />");
-            out.println("<br /><br /><br /><br /><br /><br />");
-            out.println("</div>");
-            out.println("<div style=\"border:1px solid black;text-align:center;width:700px;\">");
-            out.println("<p>");
-            out.println("<a href=\"about_us.html\">About Us</a>&emsp;&emsp;&emsp;");
-            out.println("<a href=\"contact_us.html\">Contact Us</a>");
-            out.println("</p>");
-            out.println("</div>");
-            out.println("</div>");
-
-            out.println("</body>");
-            out.println("</html>");
+            printAfterContent(out);
         }
     }
 
@@ -146,26 +113,42 @@ public class ShowArticleDetail extends HttpServlet {
 
     private void printBasic(PrintWriter out) {
         try {
-            String journal;
-            int year;
-            String reseachLv;
-            stmt = myDB.getConn().prepareStatement("SELECT Location FROM AllArticles WHERE A_Id = ?");
+            String link = "";
+            stmt = myDB.getConn().prepareStatement("SELECT * FROM AllArticles WHERE ArticleId = ?");
             stmt.setString(1, id);
             ResultSet rs = stmt.executeQuery();
-            String link = rs.getString("Location");
-            out.println("Title: ");
-            out.println("< a href=\" " + link + "\">" + title + "</a>");
-
+            if (rs.next()) {
+                link = rs.getString("Location");
+                title = rs.getString("Title");
+                out.println("Title: <br/>");
+                out.println("<a href=\"" + link + "\">" + title + "</a><br/>");
+//                out.println("< a href=\" " + link + "\">" + title + "</a>");
+            }
             stmt = myDB.getConn().prepareStatement("SELECT * FROM AuthorTable WHERE ArticleID = ?");
             stmt.setString(1, id);
             rs = stmt.executeQuery();
-            if (!rs.isBeforeFirst()) {
-                out.println("Not Analyse yet<br />");
-                out.println("< a href=\" " + link + "\">" + title + "</a>");
-            } else {
-                
+            if (rs.isBeforeFirst()) {
+                out.println("<br/>Author(s): <br/>");
+                while (rs.next()) {
+                    out.println("&emsp;" + rs.getString("FirstName") + " " + rs.getString("LastName") + "<br/>");
+                }
             }
-            
+            stmt = myDB.getConn().prepareStatement("SELECT * FROM porcesseddetails WHERE ArticleID = ?");
+            stmt.setString(1, id);
+            rs = stmt.executeQuery();
+            if (!rs.isBeforeFirst()) {
+                out.println("<br />No more information<br />");
+            } else {
+                if (rs.next()) {
+                    out.println("Journal: <br/>&emsp;");
+                    out.println(rs.getString("Journal") + "<br/>");
+                    out.println("Year of Publish: <br/>&emsp;");
+                    out.println(rs.getString("YearOfPublish") + "<br/>");
+                    out.println("Research Level: <br/>&emsp;");
+                    out.println(rs.getString("ResearchLv") + "<br/>");
+                }
+            }
+
         } catch (SQLException ex) {
             Logger.getLogger(UploadServlet.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -173,18 +156,175 @@ public class ShowArticleDetail extends HttpServlet {
     }
 
     private void printCredibility(PrintWriter out) {
+        try {
+            stmt = myDB.getConn().prepareStatement("SELECT * FROM credibilitytable WHERE ArticleId = ?");
+            stmt.setString(1, id);
+            System.out.println("stmt = " + stmt);
+            ResultSet rs = stmt.executeQuery();
+            String AverageRating = getAverage("credibilitytable");
+            out.println("Average Rating:&emsp;" + AverageRating);
+
+            out.println("<br/><br/>More Details:");
+            out.println("<style>table, th, td {border: 1px solid black;}</style>");
+            out.println("<table>");
+            out.println("<tr><th>&emsp;Rater&emsp;</th><th>&emsp;Reason&emsp;</th><th>&emsp;Rating&emsp;</th></tr>");
+            rs.beforeFirst();
+            while (rs.next()) {
+                out.println("<tr><th>&emsp;" + rs.getString("Rater")
+                        + "&emsp;</th><th>&emsp;" + rs.getString("Reason")
+                        + "&emsp;</th><th>&emsp;" + rs.getString("Rating")
+                        + "&emsp;</th></tr>");
+            }
+            out.println("</table>");
+
+        } catch (SQLException ex) {
+            Logger.getLogger(UploadServlet.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     private void printMethodology(PrintWriter out) {
+        try {
+            stmt = myDB.getConn().prepareStatement("SELECT * FROM methodologytable WHERE ArticleId = ?");
+            stmt.setString(1, id);
+            System.out.println("stmt = " + stmt);
+            ResultSet rs = stmt.executeQuery();
+            rs.beforeFirst();
+            while (rs.next()) {
+                out.println("Methodology Name:&emsp;" + rs.getString("M_Name") + "<br/>"
+                        + "Description:<br/>&emsp;" + rs.getString("Description") + "<br/>");
+            }
+
+        } catch (SQLException ex) {
+            Logger.getLogger(UploadServlet.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     private void printPractice(PrintWriter out) {
+        try {
+            stmt = myDB.getConn().prepareStatement("SELECT * FROM practicetable WHERE ArticleId = ?");
+            stmt.setString(1, id);
+            System.out.println("stmt = " + stmt);
+            ResultSet rs = stmt.executeQuery();
+            rs.beforeFirst();
+            while (rs.next()) {
+                out.println("Practice Name:&emsp;" + rs.getString("M_Name") + "<br/>"
+                        + "Description:<br/>&emsp;" + rs.getString("Description") + "<br/>");
+            }
+
+        } catch (SQLException ex) {
+            Logger.getLogger(UploadServlet.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     private void printItem(PrintWriter out) {
+         try {
+            ResultSet rs;
+            stmt = myDB.getConn().prepareStatement("SELECT * FROM evidenceitemtable WHERE ArticleID = ?");
+            stmt.setString(1, id);
+            rs = stmt.executeQuery();
+            if (rs.isBeforeFirst()) {
+                while (rs.next()) {
+                    out.println("Item Name:&emsp;");
+                    out.println(rs.getString("ItemName") + "<br/>");
+                    out.println("Benefit: <br/>&emsp;");
+                    out.println(rs.getString("Benefit") + "<br/>");
+                    out.println("Who:&emsp;");
+                    out.println(rs.getString("I_Who") + "<br/>");
+                    out.println("What:&emsp;");
+                    out.println(rs.getString("I_What") + "<br/>");
+                    out.println("Where:&emsp;");
+                    out.println(rs.getString("I_Where") + "<br/>");
+                    out.println("When:&emsp;");
+                    out.println(rs.getString("I_When") + "<br/>");
+                    out.println("How:&emsp;");
+                    out.println(rs.getString("I_How") + "<br/>");
+                    out.println("Why:&emsp;");
+                    out.println(rs.getString("I_Why") + "<br/>");
+                    out.println("Result: <br/>&emsp;");
+                    out.println(rs.getString("I_result") + "<br/>");
+                    out.println("Integrity: <br/>&emsp;");
+                    out.println(rs.getString("I_Integrity") + "<br/>");
+                }
+            }
+
+        } catch (SQLException ex) {
+            Logger.getLogger(UploadServlet.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     private void printResearch(PrintWriter out) {
+                 try {
+            ResultSet rs;
+            stmt = myDB.getConn().prepareStatement("SELECT * FROM researchdesigntable WHERE ArticleID = ?");
+            stmt.setString(1, id);
+            rs = stmt.executeQuery();
+            if (rs.isBeforeFirst()) {
+                /*
+                    ArticleID int NOT NULL,
+    R_Name varchar(255) NOT NULL,
+    Queation varchar(255),
+    R_Method varchar(255),
+    Nature varchar(255),
+    PRIMARY KEY (ArticleID, R_Name)
+                */
+                while (rs.next()) {
+                    out.println("Research Name:&emsp;");
+                    out.println(rs.getString("R_Name") + "<br/>");
+                    out.println("Method:<br/>&emsp;");
+                    out.println(rs.getString("R_Method") + "<br/>");
+                    out.println("Metric(s):&emsp;");
+                    printMetrics(out);
+                    out.println("Nature of the Participants:<br/>&emsp;");
+                    out.println(rs.getString("Nature") + "<br/>");
+                }
+            }
+
+        } catch (SQLException ex) {
+            Logger.getLogger(UploadServlet.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
     }
+
+    private void printMetrics(PrintWriter out) {
+                try {
+            stmt = myDB.getConn().prepareStatement("SELECT * FROM metrictable WHERE ArticleId = ?");
+            stmt.setString(1, id);
+            System.out.println("stmt = " + stmt);
+            ResultSet rs = stmt.executeQuery();
+            out.println("<table>");
+            out.println("<tr><th>&emsp;Name&emsp;</th><th>&emsp;Description&emsp;</th></tr>");
+            rs.beforeFirst();
+            while (rs.next()) {
+                out.println("<tr><th>&emsp;" + rs.getString("M_Name")
+                        + "&emsp;</th><th>&emsp;" + rs.getString("Description")
+                        + "&emsp;</th></tr>");
+            }
+            out.println("</table>");
+
+        } catch (SQLException ex) {
+            Logger.getLogger(UploadServlet.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    private String getAverage(String table) throws SQLException {
+
+        double sum = 0;
+        int count = 0;
+        DecimalFormat df = new DecimalFormat("####0.0");
+        try {
+            stmt = myDB.getConn().prepareStatement("SELECT * FROM " + table + " WHERE ArticleId = ?");
+            stmt.setString(1, id);
+            System.out.println("stmt = " + stmt);
+            ResultSet rs = stmt.executeQuery();
+            rs.beforeFirst();
+            while (rs.next()) {
+                sum += Integer.parseInt(rs.getString("Rating"));
+                count++;
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(UploadServlet.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return df.format(sum / count);
+    }
+
 
 }
