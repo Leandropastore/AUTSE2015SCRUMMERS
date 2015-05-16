@@ -56,6 +56,7 @@ public class DisplayAll extends MyServlet {
             addArticle(out);
             addEvidenceItem(out);
             ConfidenceRating(out);
+            ResearchDesign(out);
             
 
             printAfterContent(out);
