@@ -3,16 +3,8 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/D:/Documents/GitHub/AUTSE2015SCRUMMERS/SERLER/web/home_page.html</file>
-            <file>file:/D:/Documents/GitHub/AUTSE2015SCRUMMERS/SERLER/web/confidence_rating.html</file>
-            <file>file:/D:/Documents/GitHub/AUTSE2015SCRUMMERS/SERLER/src/java/input/ConfidenceServlet.java</file>
-            <file>file:/D:/Documents/GitHub/AUTSE2015SCRUMMERS/SERLER/web/evidence_item.html</file>
-            <file>file:/D:/Documents/GitHub/AUTSE2015SCRUMMERS/SERLER/src/java/input/EvidenceItemServlet.java</file>
-            <file>file:/D:/Documents/GitHub/AUTSE2015SCRUMMERS/SERLER/web/login.html</file>
-            <file>file:/D:/Documents/GitHub/AUTSE2015SCRUMMERS/SERLER/web/layout.html</file>
-            <file>file:/D:/Documents/GitHub/AUTSE2015SCRUMMERS/SERLER/web/upload_article.html</file>
-            <file>file:/D:/Documents/GitHub/AUTSE2015SCRUMMERS/SERLER/src/java/input/UploadServlet.java</file>
-            <file>file:/D:/Documents/GitHub/AUTSE2015SCRUMMERS/SERLER/src/java/output/DisplayAll.java</file>
+            <file>file:/C:/Users/Leandro/Documents/AUTSE2015SCRUMMERS/SERLER/web/WEB-INF/web.xml</file>
+            <file>file:/C:/Users/Leandro/Documents/AUTSE2015SCRUMMERS/SERLER/src/java/classes/MyDatabase.java</file>
         </group>
     </open-files>
 </project-private>
