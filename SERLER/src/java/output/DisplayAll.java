@@ -156,7 +156,7 @@ public class DisplayAll extends MyServlet {
         private void EvidenceSource(PrintWriter out) {
         out.println("<a href=\"evidence_source.html\">Add Evidence Source</a>");
         out.println("<br /><br />");
-        }
+    }
 
     
 }
