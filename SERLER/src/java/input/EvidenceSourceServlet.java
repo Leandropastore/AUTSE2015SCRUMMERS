@@ -66,7 +66,7 @@ public class EvidenceSourceServlet extends MyServlet {
 
             printBeforeContent(out);
 
-            out.println("Your evidence source is added into the system.");
+            out.println("Your evidence source is added to the system.");
 
             printAfterContent(out);
         }
