@@ -57,6 +57,7 @@ public class DisplayAll extends MyServlet {
             addEvidenceItem(out);
             ConfidenceRating(out);
             ResearchDesign(out);
+            EvidenceSource(out);
             
 
             printAfterContent(out);
@@ -152,6 +153,10 @@ public class DisplayAll extends MyServlet {
         out.println("<a href=\"research_design.html\">Add Research Design</a>");
         out.println("<br /><br />");
     }
+        private void EvidenceSource(PrintWriter out) {
+        out.println("<a href=\"evidence_source.html\">Add Evidence Source</a>");
+        out.println("<br /><br />");
+        }
 
     
 }
