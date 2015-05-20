@@ -66,6 +66,9 @@ public class ShowArticleDetail extends MyServlet {
 
             out.println("<br /><br /><h3>Research Design:</h3><br />");
             printResearch(out);
+            
+            out.println("<br /><br /><h3>Evidence Source:</h3><br />");
+            printEvidence(out);
 
 //            out.println("<br /><br />Practice:<br />");
             printAfterContent(out);
@@ -284,6 +287,44 @@ public class ShowArticleDetail extends MyServlet {
         }
         
     }
+    
+    private void printEvidence(PrintWriter out) {
+        try {
+            ResultSet rs;
+            stmt = myDB.getConn().prepareStatement("SELECT * FROM evidencesourcetable WHERE ArticleID = ?");
+            stmt.setString(1, id);
+            rs = stmt.executeQuery();
+            if (rs.isBeforeFirst()) {
+                /*
+                    ArticleID int NOT NULL,
+    R_Name varchar(255) NOT NULL,
+    Queation varchar(255),
+    R_Method varchar(255),
+    Nature varchar(255),
+    PRIMARY KEY (ArticleID, R_Name)
+                */
+                while (rs.next()) {
+                    out.println("Title:<br/>&emsp;");
+                    out.println(rs.getString("E_Title") + "<br/>");
+                    out.println("Authors:<br/>&emsp;");
+                    out.println(rs.getString("E_Authors") + "<br/>");
+                    out.println("Journal:<br/>&emsp;");
+                    out.println(rs.getString("E_Journal") + "<br/>");
+                    out.println("Year:<br/>&emsp;");
+                    out.println(rs.getString("E_Year") + "<br/>");
+                    out.println("<tr><th>&emsp;" + rs.getString("Rater")
+                        + "&emsp;</th><th>&emsp;" + rs.getString("Rating")
+                        + "&emsp;</th><th>&emsp;" + rs.getString("Reason")
+                        + "&emsp;</th></tr>");
+
+                }
+            }
+
+        } catch (SQLException ex) {
+            Logger.getLogger(UploadServlet.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+       
 
     private void printMetrics(PrintWriter out) {
                 try {
