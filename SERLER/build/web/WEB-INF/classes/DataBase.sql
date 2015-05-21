@@ -63,7 +63,7 @@ CREATE TABLE PorcessedDetails
 (
     ArticleID int NOT NULL,
     Journal varchar(255),
-    YearOfPublish int,
+    YearOfPublish varchar(255),
     ResearchLv varchar(255),
     PRIMARY KEY (ArticleID)
 );

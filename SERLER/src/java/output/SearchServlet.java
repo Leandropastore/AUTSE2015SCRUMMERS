@@ -117,7 +117,7 @@ public class SearchServlet extends MyServlet {
         HashSet<String> wordSet = new HashSet<String>();
         StringTokenizer st = new StringTokenizer(keywords, " ");
         while (st.hasMoreTokens()) {
-            wordSet.add(st.nextToken());
+            wordSet.add(st.nextToken().toLowerCase());
         }
 
         try {

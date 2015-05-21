@@ -32,6 +32,14 @@
         <servlet-name>SearchServlet</servlet-name>
         <servlet-class>output.SearchServlet</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>EditAuthors</servlet-name>
+        <servlet-class>input.EditAuthors</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>EditBasic</servlet-name>
+        <servlet-class>input.EditBasic</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>UploadServlet</servlet-name>
         <url-pattern>/UploadServlet</url-pattern>
@@ -63,6 +71,14 @@
     <servlet-mapping>
         <servlet-name>SearchServlet</servlet-name>
         <url-pattern>/SearchServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>EditAuthors</servlet-name>
+        <url-pattern>/EditAuthors</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>EditBasic</servlet-name>
+        <url-pattern>/EditBasic</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

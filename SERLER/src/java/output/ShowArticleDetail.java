@@ -66,9 +66,10 @@ public class ShowArticleDetail extends MyServlet {
 
             out.println("<br /><br /><h3>Research Design:</h3><br />");
             printResearch(out);
-            
+
             out.println("<br /><br /><h3>Evidence Source:</h3><br />");
-            printEvidence(out);
+            // This method is not working as there is not evidencesourcetable in the database
+//            printEvidence(out);
 
 //            out.println("<br /><br />Practice:<br />");
             printAfterContent(out);
@@ -130,27 +131,36 @@ public class ShowArticleDetail extends MyServlet {
             stmt = myDB.getConn().prepareStatement("SELECT * FROM AuthorTable WHERE ArticleID = ?");
             stmt.setString(1, id);
             rs = stmt.executeQuery();
+            out.println("<br/>Author(s): <br />");
             if (rs.isBeforeFirst()) {
-                out.println("<br/>Author(s): <br/>");
                 while (rs.next()) {
                     out.println("&emsp;" + rs.getString("AName") + "<br/>");
                 }
+            } else {
+                out.println("&emsp;Unknow<br/>");
             }
+            out.println("<a href=\"EditAuthors?id=" + id + "&title="+title+"\">------Add Author</a><br/>");
+            
             stmt = myDB.getConn().prepareStatement("SELECT * FROM porcesseddetails WHERE ArticleID = ?");
             stmt.setString(1, id);
             rs = stmt.executeQuery();
-            if (!rs.isBeforeFirst()) {
-                out.println("<br />No more information<br />");
-            } else {
+            String journal = "Unknow";
+            String year = "Unknow";
+            String level = "Unknow";
+            if (rs.isBeforeFirst()) {
                 if (rs.next()) {
-                    out.println("Journal: <br/>&emsp;");
-                    out.println(rs.getString("Journal") + "<br/>");
-                    out.println("Year of Publish: <br/>&emsp;");
-                    out.println(rs.getString("YearOfPublish") + "<br/>");
-                    out.println("Research Level: <br/>&emsp;");
-                    out.println(rs.getString("ResearchLv") + "<br/>");
+                    journal = rs.getString("Journal");
+                    year = rs.getString("YearOfPublish");
+                    level = rs.getString("ResearchLv");
                 }
+            } else {                
+                out.println("<br />Not analysed yet<br />");
             }
+            out.println("<br/>Journal: <br/>&emsp;" + journal  + "<br/>");
+            out.println("Year of Publish: <br/>&emsp;" + year  + "<br/>");
+            out.println("Research Level: <br/>&emsp;" + level  + "<br/>");
+            
+            out.println("<a href=\"EditBasic?id=" + id + "&title="+title+"\">------Edit Basic Info</a><br/>");
 
         } catch (SQLException ex) {
             Logger.getLogger(UploadServlet.class.getName()).log(Level.SEVERE, null, ex);
@@ -220,7 +230,7 @@ public class ShowArticleDetail extends MyServlet {
     }
 
     private void printItem(PrintWriter out) {
-         try {
+        try {
             ResultSet rs;
             stmt = myDB.getConn().prepareStatement("SELECT * FROM evidenceitemtable WHERE ArticleID = ?");
             stmt.setString(1, id);
@@ -256,20 +266,20 @@ public class ShowArticleDetail extends MyServlet {
     }
 
     private void printResearch(PrintWriter out) {
-                 try {
+        try {
             ResultSet rs;
             stmt = myDB.getConn().prepareStatement("SELECT * FROM researchdesigntable WHERE ArticleID = ?");
             stmt.setString(1, id);
             rs = stmt.executeQuery();
             if (rs.isBeforeFirst()) {
                 /*
-                    ArticleID int NOT NULL,
-    R_Name varchar(255) NOT NULL,
-    Queation varchar(255),
-    R_Method varchar(255),
-    Nature varchar(255),
-    PRIMARY KEY (ArticleID, R_Name)
-                */
+                 ArticleID int NOT NULL,
+                 R_Name varchar(255) NOT NULL,
+                 Queation varchar(255),
+                 R_Method varchar(255),
+                 Nature varchar(255),
+                 PRIMARY KEY (ArticleID, R_Name)
+                 */
                 while (rs.next()) {
                     out.println("Research Name:&emsp;");
                     out.println(rs.getString("R_Name") + "<br/>");
@@ -285,9 +295,9 @@ public class ShowArticleDetail extends MyServlet {
         } catch (SQLException ex) {
             Logger.getLogger(UploadServlet.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
+
     }
-    
+
     private void printEvidence(PrintWriter out) {
         try {
             ResultSet rs;
@@ -296,13 +306,13 @@ public class ShowArticleDetail extends MyServlet {
             rs = stmt.executeQuery();
             if (rs.isBeforeFirst()) {
                 /*
-                    ArticleID int NOT NULL,
-    R_Name varchar(255) NOT NULL,
-    Queation varchar(255),
-    R_Method varchar(255),
-    Nature varchar(255),
-    PRIMARY KEY (ArticleID, R_Name)
-                */
+                 ArticleID int NOT NULL,
+                 R_Name varchar(255) NOT NULL,
+                 Queation varchar(255),
+                 R_Method varchar(255),
+                 Nature varchar(255),
+                 PRIMARY KEY (ArticleID, R_Name)
+                 */
                 while (rs.next()) {
                     out.println("Title:<br/>&emsp;");
                     out.println(rs.getString("E_Title") + "<br/>");
@@ -313,9 +323,9 @@ public class ShowArticleDetail extends MyServlet {
                     out.println("Year:<br/>&emsp;");
                     out.println(rs.getString("E_Year") + "<br/>");
                     out.println("<tr><th>&emsp;" + rs.getString("Rater")
-                        + "&emsp;</th><th>&emsp;" + rs.getString("Rating")
-                        + "&emsp;</th><th>&emsp;" + rs.getString("Reason")
-                        + "&emsp;</th></tr>");
+                            + "&emsp;</th><th>&emsp;" + rs.getString("Rating")
+                            + "&emsp;</th><th>&emsp;" + rs.getString("Reason")
+                            + "&emsp;</th></tr>");
 
                 }
             }
@@ -324,10 +334,9 @@ public class ShowArticleDetail extends MyServlet {
             Logger.getLogger(UploadServlet.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-       
 
     private void printMetrics(PrintWriter out) {
-                try {
+        try {
             stmt = myDB.getConn().prepareStatement("SELECT * FROM metrictable WHERE ArticleId = ?");
             stmt.setString(1, id);
             System.out.println("stmt = " + stmt);
@@ -346,6 +355,7 @@ public class ShowArticleDetail extends MyServlet {
             Logger.getLogger(UploadServlet.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
+
     private String getAverage(String table) throws SQLException {
 
         double sum = 0;
@@ -366,6 +376,5 @@ public class ShowArticleDetail extends MyServlet {
         }
         return df.format(sum / count);
     }
-
 
 }

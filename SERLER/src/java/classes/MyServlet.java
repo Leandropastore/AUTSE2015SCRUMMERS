@@ -31,6 +31,7 @@ public class MyServlet extends HttpServlet {
      */
     protected MyDatabase myDB;
     protected PreparedStatement stmt;
+    protected String id, title;
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
