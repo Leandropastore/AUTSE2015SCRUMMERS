@@ -29,10 +29,9 @@ public class MyServlet extends HttpServlet {
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
      */
-    
-        private MyDatabase myDB;
-    private PreparedStatement stmt;
-    
+    protected MyDatabase myDB;
+    protected PreparedStatement stmt;
+
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
@@ -41,7 +40,7 @@ public class MyServlet extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet LayoutServlet</title>");            
+            out.println("<title>Servlet LayoutServlet</title>");
             out.println("</head>");
             out.println("<body>");
             out.println("<h1>Servlet LayoutServlet at " + request.getContextPath() + "</h1>");
@@ -89,7 +88,6 @@ public class MyServlet extends HttpServlet {
         return "Short description";
     }// </editor-fold>
 
-    
     public void destroy() {
         super.destroy();
         // close database connection

@@ -133,7 +133,7 @@ public class ShowArticleDetail extends MyServlet {
             if (rs.isBeforeFirst()) {
                 out.println("<br/>Author(s): <br/>");
                 while (rs.next()) {
-                    out.println("&emsp;" + rs.getString("FirstName") + " " + rs.getString("LastName") + "<br/>");
+                    out.println("&emsp;" + rs.getString("AName") + "<br/>");
                 }
             }
             stmt = myDB.getConn().prepareStatement("SELECT * FROM porcesseddetails WHERE ArticleID = ?");

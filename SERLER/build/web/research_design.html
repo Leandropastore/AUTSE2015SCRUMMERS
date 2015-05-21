@@ -31,16 +31,29 @@
                                 <label>Question: </label>
                                 <input type="text" name="question" value=""/><br /><br />
                                 <label>Method: </label>
+                                <select name = "MethodSelected">
+                                    <option value="mA">A</option>
+                                    <option value="mB">B</option>
+                                    <option value="mC">C</option>
+                                    <option value="mD">D</option>
+                                </select>
+                                <br/>Description:
                                 <textarea rows="5" cols="50" name="method" form="form0"> What method was being used for the research?</textarea><br /><br />
                                 <label>Metrics: </label>
                                 <textarea rows="5" cols="50" name="metrics" form="form0"> What were the metrics of the research?</textarea><br /><br />
                                 <label>Participants: </label>
+                                <select name="ParticipantSelected">
+                                    <option value="mA">A</option>
+                                    <option value="mB">B</option>
+                                    <option value="mC">C</option>
+                                    <option value="mD">D</option>
+                                </select>
                                 <textarea rows="5" cols="50" name="participants" form="form0"> Who was involved in the research?</textarea><br /><br />
                             </div>
                             <div style="text-align: center">
                                 <br />
 
-                                <input type="submit" name="btnSend" value="Rate"/>
+                                <input type="submit" name="btnSend" value="Add"/>
                                 </form>
 
                             </div>

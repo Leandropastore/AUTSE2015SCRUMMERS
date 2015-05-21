@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Evidence Source</title>
+
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+        <link type="text/css" href="css/ui-lightness/jquery-ui-1.8.23.custom.css" rel="stylesheet" />
+        <link type="text/css" href="css/common.css" rel="stylesheet"/>
+
+
+    </head>
+    <body>
+        <div align="center" id="layout">
+            <div id="bodytopbottombox">
+                <h1>Amazing Agile</h1>
+            </div>
+            <div id="bodytopbottombox">
+                <p>
+                    <a href="home_page.html">Home</a>&emsp;&emsp;&emsp;
+                    <a href="login.html">Login</a>&emsp;&emsp;&emsp;
+                    <a href="sign_up.html">Create Account</a>&emsp;&emsp;&emsp;
+                    <a href="DisplayAll">Articles</a></p>
+            </div>
+            <div id="bodycontentbox">
+                <div>
+                    <form action="ResearchServlet">
+                        <fieldset>
+
+                            <div style="text-align: justify">
+                                <label>Bibliographic Info: </label><br /><br />
+                                <label>Title: </label>
+                                <input type="text" name="title" value=""/><br /><br />
+                                <label>Authors: </label>
+                                <input type="text" name="authors" value=""/><br /><br />
+                                <label>Journal: </label>
+                                <input type="text" name="journal" value=""/><br /><br />
+                                <label>Year: </label>
+                                <input type="text" name="year" value=""/><br /><br />
+                                <label>Credibility rating: </label><br /><br />
+                                <label>Your Name: </label>
+                                <input type="text" name="name" value=""/><br /><br />
+                                <label>Your Rating: </label>
+                                <input type="number" name="rating" value="3" min="1" max="5"><br /><br />
+                                <label>Your Reason: </label>
+                                <input type="text" name="reason" value=""/><br /><br /><br />
+                                <label>Research level: </label><br /><br />
+                                <select>
+                                <option value="level1">Level 1</option>
+                                <option value="level2">Level 2</option>
+                                <option value="level3">Level 3</option>
+                                <option value="level3">Level 4</option>
+                                </select>
+                            </div>
+                            <div style="text-align: center">
+                                <br />
+
+                                <input type="submit" name="btnSend" value="Rate"/>
+                                </form>
+
+                            </div>
+
+                        </fieldset>
+                    </form>
+                </div>
+
+                <div id="bodytopbottombox">
+                    <p>
+                        <a href="about_us.html">About Us</a>&emsp;&emsp;&emsp;
+                        <a href="contact_us.html">Contact Us</a>
+                    </p>
+                </div>
+            </div>
+    </body>
+</html>

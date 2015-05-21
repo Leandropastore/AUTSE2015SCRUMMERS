@@ -51,13 +51,14 @@ public class DisplayAll extends MyServlet {
             printContent(out);
 
             out.println("<br /><br /><br /><br /><br /><br />");
-            
+
             // adding links for testing
             addArticle(out);
             addEvidenceItem(out);
             ConfidenceRating(out);
             ResearchDesign(out);
             EvidenceSource(out);
+            AddSearch(out);
             
 
             printAfterContent(out);
@@ -105,7 +106,7 @@ public class DisplayAll extends MyServlet {
 
     private void printContent(PrintWriter out) {
 
-        MyDatabase myDB = new MyDatabase();
+        myDB = new MyDatabase();
         try {
             stmt = myDB.getConn().prepareStatement("SELECT * FROM AllArticles");
             System.out.println(stmt);
@@ -116,18 +117,18 @@ public class DisplayAll extends MyServlet {
 //                        rs.getString("Title"),
 //                        rs.getString("Status"),
 //                        rs.getString("Location"));
-                out.println("<style>table, th, td {border: 1px solid black;}</style>");
+            out.println("<style>table, th, td {border: 1px solid black;}</style>");
             out.println("<table>");
             out.println("<tr><th>&emsp;ID</th><th>&emsp;Title</th><th>&emsp;Status</th></tr>");
             while (rs.next()) {
-                System.out.println(stmt+"-----has rs");
+                System.out.println(stmt + "-----has rs");
                 String id = rs.getString("ArticleId");
                 String title = rs.getString("Title");
                 String location = rs.getString("Location");
                 String status = rs.getString("Status");
-                out.println("<tr><th>&emsp;" + "<a href=\"ShowArticleDetail?id="+id+"\">"+id
-                        + "</a>&emsp;</th><th>" + "&emsp;<a href=\""+location+"\">"+title+"</a>&emsp;"
-                        + "&emsp;</th><th>&emsp;" + status 
+                out.println("<tr><th>&emsp;" + "<a href=\"ShowArticleDetail?id=" + id + "\">" + id
+                        + "</a>&emsp;</th><th>" + "&emsp;<a href=\"" + location + "\">" + title + "</a>&emsp;"
+                        + "&emsp;</th><th>&emsp;" + status
                         + "&emsp;</th></tr>");
             }
             out.println("</table>");
@@ -136,27 +137,35 @@ public class DisplayAll extends MyServlet {
             Logger.getLogger(DisplayAll.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-    
+
     private void addArticle(PrintWriter out) {
         out.println("<a href=\"upload_article.html\">Upload an Article</a>");
         out.println("<br /><br />");
     }
-        private void addEvidenceItem(PrintWriter out) {
+
+    private void addEvidenceItem(PrintWriter out) {
         out.println("<a href=\"evidence_item.html\">Add an Evidence Item</a>");
         out.println("<br /><br />");
     }
-        private void ConfidenceRating(PrintWriter out) {
+
+    private void ConfidenceRating(PrintWriter out) {
         out.println("<a href=\"confidence_rating.html\">Rate an Evidence Item</a>");
         out.println("<br /><br />");
     }
-        private void ResearchDesign(PrintWriter out) {
+
+    private void ResearchDesign(PrintWriter out) {
         out.println("<a href=\"research_design.html\">Add Research Design</a>");
         out.println("<br /><br />");
     }
-        private void EvidenceSource(PrintWriter out) {
+
+    private void EvidenceSource(PrintWriter out) {
         out.println("<a href=\"evidence_source.html\">Add Evidence Source</a>");
         out.println("<br /><br />");
     }
 
-    
+    private void AddSearch(PrintWriter out) {
+        out.println("<a href=\"SearchServlet\">Search</a>");
+        out.println("<br /><br />");
+    }
+
 }

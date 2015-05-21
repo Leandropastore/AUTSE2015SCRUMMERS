@@ -80,16 +80,14 @@ DROP TABLE IF EXISTS AuthorTable;
 CREATE TABLE AuthorTable
 (
     ArticleID int NOT NULL,
-    FirstName varchar(255),
-    LastName varchar(255) NOT NULL,
-    PRIMARY KEY (ArticleID, LastName)
+    AName varchar(255) NOT NULL,
+    PRIMARY KEY (ArticleID, AName)
 );
 
 INSERT INTO AuthorTable VALUES
 (
     "1",
-    "Mohammad",
-    "Alshayeb"
+    "Mohammad Alshayeb"
 );
 
 DROP TABLE IF EXISTS CredibilityTable;
@@ -108,6 +106,14 @@ INSERT INTO CredibilityTable VALUES
     "Andy Li",
     "4",
     "I just want to give him a 4."
+);
+
+INSERT INTO CredibilityTable VALUES
+(
+    "1",
+    "Bob",
+    "5",
+    "I love the number 5."
 );
 
 
