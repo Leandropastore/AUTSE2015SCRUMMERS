@@ -40,6 +40,10 @@
         <servlet-name>EditBasic</servlet-name>
         <servlet-class>input.EditBasic</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>AdvancedSearchServlet</servlet-name>
+        <servlet-class>output.AdvancedSearchServlet</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>UploadServlet</servlet-name>
         <url-pattern>/UploadServlet</url-pattern>
@@ -79,6 +83,10 @@
     <servlet-mapping>
         <servlet-name>EditBasic</servlet-name>
         <url-pattern>/EditBasic</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>AdvancedSearchServlet</servlet-name>
+        <url-pattern>/AdvancedSearchServlet</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

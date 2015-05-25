@@ -23,7 +23,7 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author Andy Li
  */
-public class SearchServlet extends MyServlet {
+public class AdvancedSearchServlet extends MyServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -34,18 +34,39 @@ public class SearchServlet extends MyServlet {
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
      */
+    private String title, author, journal, year, level, credibility, methodology, practice, evidenceItem, confidence, researchDesign;
+
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        String keywords = request.getParameter("keywords");
-        String field = request.getParameter("field");
+        title = request.getParameter("title");
+        author = request.getParameter("author");
+        journal = request.getParameter("journal");
+        year = request.getParameter("year");
+        level = request.getParameter("level");
+        credibility = request.getParameter("credibility");
+        methodology = request.getParameter("methodology");
+        practice = request.getParameter("practice");
+        evidenceItem = request.getParameter("evidenceItem");
+        confidence = request.getParameter("confidence");
+        researchDesign = request.getParameter("researchDesign");
 
         try (PrintWriter out = response.getWriter()) {
             printBeforeContent(out);
             printSearchBar(out);
-            if (keywords == null || keywords == "") {
+            if (title == null
+                    || author == null
+                    || journal == null
+                    || year == null
+                    || level == null
+                    || credibility == null
+                    || methodology == null
+                    || practice == null
+                    || evidenceItem == null
+                    || confidence == null
+                    || researchDesign == null) {
                 out.println("<br /><br /><h3>Not search yet</h3><br />");
             } else {
-                doSearch(out, keywords, field);
+                doSearch(out);
             }
             printAfterContent(out);
         }
@@ -109,46 +130,69 @@ public class SearchServlet extends MyServlet {
 
     }
 
-    private void doSearch(PrintWriter out, String keywords, String field) {
+    private void doSearch(PrintWriter out) {
+        title = title.trim().toLowerCase();
+        author = author.trim().toLowerCase();
+        journal = journal.trim().toLowerCase();
+        year = year.trim().toLowerCase();
+        level = level.trim().toLowerCase();
+        credibility = credibility.trim().toLowerCase();
+        methodology = methodology.trim().toLowerCase();
+        practice = practice.trim().toLowerCase();
+        evidenceItem = evidenceItem.trim().toLowerCase();
+        confidence = confidence.trim().toLowerCase();
+        researchDesign = researchDesign.trim().toLowerCase();
+
         myDB = new MyDatabase();
+        boolean searched = false;
         String column = "";
-        HashSet<Integer> result = new HashSet<Integer>();
-        HashSet<String> wordSet = new HashSet<String>();
-        StringTokenizer st = new StringTokenizer(keywords, " ");
-        while (st.hasMoreTokens()) {
-            wordSet.add(st.nextToken().toLowerCase());
-        }
+        HashSet<Integer> result = new HashSet<>();
+        HashSet<String> wordSet = new HashSet<>();
+        ResultSet rs;
 
         try {
-            switch (field) {
-                case "title":
-                    stmt = myDB.getConn().prepareStatement("SELECT * FROM AllArticles");
-                    column = "Title";
-                    break;
-                case "author":
-                    stmt = myDB.getConn().prepareStatement("SELECT * FROM AuthorTable");
-                    column = "AName";
-                    break;
-                case "methodology":
-                    stmt = myDB.getConn().prepareStatement("SELECT * FROM MethodologyTable");
-                    column = "M_Name";
-                    break;
-                case "practice":
-                    stmt = myDB.getConn().prepareStatement("SELECT * FROM PracticeTable");
-                    column = "M_Name";
-                    break;
-            }
-            System.out.println(stmt);
-            ResultSet rs = stmt.executeQuery();
-            while (rs.next()) {
-                String data = rs.getString(column).toLowerCase();
-                int id = Integer.parseInt(rs.getString("ArticleID"));
-                for (String word : wordSet) {
-                    if (data.contains(word)) {
-                        result.add(id);
+            if (title.length() != 0) {
+                searched = true;
+                wordSet.clear();
+                column = "Title";
+                StringTokenizer st = new StringTokenizer(title, " ");
+                while (st.hasMoreTokens()) {
+                    wordSet.add(st.nextToken().toLowerCase());
+                }
+                myDB.getConn().prepareStatement("SELECT * FROM AllArticles");
+                System.out.println(stmt);
+                rs = stmt.executeQuery();
+                while (rs.next()) {
+                    String data = rs.getString(column).toLowerCase();
+                    int id = Integer.parseInt(rs.getString("ArticleID"));
+                    for (String word : wordSet) {
+                        if (data.contains(word)) {
+                            result.add(id);
+                        }
                     }
                 }
-
+            }
+            
+            if (author.length() != 0) {
+                searched = true;
+                wordSet.clear();
+                column = "AName";
+                StringTokenizer st = new StringTokenizer(author, " ");
+                while (st.hasMoreTokens()) {
+                    wordSet.add(st.nextToken().toLowerCase());
+                }
+                myDB.getConn().prepareStatement("SELECT * FROM AuthorTable");
+                System.out.println(stmt);
+                rs = stmt.executeQuery();
+                while (rs.next()) {
+                    String data = rs.getString(column).toLowerCase();
+                    int id = Integer.parseInt(rs.getString("ArticleID"));
+                    for (String word : wordSet) {
+                        if (data.contains(word)) {
+                            result.add(id);
+                        }
+                    }
+                }
             }
 
             if (result.size() > 0) {
@@ -171,12 +215,10 @@ public class SearchServlet extends MyServlet {
                     }
 
                 }
-            out.println("</table>");
-            }else{
+                out.println("</table>");
+            } else {
                 out.println("<br /><br /><h3>No Article found</h3><br />");
             }
-
-
         } catch (SQLException ex) {
             Logger.getLogger(DisplayAll.class.getName()).log(Level.SEVERE, null, ex);
         }
