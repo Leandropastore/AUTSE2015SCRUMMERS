@@ -44,6 +44,10 @@
         <servlet-name>AdvancedSearchServlet</servlet-name>
         <servlet-class>output.AdvancedSearchServlet</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>CredibilityRating</servlet-name>
+        <servlet-class>input.CredibilityRating</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>UploadServlet</servlet-name>
         <url-pattern>/UploadServlet</url-pattern>
@@ -87,6 +91,10 @@
     <servlet-mapping>
         <servlet-name>AdvancedSearchServlet</servlet-name>
         <url-pattern>/AdvancedSearchServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>CredibilityRating</servlet-name>
+        <url-pattern>/CredibilityRating</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

@@ -63,7 +63,7 @@ CREATE TABLE PorcessedDetails
 (
     ArticleID int NOT NULL,
     Journal varchar(255),
-    YearOfPublish varchar(255),
+    YearOfPublish int,
     ResearchLv varchar(255),
     PRIMARY KEY (ArticleID)
 );
@@ -213,6 +213,8 @@ CREATE TABLE ResearchDesignTable
     R_Name varchar(255) NOT NULL,
     Queation varchar(255),
     R_Method varchar(255),
+    R_Metric varchar(255),
+    M_Description varchar(8000),
     Nature varchar(255),
     PRIMARY KEY (ArticleID, R_Name)
 );
@@ -223,9 +225,13 @@ INSERT INTO ResearchDesignTable VALUES
     "Research A",
     "What is this?",
     "Interview",
+    "Metric A",
+    "Some sort of metric",
     "All people"
 );
 
+DROP TABLE IF EXISTS MetricTable;
+/*
 DROP TABLE IF EXISTS MetricTable;
 CREATE TABLE MetricTable
 (
@@ -243,3 +249,4 @@ INSERT INTO MetricTable VALUES
     "Metric A",
     "Some sort of metric"
 );
+*/

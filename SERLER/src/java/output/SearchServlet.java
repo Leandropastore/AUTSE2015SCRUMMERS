@@ -14,8 +14,6 @@ import java.sql.SQLException;
 import java.text.DecimalFormat;
 import java.util.HashSet;
 import java.util.StringTokenizer;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -35,16 +33,20 @@ public class SearchServlet extends MyServlet {
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
      */
+    protected HashSet<Integer> result = new HashSet<>();
+    protected DecimalFormat df = new DecimalFormat("####0.0");
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         String keywords = request.getParameter("keywords");
         String field = request.getParameter("field");
+        String test = request.getParameter("test");
 
         try (PrintWriter out = response.getWriter()) {
             printBeforeContent(out);
             printSearchBar(out);
             if (keywords == null || keywords.trim().length() == 0) {
                 out.println("<br /><br /><h3>Not search yet</h3><br />");
+//                out.println(test);
             } else {
                 doSearch(out, keywords, field);
             }
@@ -96,6 +98,10 @@ public class SearchServlet extends MyServlet {
         out.println("<form ACTION=\"SearchServlet\">");
         out.println("<fieldset>");
         out.println("<div style=\"text-align: justify\">");
+
+//        out.println("<input type=\"radio\" name=\"test\" value=\"33\"/>33<br />");
+//        out.println("<input type=\"radio\" name=\"test\" value=\"44\"/>44<br />");
+
         out.println("<input type=\"text\" name=\"keywords\" value=\"\"/><br />");
         out.println("<select name = \"field\">");
         out.println("<option value=\"title\">by title</option>");
@@ -111,9 +117,9 @@ public class SearchServlet extends MyServlet {
     }
 
     private void doSearch(PrintWriter out, String keywords, String field) {
+        result = new HashSet<>();
         myDB = new MyDatabase();
         String column = "";
-        HashSet<Integer> result = new HashSet<>();
         HashSet<String> wordSet = new HashSet<>();
         StringTokenizer st = new StringTokenizer(keywords, " ");
         while (st.hasMoreTokens()) {
@@ -149,8 +155,17 @@ public class SearchServlet extends MyServlet {
                         result.add(rID);
                     }
                 }
-
             }
+            printResult(out);
+
+        } catch (SQLException ex) {
+            System.out.println("Error: \n" + ex);
+        }
+
+    }
+
+    protected void printResult(PrintWriter out) {
+        try {
 
             if (result.size() > 0) {
                 out.println("<style>table, th, td {border: 1px solid black;}</style>");
@@ -163,10 +178,9 @@ public class SearchServlet extends MyServlet {
                 String rRating = "";
 
                 for (Integer i : result) {
-
                     stmt = myDB.getConn().prepareStatement("SELECT * FROM porcesseddetails WHERE ArticleId = ?");
                     stmt.setString(1, i.toString());
-                    rs = stmt.executeQuery();
+                    ResultSet rs = stmt.executeQuery();
                     if (rs.next()) {
 
                         rJournal = rs.getString("Journal");
@@ -174,7 +188,7 @@ public class SearchServlet extends MyServlet {
                         String id0 = rs.getString("ArticleId");
                         rTitle = getTitle(id0);
                         rAuthors = getAuthors(id0);
-                        rRating = getRating(id0);
+                        rRating = df.format(getRating(id0));
                         out.println("<tr><th>&emsp;" + "<a href=\"ShowArticleDetail?id=" + id0 + "\">" + id0 + "</a>"
                                 + "&emsp;</th><th>&emsp;<a href=\"ShowArticleDetail?id=" + id0 + "\">" + rTitle + "</a>"
                                 + "&emsp;</th><th>&emsp;" + rAuthors
@@ -191,21 +205,21 @@ public class SearchServlet extends MyServlet {
             }
 
         } catch (SQLException ex) {
-            Logger.getLogger(DisplayAll.class.getName()).log(Level.SEVERE, null, ex);
-        }
+            System.out.println("Error: \n" + ex);
 
+        }
     }
 
-    private String getAuthors(String id) {
+    protected String getAuthors(String id) {
         String authorsList = "";
         try {
             stmt = myDB.getConn().prepareStatement("SELECT * FROM AuthorTable WHERE ArticleID = ?");
-            stmt.setString(1, id);            
+            stmt.setString(1, id);
             System.out.println(stmt);
             ResultSet result = stmt.executeQuery();
-                while (result.next()) {
-                    authorsList += result.getString("AName") + ", ";
-                }
+            while (result.next()) {
+                authorsList += result.getString("AName") + ", ";
+            }
 
         } catch (SQLException ex) {
             System.out.println(ex);
@@ -213,11 +227,11 @@ public class SearchServlet extends MyServlet {
         return authorsList;
     }
 
-    private String getRating(String id) {
+    protected double getRating(String id) {
 
         double sum = 0;
         int count = 0;
-        DecimalFormat df = new DecimalFormat("####0.0");
+        
         try {
             stmt = myDB.getConn().prepareStatement("SELECT * FROM credibilitytable WHERE ArticleId = ?");
             stmt.setString(1, id);
@@ -232,10 +246,10 @@ public class SearchServlet extends MyServlet {
 
             System.out.println(ex);
         }
-        return df.format(sum / count);
+        return (sum / count);
     }
 
-    private String getTitle(String id) {
+    protected String getTitle(String id) {
         String s = "unknow";
         try {
             stmt = myDB.getConn().prepareStatement("SELECT * FROM AllArticles WHERE ArticleID = ?");

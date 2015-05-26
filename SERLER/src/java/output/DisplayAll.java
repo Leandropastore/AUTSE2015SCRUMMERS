@@ -134,7 +134,7 @@ public class DisplayAll extends MyServlet {
             out.println("</table>");
 
         } catch (SQLException ex) {
-            Logger.getLogger(DisplayAll.class.getName()).log(Level.SEVERE, null, ex);
+            System.out.println("Error: \n" + ex);
         }
     }
 
@@ -164,8 +164,9 @@ public class DisplayAll extends MyServlet {
     }
 
     private void AddSearch(PrintWriter out) {
-        out.println("<a href=\"SearchServlet\">Search</a>");
-        out.println("<br /><br />");
+        out.println("<a href=\"SearchServlet\">Search</a><br />");
+        out.println("<a href=\"AdvancedSearchServlet\">Advanced Search</a>");
+        out.println("<br />");
     }
 
 }

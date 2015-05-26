@@ -17,7 +17,6 @@ import java.text.DecimalFormat;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.servlet.ServletException;
-import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -190,6 +189,7 @@ public class ShowArticleDetail extends MyServlet {
             }
             out.println("</table>");
 
+            out.println("<br/><a href=\"CredibilityRating?id=" + id + "&title="+title+"\">------Rate this article</a><br/>");
         } catch (SQLException ex) {
             Logger.getLogger(UploadServlet.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -273,20 +273,22 @@ public class ShowArticleDetail extends MyServlet {
             rs = stmt.executeQuery();
             if (rs.isBeforeFirst()) {
                 /*
-                 ArticleID int NOT NULL,
-                 R_Name varchar(255) NOT NULL,
-                 Queation varchar(255),
-                 R_Method varchar(255),
-                 Nature varchar(255),
-                 PRIMARY KEY (ArticleID, R_Name)
+    ArticleID int NOT NULL,
+    R_Name varchar(255) NOT NULL,
+    Queation varchar(255),
+    R_Method varchar(255),
+    R_Metric varchar(255),
+    M_Description varchar(8000),
+    Nature varchar(255),
+    PRIMARY KEY (ArticleID, R_Name)
                  */
                 while (rs.next()) {
                     out.println("Research Name:&emsp;");
                     out.println(rs.getString("R_Name") + "<br/>");
                     out.println("Method:<br/>&emsp;");
                     out.println(rs.getString("R_Method") + "<br/>");
-                    out.println("Metric(s):&emsp;");
-                    printMetrics(out);
+                    out.println("Metrics:"+rs.getString("R_Metric")+ "<br/>&emsp;");
+                    out.println(rs.getString("R_Metric") + "&emsp; - &emsp;"+ rs.getString("M_Description") + "<br/>");
                     out.println("Nature of the Participants:<br/>&emsp;");
                     out.println(rs.getString("Nature") + "<br/>");
                 }
@@ -335,26 +337,26 @@ public class ShowArticleDetail extends MyServlet {
         }
     }
 
-    private void printMetrics(PrintWriter out) {
-        try {
-            stmt = myDB.getConn().prepareStatement("SELECT * FROM metrictable WHERE ArticleId = ?");
-            stmt.setString(1, id);
-            System.out.println("stmt = " + stmt);
-            ResultSet rs = stmt.executeQuery();
-            out.println("<table>");
-            out.println("<tr><th>&emsp;Name&emsp;</th><th>&emsp;Description&emsp;</th></tr>");
-            rs.beforeFirst();
-            while (rs.next()) {
-                out.println("<tr><th>&emsp;" + rs.getString("M_Name")
-                        + "&emsp;</th><th>&emsp;" + rs.getString("Description")
-                        + "&emsp;</th></tr>");
-            }
-            out.println("</table>");
-
-        } catch (SQLException ex) {
-            Logger.getLogger(UploadServlet.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }
+//    private void printMetrics(PrintWriter out) {
+//        try {
+//            stmt = myDB.getConn().prepareStatement("SELECT * FROM metrictable WHERE ArticleId = ?");
+//            stmt.setString(1, id);
+//            System.out.println("stmt = " + stmt);
+//            ResultSet rs = stmt.executeQuery();
+//            out.println("<table>");
+//            out.println("<tr><th>&emsp;Name&emsp;</th><th>&emsp;Description&emsp;</th></tr>");
+//            rs.beforeFirst();
+//            while (rs.next()) {
+//                out.println("<tr><th>&emsp;" + rs.getString("M_Name")
+//                        + "&emsp;</th><th>&emsp;" + rs.getString("Description")
+//                        + "&emsp;</th></tr>");
+//            }
+//            out.println("</table>");
+//
+//        } catch (SQLException ex) {
+//            Logger.getLogger(UploadServlet.class.getName()).log(Level.SEVERE, null, ex);
+//        }
+//    }
 
     private String getAverage(String table) throws SQLException {
 

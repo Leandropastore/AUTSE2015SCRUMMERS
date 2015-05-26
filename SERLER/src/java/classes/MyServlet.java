@@ -32,6 +32,7 @@ public class MyServlet extends HttpServlet {
     protected MyDatabase myDB;
     protected PreparedStatement stmt;
     protected String id, title;
+    protected String pageTitle = "Amazing Agile";
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
@@ -106,45 +107,86 @@ public class MyServlet extends HttpServlet {
 
     public void printBeforeContent(PrintWriter out) {
         out.println("<!DOCTYPE html>");
+        /*
+         out.println("<html>");
+         out.println("<head>");
+         out.println("<title>All Articles</title>");
+         out.println("<meta http-equiv=\"Content-Type\" content=\"text/html; charset=UTF-8\">");         
+
+         out.println("<link type=\"text/css\" href=\"css/ui-lightness/jquery-ui-1.8.23.custom.css\" rel=\"stylesheet\" />");
+         out.println("<link type=\"text/css\" href=\"css/common.css\" rel=\"stylesheet\"/>");
+
+         out.println("</head>");
+         out.println("<body>");
+
+         out.println("<div align=\"center\" id=\"layout\">");
+         out.println("<div style=\"border:1px solid black;text-align:center;width:700px;\">");
+         out.println("<h1>Amazing Agile</h1>");
+         out.println("</div>");
+         out.println("<div style=\"border:1px solid black;text-align:center;width:700px;\">");
+         out.println("<p>");
+         out.println("<a href=\"home_page.html\">Home</a>&emsp;&emsp;&emsp;");
+         out.println("<a href=\"login.html\">Login</a>&emsp;&emsp;&emsp;");
+         out.println("<a href=\"sign_up.html\">Create Account</a>&emsp;&emsp;&emsp;");
+         out.println("<a href=\"DisplayAll\">Articles</a></p>");
+         out.println("</div>");
+         out.println("<div style=\"border:1px solid black;text-align:left;width:700px;\">");
+         out.println("<br /><br /><br />");
+         */
+
         out.println("<html>");
         out.println("<head>");
-        out.println("<title>All Articles</title>");
+        out.println("<title>"+pageTitle+"</title>");
         out.println("<meta http-equiv=\"Content-Type\" content=\"text/html; charset=UTF-8\">");
-//            out.println("<meta http-equiv=\"refresh\" content=\"5; url = http://localhost:8080/SERLER/DisplayAll\"/>");            
-
         out.println("<link type=\"text/css\" href=\"css/ui-lightness/jquery-ui-1.8.23.custom.css\" rel=\"stylesheet\" />");
         out.println("<link type=\"text/css\" href=\"css/common.css\" rel=\"stylesheet\"/>");
-
         out.println("</head>");
         out.println("<body>");
-
         out.println("<div align=\"center\" id=\"layout\">");
-        out.println("<div style=\"border:1px solid black;text-align:center;width:700px;\">");
+        out.println("<div id=\"bodytopbottombox\">");
         out.println("<h1>Amazing Agile</h1>");
         out.println("</div>");
-        out.println("<div style=\"border:1px solid black;text-align:center;width:700px;\">");
+        out.println("<div id=\"bodytopbottombox\">");
         out.println("<p>");
         out.println("<a href=\"home_page.html\">Home</a>&emsp;&emsp;&emsp;");
         out.println("<a href=\"login.html\">Login</a>&emsp;&emsp;&emsp;");
         out.println("<a href=\"sign_up.html\">Create Account</a>&emsp;&emsp;&emsp;");
         out.println("<a href=\"DisplayAll\">Articles</a></p>");
         out.println("</div>");
-        out.println("<div style=\"border:1px solid black;text-align:left;width:700px;\">");
-        out.println("<br /><br /><br />");
+        out.println("<div id=\"bodycontentbox\">");
+        out.println("<br /><br />");
+
     }
 
     public void printAfterContent(PrintWriter out) {
-        out.println("<br /><br /><br />");
+        /*
+         out.println("<br /><br /><br />");
+         out.println("</div>");
+         out.println("<div style=\"border:1px solid black;text-align:center;width:700px;\">");
+         out.println("<p>");
+         out.println("<a href=\"about_us.html\">About Us</a>&emsp;&emsp;&emsp;");
+         out.println("<a href=\"contact_us.html\">Contact Us</a>");
+         out.println("</p>");
+         out.println("</div>");
+         out.println("</div>");
+
+         out.println("</body>");
+         out.println("</html>");
+         */
+        out.println("<br /><br />");
         out.println("</div>");
-        out.println("<div style=\"border:1px solid black;text-align:center;width:700px;\">");
+        out.println("<div id=\"bodytopbottombox\">");
         out.println("<p>");
         out.println("<a href=\"about_us.html\">About Us</a>&emsp;&emsp;&emsp;");
         out.println("<a href=\"contact_us.html\">Contact Us</a>");
         out.println("</p>");
         out.println("</div>");
         out.println("</div>");
-
         out.println("</body>");
         out.println("</html>");
+    }
+    
+    protected void setPageTitle(String pt){
+        pageTitle = pt;
     }
 }
