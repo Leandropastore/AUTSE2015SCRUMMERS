@@ -23,7 +23,7 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author Andy Li
  */
-public class AdvancedSearchServlet extends MyServlet {
+public class AdvancedSearchServlet extends SearchServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -34,7 +34,7 @@ public class AdvancedSearchServlet extends MyServlet {
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
      */
-    private String title, author, journal, year, level, credibility, methodology, practice, evidenceItem, confidence, researchDesign;
+    private String author, journal, year, level, credibility, methodology, practice, evidenceItem, confidence, researchDesign;
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {

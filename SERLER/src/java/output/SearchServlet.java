@@ -11,6 +11,7 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.text.DecimalFormat;
 import java.util.HashSet;
 import java.util.StringTokenizer;
 import java.util.logging.Level;
@@ -42,7 +43,7 @@ public class SearchServlet extends MyServlet {
         try (PrintWriter out = response.getWriter()) {
             printBeforeContent(out);
             printSearchBar(out);
-            if (keywords == null || keywords == "") {
+            if (keywords == null || keywords.trim().length() == 0) {
                 out.println("<br /><br /><h3>Not search yet</h3><br />");
             } else {
                 doSearch(out, keywords, field);
@@ -112,8 +113,8 @@ public class SearchServlet extends MyServlet {
     private void doSearch(PrintWriter out, String keywords, String field) {
         myDB = new MyDatabase();
         String column = "";
-        HashSet<Integer> result = new HashSet<Integer>();
-        HashSet<String> wordSet = new HashSet<String>();
+        HashSet<Integer> result = new HashSet<>();
+        HashSet<String> wordSet = new HashSet<>();
         StringTokenizer st = new StringTokenizer(keywords, " ");
         while (st.hasMoreTokens()) {
             wordSet.add(st.nextToken().toLowerCase());
@@ -142,10 +143,10 @@ public class SearchServlet extends MyServlet {
             ResultSet rs = stmt.executeQuery();
             while (rs.next()) {
                 String data = rs.getString(column).toLowerCase();
-                int id = Integer.parseInt(rs.getString("ArticleID"));
+                int rID = Integer.parseInt(rs.getString("ArticleID"));
                 for (String word : wordSet) {
                     if (data.contains(word)) {
-                        result.add(id);
+                        result.add(rID);
                     }
                 }
 
@@ -154,32 +155,100 @@ public class SearchServlet extends MyServlet {
             if (result.size() > 0) {
                 out.println("<style>table, th, td {border: 1px solid black;}</style>");
                 out.println("<table>");
-                out.println("<tr><th>&emsp;ID</th><th>&emsp;Title</th><th>&emsp;Status</th></tr>");
+                out.println("<tr><th>&emsp;ID</th><th>&emsp;Title</th><th>&emsp;Arthors</th><th>&emsp;Year of Publish</th><th>&emsp;Journal</th><th>&emsp;Rating</th></tr>");
+                String rTitle = "";
+                String rAuthors = "";
+                String rYear = "";
+                String rJournal = "";
+                String rRating = "";
+
                 for (Integer i : result) {
-                    stmt = myDB.getConn().prepareStatement("SELECT * FROM AllArticles WHERE ArticleId = ?");
+
+                    stmt = myDB.getConn().prepareStatement("SELECT * FROM porcesseddetails WHERE ArticleId = ?");
                     stmt.setString(1, i.toString());
                     rs = stmt.executeQuery();
                     if (rs.next()) {
-                        String id = rs.getString("ArticleId");
-                        String title = rs.getString("Title");
-                        String location = rs.getString("Location");
-                        String status = rs.getString("Status");
-                        out.println("<tr><th>&emsp;" + "<a href=\"ShowArticleDetail?id=" + id + "\">" + id
-                                + "</a>&emsp;</th><th>" + "&emsp;<a href=\"" + location + "\">" + title + "</a>&emsp;"
-                                + "&emsp;</th><th>&emsp;" + status
+
+                        rJournal = rs.getString("Journal");
+                        rYear = rs.getString("YearOfPublish");
+                        String id0 = rs.getString("ArticleId");
+                        rTitle = getTitle(id0);
+                        rAuthors = getAuthors(id0);
+                        rRating = getRating(id0);
+                        out.println("<tr><th>&emsp;" + "<a href=\"ShowArticleDetail?id=" + id0 + "\">" + id0 + "</a>"
+                                + "&emsp;</th><th>&emsp;<a href=\"ShowArticleDetail?id=" + id0 + "\">" + rTitle + "</a>"
+                                + "&emsp;</th><th>&emsp;" + rAuthors
+                                + "&emsp;</th><th>&emsp;" + rYear
+                                + "&emsp;</th><th>&emsp;" + rJournal
+                                + "&emsp;</th><th>&emsp;" + rRating
                                 + "&emsp;</th></tr>");
                     }
 
                 }
-            out.println("</table>");
-            }else{
+                out.println("</table>");
+            } else {
                 out.println("<br /><br /><h3>No Article found</h3><br />");
             }
-
 
         } catch (SQLException ex) {
             Logger.getLogger(DisplayAll.class.getName()).log(Level.SEVERE, null, ex);
         }
 
     }
+
+    private String getAuthors(String id) {
+        String authorsList = "";
+        try {
+            stmt = myDB.getConn().prepareStatement("SELECT * FROM AuthorTable WHERE ArticleID = ?");
+            stmt.setString(1, id);            
+            System.out.println(stmt);
+            ResultSet result = stmt.executeQuery();
+                while (result.next()) {
+                    authorsList += result.getString("AName") + ", ";
+                }
+
+        } catch (SQLException ex) {
+            System.out.println(ex);
+        }
+        return authorsList;
+    }
+
+    private String getRating(String id) {
+
+        double sum = 0;
+        int count = 0;
+        DecimalFormat df = new DecimalFormat("####0.0");
+        try {
+            stmt = myDB.getConn().prepareStatement("SELECT * FROM credibilitytable WHERE ArticleId = ?");
+            stmt.setString(1, id);
+            System.out.println("stmt = " + stmt);
+            ResultSet rs = stmt.executeQuery();
+            rs.beforeFirst();
+            while (rs.next()) {
+                sum += Integer.parseInt(rs.getString("Rating"));
+                count++;
+            }
+        } catch (SQLException ex) {
+
+            System.out.println(ex);
+        }
+        return df.format(sum / count);
+    }
+
+    private String getTitle(String id) {
+        String s = "unknow";
+        try {
+            stmt = myDB.getConn().prepareStatement("SELECT * FROM AllArticles WHERE ArticleID = ?");
+            stmt.setString(1, id);
+            ResultSet result = stmt.executeQuery();
+            if (result.next()) {
+                s = result.getString("Title");
+            }
+
+        } catch (SQLException ex) {
+            System.out.println(ex);
+        }
+        return s;
+    }
+
 }
