@@ -32,7 +32,7 @@ public class MyServlet extends HttpServlet {
     protected MyDatabase myDB;
     protected PreparedStatement stmt;
     protected String id, title;
-    protected String pageTitle = "Amazing Agile";
+    protected String pageTitle = "Amazing Articles";
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
@@ -144,7 +144,7 @@ public class MyServlet extends HttpServlet {
         out.println("<body>");
         out.println("<div align=\"center\" id=\"layout\">");
         out.println("<div id=\"bodytopbottombox\">");
-        out.println("<h1>Amazing Agile</h1>");
+        out.println("<h1>Amazing Articles</h1>");
         out.println("</div>");
         out.println("<div id=\"bodytopbottombox\">");
         out.println("<p>");

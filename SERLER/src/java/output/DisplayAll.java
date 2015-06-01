@@ -45,6 +45,9 @@ public class DisplayAll extends MyServlet {
 
         HttpSession session = request.getSession();
         member = (Member) session.getAttribute("member");
+        if(member == null){
+            member = new Member("new user", "Non-member");
+        }
 
         try (PrintWriter out = response.getWriter()) {
             /* TODO output your page here. You may use following sample code. */
