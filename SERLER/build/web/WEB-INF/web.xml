@@ -48,6 +48,10 @@
         <servlet-name>CredibilityRating</servlet-name>
         <servlet-class>input.CredibilityRating</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>ModerationServlet</servlet-name>
+        <servlet-class>input.ModerationServlet</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>UploadServlet</servlet-name>
         <url-pattern>/UploadServlet</url-pattern>
@@ -95,6 +99,10 @@
     <servlet-mapping>
         <servlet-name>CredibilityRating</servlet-name>
         <url-pattern>/CredibilityRating</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ModerationServlet</servlet-name>
+        <url-pattern>/ModerationServlet</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

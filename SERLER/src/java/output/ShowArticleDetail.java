@@ -36,8 +36,8 @@ public class ShowArticleDetail extends MyServlet {
      * @throws IOException if an I/O error occurs
      */
     private PreparedStatement stmt;
-    private String id, title;
     MyDatabase myDB;
+    private String authors, journal, year, level;
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
@@ -49,7 +49,7 @@ public class ShowArticleDetail extends MyServlet {
         try (PrintWriter out = response.getWriter()) {
             /* TODO output your page here. You may use following sample code. */
             printBeforeContent(out);
-            out.println("<h3>Basic Info:</h3><br />");
+            out.println("<h3>Bibliographic Info:</h3><br />");
             printBasic(out);
             out.println("<br /><br /><h3>Credibility:</h3><br />");
             printCredibility(out);
@@ -66,7 +66,6 @@ public class ShowArticleDetail extends MyServlet {
             out.println("<br /><br /><h3>Research Design:</h3><br />");
             printResearch(out);
 
-            out.println("<br /><br /><h3>Evidence Source:</h3><br />");
             // This method is not working as there is not evidencesourcetable in the database
 //            printEvidence(out);
 
@@ -116,50 +115,31 @@ public class ShowArticleDetail extends MyServlet {
 
     private void printBasic(PrintWriter out) {
         try {
-            String link = "";
             stmt = myDB.getConn().prepareStatement("SELECT * FROM AllArticles WHERE ArticleId = ?");
             stmt.setString(1, id);
             ResultSet rs = stmt.executeQuery();
             if (rs.next()) {
-                link = rs.getString("Location");
                 title = rs.getString("Title");
-                out.println("Title: <br/>");
-                out.println("<a href=\"" + link + "\">" + title + "</a><br/>");
+                authors = rs.getString("Authors");
+                journal = rs.getString("Journal");
+                year = rs.getString("YearOfPublish");
+                level = rs.getString("ResearchLv");
+                out.println("Title: <br/>&emsp;" + title + "<br/><br/>");
+                out.println("Author(s): <br />&emsp;" + authors + "<br/><br/>");
+                out.println("Journal: <br/>&emsp;" + journal + "<br/><br/>");
+                out.println("Year of Publish: <br/>&emsp;" + year + "<br/><br/>");
+                out.println("Research Level: <br/>&emsp;" + level + "<br/><br/>");
 //                out.println("< a href=\" " + link + "\">" + title + "</a>");
             }
-            stmt = myDB.getConn().prepareStatement("SELECT * FROM AuthorTable WHERE ArticleID = ?");
-            stmt.setString(1, id);
-            rs = stmt.executeQuery();
-            out.println("<br/>Author(s): <br />");
-            if (rs.isBeforeFirst()) {
-                while (rs.next()) {
-                    out.println("&emsp;" + rs.getString("AName") + "<br/>");
-                }
-            } else {
-                out.println("&emsp;Unknow<br/>");
-            }
-            out.println("<a href=\"EditAuthors?id=" + id + "&title="+title+"\">------Add Author</a><br/>");
-            
-            stmt = myDB.getConn().prepareStatement("SELECT * FROM porcesseddetails WHERE ArticleID = ?");
-            stmt.setString(1, id);
-            rs = stmt.executeQuery();
-            String journal = "Unknow";
-            String year = "Unknow";
-            String level = "Unknow";
-            if (rs.isBeforeFirst()) {
-                if (rs.next()) {
-                    journal = rs.getString("Journal");
-                    year = rs.getString("YearOfPublish");
-                    level = rs.getString("ResearchLv");
-                }
-            } else {                
-                out.println("<br />Not analysed yet<br />");
-            }
-            out.println("<br/>Journal: <br/>&emsp;" + journal  + "<br/>");
-            out.println("Year of Publish: <br/>&emsp;" + year  + "<br/>");
-            out.println("Research Level: <br/>&emsp;" + level  + "<br/>");
-            
-            out.println("<a href=\"EditBasic?id=" + id + "&title="+title+"\">------Edit Basic Info</a><br/>");
+
+            out.println("<a href=\"EditBasic?"
+                    + "id=" + id 
+                    + "&title=" + title 
+                    + "&authors=" + authors 
+                    + "&journal=" + journal 
+                    + "&level=" + level 
+                    + "&year=" + year 
+                    + "\">------Edit Basic Info</a><br/>");
 
         } catch (SQLException ex) {
             Logger.getLogger(UploadServlet.class.getName()).log(Level.SEVERE, null, ex);
@@ -189,7 +169,7 @@ public class ShowArticleDetail extends MyServlet {
             }
             out.println("</table>");
 
-            out.println("<br/><a href=\"CredibilityRating?id=" + id + "&title="+title+"\">------Rate this article</a><br/>");
+            out.println("<br/><a href=\"CredibilityRating?id=" + id + "&title=" + title + "\">------Rate this article</a><br/>");
         } catch (SQLException ex) {
             Logger.getLogger(UploadServlet.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -273,22 +253,22 @@ public class ShowArticleDetail extends MyServlet {
             rs = stmt.executeQuery();
             if (rs.isBeforeFirst()) {
                 /*
-    ArticleID int NOT NULL,
-    R_Name varchar(255) NOT NULL,
-    Queation varchar(255),
-    R_Method varchar(255),
-    R_Metric varchar(255),
-    M_Description varchar(8000),
-    Nature varchar(255),
-    PRIMARY KEY (ArticleID, R_Name)
+                 ArticleID int NOT NULL,
+                 R_Name varchar(255) NOT NULL,
+                 Queation varchar(255),
+                 R_Method varchar(255),
+                 R_Metric varchar(255),
+                 M_Description varchar(8000),
+                 Nature varchar(255),
+                 PRIMARY KEY (ArticleID, R_Name)
                  */
                 while (rs.next()) {
                     out.println("Research Name:&emsp;");
                     out.println(rs.getString("R_Name") + "<br/>");
                     out.println("Method:<br/>&emsp;");
                     out.println(rs.getString("R_Method") + "<br/>");
-                    out.println("Metrics:"+rs.getString("R_Metric")+ "<br/>&emsp;");
-                    out.println(rs.getString("R_Metric") + "&emsp; - &emsp;"+ rs.getString("M_Description") + "<br/>");
+                    out.println("Metrics:" + rs.getString("R_Metric") + "<br/>&emsp;");
+                    out.println(rs.getString("R_Metric") + "&emsp; - &emsp;" + rs.getString("M_Description") + "<br/>");
                     out.println("Nature of the Participants:<br/>&emsp;");
                     out.println(rs.getString("Nature") + "<br/>");
                 }
@@ -357,7 +337,6 @@ public class ShowArticleDetail extends MyServlet {
 //            Logger.getLogger(UploadServlet.class.getName()).log(Level.SEVERE, null, ex);
 //        }
 //    }
-
     private String getAverage(String table) throws SQLException {
 
         double sum = 0;

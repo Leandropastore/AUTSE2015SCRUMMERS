@@ -43,53 +43,29 @@ CREATE TABLE AllArticles
 (
     ArticleId int NOT NULL UNIQUE AUTO_INCREMENT,
     Title varchar(255) NOT NULL,
-    Location varchar(255),
-    Status varchar(255) DEFAULT "new",
-    PRIMARY KEY (ArticleId)
-);
-
-INSERT INTO AllArticles (Title, Location, Status)
-VALUES ("Empirical investigation of refactoring effect on software quality",
-"http://www.sciencedirect.com/science/article/pii/S095058490900038X",
-"released");
-
-INSERT INTO AllArticles (Title, Location, Status)
-VALUES ("I am a FAKE acticle",
-"http://www.google.co.nz",
-"new");
-
-DROP TABLE IF EXISTS PorcessedDetails;
-CREATE TABLE PorcessedDetails
-(
-    ArticleID int NOT NULL,
+    Authors varchar(255) NOT NULL,
     Journal varchar(255),
     YearOfPublish int,
     ResearchLv varchar(255),
-    PRIMARY KEY (ArticleID)
+    Status varchar(255) DEFAULT "new",
+    Contributor varchar(255),
+    PRIMARY KEY (ArticleId)
 );
 
-INSERT INTO PorcessedDetails VALUES
-(
-    "1",
+INSERT INTO AllArticles (Title, Authors, Journal, YearOfPublish, ResearchLv, Status, Contributor)
+VALUES (
+    "Empirical investigation of refactoring effect on software quality",
+    "Mohammad Alshayeb",
     "Information and Software Technology",
     "2009",
-    "NOT SURE"
+    "Level 1",
+    "released",
+    "admin"
 );
 
+
+DROP TABLE IF EXISTS PorcessedDetails;
 DROP TABLE IF EXISTS AuthorTable;
-CREATE TABLE AuthorTable
-(
-    ArticleID int NOT NULL,
-    AName varchar(255) NOT NULL,
-    PRIMARY KEY (ArticleID, AName)
-);
-
-INSERT INTO AuthorTable VALUES
-(
-    "1",
-    "Mohammad Alshayeb"
-);
-
 DROP TABLE IF EXISTS CredibilityTable;
 CREATE TABLE CredibilityTable
 (

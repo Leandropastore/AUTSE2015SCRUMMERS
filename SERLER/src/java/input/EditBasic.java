@@ -31,30 +31,28 @@ public class EditBasic extends MyServlet {
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
      */
-    private String journal, year, level;
+    private String journal, year, level, authors;
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-
         myDB = new MyDatabase();
         id = request.getParameter("id");
         title = request.getParameter("title");
+        authors = request.getParameter("authors");
         journal = request.getParameter("journal");
         year = request.getParameter("year");
         level = request.getParameter("level");
-        if (journal == null || journal == ""
-                || year == null || year == ""
-                || level == null || level == "") {
+        if (request.getParameter("update") == null) {
             try (PrintWriter out = response.getWriter()) {
                 /* TODO output your page here. You may use following sample code. */
                 printBeforeContent(out);
-                out.println("Editing the basic info of: <br/>&emsp;" + title);
+                out.println("Editing the Bibliographic Info of: <br/>&emsp;" + title);
                 printForm(out);
 
                 printAfterContent(out);
             }
         } else {
-            addBasic();
+            updataDatabase();
             request.setAttribute("id", id);
             RequestDispatcher dispatcher = getServletContext().
                     getRequestDispatcher("/ShowArticleDetail");
@@ -107,10 +105,20 @@ public class EditBasic extends MyServlet {
         out.println("<div style=\"text-align: justify\">");
         out.println("<input type=\"hidden\" name=\"id\" value=\"" + id + "\"/>");
         out.println("<input type=\"hidden\" name=\"title\" value=\"" + title + "\"/>");
-        out.println("The artitcle is published in which journal?<br/><input type=\"text\" name=\"journal\" value=\"\"/><br />");
-        out.println("The artitcle is published in which year?<br/><input type=\"text\" name=\"year\" value=\"\"/><br />");
-        out.println("What is the research level?<br/><input type=\"text\" name=\"level\" value=\"\"/><br />");
-        out.println("<input type=\"submit\" value=\"Add\"/>");
+        out.println("<input type=\"hidden\" name=\"update\" value=\"yes\"/>");
+        out.println("<label>Authors: </label><input type=\"text\" name=\"authors\" value=\"" + authors + "\"/><br /><br />");
+        out.println("<label>Journal: </label><input type=\"text\" name=\"journal\" value=\"" + journal + "\"/><br /><br />");
+        out.println("<label>Year: </label><input type=\"number\" name=\"year\" value=\"" + year + "\"/><br /><br />");
+
+        out.println("<label>Research level: </label>");
+        out.println("<select name=\"level\">");
+        out.println("<option value=\"Level 1\" " + ((level != null && level.equalsIgnoreCase("level 1")) ? "selected" : "") + ">Level 1</option>");
+        out.println("<option value=\"Level 2\" " + ((level != null && level.equalsIgnoreCase("level 2")) ? "selected" : "") + ">Level 2</option>");
+        out.println("<option value=\"Level 3\" " + ((level != null && level.equalsIgnoreCase("level 3")) ? "selected" : "") + ">Level 3</option>");
+        out.println("<option value=\"Level 3\" " + ((level != null && level.equalsIgnoreCase("level 4")) ? "selected" : "") + ">Level 4</option>");
+        out.println("</select><br /><br />");
+
+        out.println("<input type=\"submit\" value=\"Update\"/>");
         out.println("</div>");
         out.println("</fieldset>");
         out.println("</form>");
@@ -118,18 +126,25 @@ public class EditBasic extends MyServlet {
         out.println("<a href=\"ShowArticleDetail?id=" + id + "\">Cancel</a>");
     }
 
-    private void addBasic() {
+    private void updataDatabase() {
         try {
-            stmt = myDB.getConn().prepareStatement("INSERT INTO PorcessedDetails VALUES (?, ?, ?, ?)"
-                    + "ON DUPLICATE KEY UPDATE"
-                    + "  Journal     = VALUES(Journal),"
-                    + "  YearOfPublish = VALUES(YearOfPublish),"
-                    + "  ResearchLv = VALUES(ResearchLv);");
-
-            stmt.setString(1, id);
+            stmt = myDB.getConn().prepareStatement("Update allarticles SET "
+                    + "authors = ?, "
+                    + "Journal = ? , "
+                    + "YearOfPublish = ?, "
+                    + "ResearchLv = ? "
+                    + "WHERE ArticleId = ?; ");
+//            stmt = myDB.getConn().prepareStatement("INSERT INTO AllArticles VALUES (?, ?, ?, ?)"
+//                    + "ON DUPLICATE KEY UPDATE"
+//                    + "  Authors     = VALUES(Authors),"
+//                    + "  Journal     = VALUES(Journal),"
+//                    + "  YearOfPublish = VALUES(YearOfPublish),"
+//                    + "  ResearchLv = VALUES(ResearchLv);");
+            stmt.setString(1, authors);
             stmt.setString(2, journal);
             stmt.setString(3, year);
             stmt.setString(4, level);
+            stmt.setString(5, id);
             System.out.println(stmt);
             stmt.executeUpdate();
         } catch (SQLException ex) {

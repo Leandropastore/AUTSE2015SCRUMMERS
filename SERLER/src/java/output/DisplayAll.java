@@ -6,6 +6,7 @@
 package output;
 
 import classes.GeneralArticle;
+import classes.Member;
 import classes.MyDatabase;
 import classes.MyServlet;
 import java.io.IOException;
@@ -14,11 +15,10 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 /**
  *
@@ -37,17 +37,20 @@ public class DisplayAll extends MyServlet {
      */
     private MyDatabase myDB;
     private PreparedStatement stmt;
-    private List<GeneralArticle> articleList;
+    private Member member;
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
 
+        HttpSession session = request.getSession();
+        member = (Member) session.getAttribute("member");
+
         try (PrintWriter out = response.getWriter()) {
             /* TODO output your page here. You may use following sample code. */
 
             printBeforeContent(out);
-
+            out.println("<br />YOU ARE " + member.getType() + "<br />");
             printContent(out);
 
             out.println("<br /><br /><br /><br /><br /><br />");
@@ -59,7 +62,6 @@ public class DisplayAll extends MyServlet {
             ResearchDesign(out);
             EvidenceSource(out);
             AddSearch(out);
-            
 
             printAfterContent(out);
         }
@@ -124,10 +126,13 @@ public class DisplayAll extends MyServlet {
                 System.out.println(stmt + "-----has rs");
                 String id = rs.getString("ArticleId");
                 String title = rs.getString("Title");
-                String location = rs.getString("Location");
                 String status = rs.getString("Status");
-                out.println("<tr><th>&emsp;" + "<a href=\"ShowArticleDetail?id=" + id + "\">" + id
-                        + "</a>&emsp;</th><th>" + "&emsp;<a href=\"" + location + "\">" + title + "</a>&emsp;"
+                String link = "\"ShowArticleDetail?id=" + id + "\"";
+                if (member != null && member.getType().equalsIgnoreCase("moderator")) {
+                    link = "\"ModerationServlet?id=" + id + "&status=" + status + "\"";
+                }
+                out.println("<tr><th>&emsp;" + "<a href=" + link + ">" + id
+                        + "</a>&emsp;</th><th>" + "&emsp;<a href=" + link + ">" + title + "</a>&emsp;"
                         + "&emsp;</th><th>&emsp;" + status
                         + "&emsp;</th></tr>");
             }
@@ -159,7 +164,7 @@ public class DisplayAll extends MyServlet {
     }
 
     private void EvidenceSource(PrintWriter out) {
-        out.println("<a href=\"evidence_source.html\">Add Evidence Source</a>");
+        out.println("<a href=\"UploadServlet\">Add Evidence Source</a>");
         out.println("<br /><br />");
     }
 
