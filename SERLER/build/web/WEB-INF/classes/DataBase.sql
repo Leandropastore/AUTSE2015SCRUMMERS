@@ -63,6 +63,45 @@ VALUES (
     "admin"
 );
 
+INSERT INTO AllArticles (Title, Authors, Journal, YearOfPublish, ResearchLv, Status, Contributor)
+VALUES (
+    "A Rejected Article",
+    "rejected author",
+    "rejected journal",
+    "1000",
+    "Level 1",
+    "rejected",
+    "admin"
+);
+
+INSERT INTO AllArticles (Title, Authors, Journal, YearOfPublish, ResearchLv, Status, Contributor)
+VALUES (
+    "this is a FAKE article",
+    "FAKE author",
+    "FAKE journal",
+    "1000",
+    "Level 1",
+    "new",
+    "admin"
+);
+
+DROP TABLE IF EXISTS RejectedArticles;
+CREATE TABLE RejectedArticles
+(
+    ArticleId int NOT NULL UNIQUE,
+    Title varchar(255) NOT NULL,
+    Moderator varchar(255),
+    Reason varchar(8000),
+    PRIMARY KEY (ArticleId)
+);
+
+INSERT INTO RejectedArticles 
+VALUES (
+    "2",
+    "A Rejected Article",
+    "admin",
+    "I hate this article"
+);
 
 DROP TABLE IF EXISTS PorcessedDetails;
 DROP TABLE IF EXISTS AuthorTable;
