@@ -5,11 +5,9 @@
  */
 package input;
 
-import classes.MyDatabase;
 import classes.MyServlet;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.sql.ResultSet;
 import java.sql.SQLException;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -35,7 +33,6 @@ public class EditBasic extends MyServlet {
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        myDB = new MyDatabase();
         id = request.getParameter("id");
         title = request.getParameter("title");
         authors = request.getParameter("authors");
@@ -106,11 +103,11 @@ public class EditBasic extends MyServlet {
         out.println("<input type=\"hidden\" name=\"id\" value=\"" + id + "\"/>");
         out.println("<input type=\"hidden\" name=\"title\" value=\"" + title + "\"/>");
         out.println("<input type=\"hidden\" name=\"update\" value=\"yes\"/>");
-        out.println("<label>Authors: </label><input type=\"text\" name=\"authors\" value=\"" + authors + "\"/><br /><br />");
-        out.println("<label>Journal: </label><input type=\"text\" name=\"journal\" value=\"" + journal + "\"/><br /><br />");
-        out.println("<label>Year: </label><input type=\"number\" name=\"year\" value=\"" + year + "\"/><br /><br />");
+        out.println("<label>Authors: </label>&emsp;<input type=\"text\" name=\"authors\" value=\"" + authors + "\"/><br /><br />");
+        out.println("<label>Journal: </label>&emsp;<input type=\"text\" name=\"journal\" value=\"" + journal + "\"/><br /><br />");
+        out.println("<label>Year: </label>&emsp;<input type=\"number\" name=\"year\" value=\"" + year + "\"/><br /><br />");
 
-        out.println("<label>Research level: </label>");
+        out.println("<label>Research level: </label>&emsp;");
         out.println("<select name=\"level\">");
         out.println("<option value=\"Level 1\" " + ((level != null && level.equalsIgnoreCase("level 1")) ? "selected" : "") + ">Level 1</option>");
         out.println("<option value=\"Level 2\" " + ((level != null && level.equalsIgnoreCase("level 2")) ? "selected" : "") + ">Level 2</option>");
@@ -123,7 +120,7 @@ public class EditBasic extends MyServlet {
         out.println("</fieldset>");
         out.println("</form>");
 
-        out.println("<a href=\"ShowArticleDetail?id=" + id + "\">Cancel</a>");
+        out.println("<br /><a href=\"ShowArticleDetail?id=" + id + "\">Cancel</a><br />");
     }
 
     private void updataDatabase() {

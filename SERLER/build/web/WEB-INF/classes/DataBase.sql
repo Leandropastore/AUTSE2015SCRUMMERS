@@ -48,7 +48,10 @@ CREATE TABLE AllArticles
     YearOfPublish int,
     ResearchLv varchar(255),
     Status varchar(255) DEFAULT "new",
+    RejectedReason varchar(8000) DEFAULT "",
     Contributor varchar(255),
+    ModeratedBy varchar(255) DEFAULT "",
+    AnalysedBy varchar(255) DEFAULT "",
     PRIMARY KEY (ArticleId)
 );
 
@@ -138,7 +141,7 @@ CREATE TABLE MethodologyTable
     ArticleID int NOT NULL,
     M_Name varchar(255) NOT NULL,
     Description varchar(8000),
-    PRIMARY KEY (ArticleID, M_Name)
+    PRIMARY KEY (ArticleID)
 );
 
 INSERT INTO MethodologyTable VALUES
@@ -155,7 +158,7 @@ CREATE TABLE PracticeTable
     ArticleID int NOT NULL,
     M_Name varchar(255) NOT NULL,
     Description varchar(8000),
-    PRIMARY KEY (ArticleID, M_Name)
+    PRIMARY KEY (ArticleID)
 );
 
 INSERT INTO PracticeTable VALUES
@@ -170,17 +173,17 @@ DROP TABLE IF EXISTS EvidenceItemTable;
 CREATE TABLE EvidenceItemTable
 (
     ArticleID int NOT NULL,
-    ItemName varchar(255) NOT NULL,
-    Benefit varchar(4000) DEFAULT "",
-    I_Who varchar(255) DEFAULT "",
-    I_What varchar(255) DEFAULT "",
-    I_Where varchar(255) DEFAULT "",
-    I_When varchar(255) DEFAULT "",
-    I_How varchar(255) DEFAULT "",
-    I_Why varchar(255) DEFAULT "",
-    I_Result varchar(4000) DEFAULT "",
-    I_Integrity varchar(4000) DEFAULT "",
-    PRIMARY KEY (ArticleID, ItemName)
+    iName varchar(255) NOT NULL,
+    iBenefit varchar(4000) DEFAULT "",
+    iWho varchar(255) DEFAULT "",
+    iWhat varchar(255) DEFAULT "",
+    iWhere varchar(255) DEFAULT "",
+    iWhen varchar(255) DEFAULT "",
+    iHow varchar(255) DEFAULT "",
+    iWhy varchar(255) DEFAULT "",
+    iResult varchar(4000) DEFAULT "",
+    iIntegrity varchar(4000) DEFAULT "",
+    PRIMARY KEY (ArticleID)
 );
 
 INSERT INTO EvidenceItemTable VALUES
@@ -225,24 +228,26 @@ DROP TABLE IF EXISTS ResearchDesignTable;
 CREATE TABLE ResearchDesignTable
 (
     ArticleID int NOT NULL,
-    R_Name varchar(255) NOT NULL,
-    Queation varchar(255),
-    R_Method varchar(255),
-    R_Metric varchar(255),
-    M_Description varchar(8000),
-    Nature varchar(255),
-    PRIMARY KEY (ArticleID, R_Name)
+    qName varchar(255) NOT NULL,
+    qDescription varchar(255),
+    methodName varchar(255),
+    methodDescription varchar(4000),
+    metricsName varchar(255),
+    metricsDescription varchar(4000),
+    participants varchar(255),
+    PRIMARY KEY (ArticleID, qName)
 );
 
 INSERT INTO ResearchDesignTable VALUES
 (
     "1",
-    "Research A",
     "What is this?",
-    "Interview",
+    "talk about this",
+    "XP",
+    "what is XP",
     "Metric A",
     "Some sort of metric",
-    "All people"
+    "Professor"
 );
 
 DROP TABLE IF EXISTS MetricTable;

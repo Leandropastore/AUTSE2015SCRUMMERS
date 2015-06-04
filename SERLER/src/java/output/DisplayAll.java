@@ -5,7 +5,6 @@
  */
 package output;
 
-import classes.GeneralArticle;
 import classes.Member;
 import classes.MyDatabase;
 import classes.MyServlet;
@@ -14,7 +13,6 @@ import java.io.PrintWriter;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.List;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -37,17 +35,17 @@ public class DisplayAll extends MyServlet {
      */
     private MyDatabase myDB;
     private PreparedStatement stmt;
-    private Member member;
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        response.setContentType("text/html;charset=UTF-8");
-
         HttpSession session = request.getSession();
         member = (Member) session.getAttribute("member");
-        if(member == null){
+        if (member == null) {
             member = new Member("new user", "Non-member");
         }
+        setControlPanel(member.getType());
+        setPageTitle("All Articles");
+        
 
         try (PrintWriter out = response.getWriter()) {
             /* TODO output your page here. You may use following sample code. */
@@ -131,9 +129,9 @@ public class DisplayAll extends MyServlet {
                 String title = rs.getString("Title");
                 String status = rs.getString("Status");
                 String link = "\"ShowArticleDetail?id=" + id + "\"";
-                if (member != null && member.getType().equalsIgnoreCase("moderator")) {
-                    link = "\"ModerationServlet?id=" + id + "&status=" + status + "\"";
-                }
+//                if (member != null && member.getType().equalsIgnoreCase("moderator")) {
+//                    link = "\"ModerationServlet?id=" + id + "&status=" + status + "\"";
+//                }
                 out.println("<tr><th>&emsp;" + "<a href=" + link + ">" + id
                         + "</a>&emsp;</th><th>" + "&emsp;<a href=" + link + ">" + title + "</a>&emsp;"
                         + "&emsp;</th><th>&emsp;" + status

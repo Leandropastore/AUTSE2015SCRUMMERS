@@ -5,6 +5,7 @@
  */
 package input;
 
+import classes.Member;
 import classes.MyDatabase;
 import classes.MyServlet;
 import java.io.IOException;
@@ -12,9 +13,9 @@ import java.io.PrintWriter;
 import java.sql.SQLException;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
-import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 /**
  *
@@ -35,15 +36,21 @@ public class CredibilityRating extends MyServlet {
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        HttpSession session = request.getSession();
+        member = (Member) session.getAttribute("member");
+        if (member == null) {
+            member = new Member("new user", "Non-member");
+        }
+        setControlPanel(member.getType());
+        setPageTitle("Credibility Rating");
 
         id = request.getParameter("id");
         title = request.getParameter("title");
-        rater = request.getParameter("rater");
+//        rater = request.getParameter("rater");
         rating = request.getParameter("rating");
         reason = request.getParameter("reason");
 
-        if (rater == null || rater.trim().length() == 0
-                || reason == null || reason.trim().length() == 0
+        if ( reason == null || reason.trim().length() == 0
                 || rating == null) {
             try (PrintWriter out = response.getWriter()) {
                 /* TODO output your page here. You may use following sample code. */
@@ -53,9 +60,6 @@ public class CredibilityRating extends MyServlet {
                 printAfterContent(out);
             }
         } else {
-                    System.out.println((rater == null) +"__"+ (rater.trim().length() < 0)
-                +"__"+ (reason == null) +"__"+ (reason.trim().length() < 0)
-                +"__"+ (rating == null));
             addRating();
             request.setAttribute("id", id);
             RequestDispatcher dispatcher = getServletContext().
@@ -104,22 +108,22 @@ public class CredibilityRating extends MyServlet {
     }// </editor-fold>
 
     private void printForm(PrintWriter out) {
-        System.out.println(rater);
-        System.out.println(rating);
-        System.out.println(reason);
+//        System.out.println(rater);
+//        System.out.println(rating);
+//        System.out.println(reason);
         out.println("<form ACTION=\"CredibilityRating\" id =\"form1\">");
         out.println("<fieldset>");
         out.println("<div style=\"text-align: justify\">");
         out.println("<input type=\"hidden\" name=\"id\" value=\"" + id + "\"/>");
         out.println("<input type=\"hidden\" name=\"title\" value=\"" + title + "\"/>");
 
-        out.println("<label>Your Name:</label> <input type=\"text\" name=\"rater\" value=\"" + ((rater == null) ? "" : rater) + "\"/><br />");
         out.println("<label>Your Rating: </label> &emsp;"
                 + "<input type=\"radio\" name=\"rating\" value=\"1\" checked/>1&emsp;"
                 + "<input type=\"radio\" name=\"rating\" value=\"2\" />2&emsp;"
                 + "<input type=\"radio\" name=\"rating\" value=\"3\" />3&emsp;"
                 + "<input type=\"radio\" name=\"rating\" value=\"4\" />4&emsp;"
-                + "<input type=\"radio\" name=\"rating\" value=\"5\" />5<br />");
+                + "<input type=\"radio\" name=\"rating\" value=\"5\" />5"
+                + "<br /><br />");
         out.println("<label>Your Reason:</label> <br />");
         out.println("<textarea rows=\"3\" cols=\"40\" name=\"reason\" form=\"form1\"></textarea>" + ((reason == null) ? "" : reason) + "<br />");
         out.println("</div><div style=\"text-align: center\"><br />");
@@ -128,7 +132,7 @@ public class CredibilityRating extends MyServlet {
         out.println("</fieldset>");
         out.println("</form>");
 
-        out.println("<a href=\"ShowArticleDetail?id=" + id + "\">Cancel</a>");
+        out.println("<br /><a href=\"ShowArticleDetail?id=" + id + "\">Cancel</a><br />");
     }
 
     private void addRating() {
@@ -137,7 +141,7 @@ public class CredibilityRating extends MyServlet {
             stmt = myDB.getConn().prepareStatement("");
             stmt = myDB.getConn().prepareStatement("INSERT INTO CredibilityTable VALUES (?, ?, ?, ?)");
             stmt.setString(1, id);
-            stmt.setString(2, rater);
+            stmt.setString(2, member.getName());
             stmt.setString(3, rating);
             stmt.setString(4, reason);
             System.out.println(stmt);

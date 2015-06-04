@@ -9,7 +9,6 @@ import classes.Member;
 import classes.MyServlet;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -21,7 +20,7 @@ import javax.servlet.http.HttpSession;
  *
  * @author Andy Li
  */
-public class ConfidenceServlet extends MyServlet {
+public class PracticeServlet extends MyServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -32,44 +31,40 @@ public class ConfidenceServlet extends MyServlet {
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
      */
-    private PreparedStatement stmt;
-    private String iName, rating, reason;
+    private String pName, pDescription;
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        id = request.getParameter("id");
+        title = request.getParameter("title");
+        pName = request.getParameter("pName");
+        pDescription = request.getParameter("pDescription");
         HttpSession session = request.getSession();
         member = (Member) session.getAttribute("member");
         if (member == null) {
             member = new Member("new user", "Non-member");
         }
         setControlPanel(member.getType());
-        setPageTitle("Confidence Rating");
-
-        id = request.getParameter("id");
-        title = request.getParameter("title");
-        iName = request.getParameter("iName");
-        reason = request.getParameter("reason");
-        rating = request.getParameter("rating");
-        if (reason == null || reason.trim().length() == 0
-                || rating == null) {
-            try (PrintWriter out = response.getWriter()) {
-                /* TODO output your page here. You may use following sample code. */
+        setPageTitle("Methodology");
+        try (PrintWriter out = response.getWriter()) {
+            if (request.getParameter("update") == null
+                    ||pName == null || pName.trim().length() == 0
+                    || pDescription == null || pDescription.trim().length() == 0) {
                 printBeforeContent(out);
-                out.println("Giving the Confidece Rating to <br/>&emsp;Evidence Item:<br/>&emsp;&emsp;" + iName);
-                out.println("<br/>&emsp;In Article:<br/>&emsp;&emsp;" + title);
-                printForm(out);
+                out.println("Editing the Practice for<br />&emsp;" + title);
+                printFrom(out);
                 printAfterContent(out);
+            } else {
+                updateDatabase();
+                request.setAttribute("id", id);
+                RequestDispatcher dispatcher = getServletContext().
+                        getRequestDispatcher("/ShowArticleDetail");
+                dispatcher.forward(request, response);
             }
-        } else {
-            addRating();
-            request.setAttribute("id", id);
-            RequestDispatcher dispatcher = getServletContext().
-                    getRequestDispatcher("/ShowArticleDetail");
-            dispatcher.forward(request, response);
         }
     }
 
-// <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
+    // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
      * Handles the HTTP <code>GET</code> method.
      *
@@ -108,43 +103,43 @@ public class ConfidenceServlet extends MyServlet {
         return "Short description";
     }// </editor-fold>
 
-    private void printForm(PrintWriter out) {
-
-        out.println("<form ACTION=\"ConfidenceServlet\" id =\"form1\">");
+    private void printFrom(PrintWriter out) {
+        out.println("<form ACTION=\"PracticeServlet\" id =\"form0\">");
         out.println("<fieldset>");
         out.println("<div style=\"text-align: justify\">");
         out.println("<input type=\"hidden\" name=\"id\" value=\"" + id + "\"/>");
         out.println("<input type=\"hidden\" name=\"title\" value=\"" + title + "\"/>");
-        out.println("<input type=\"hidden\" name=\"iName\" value=\"" + iName + "\"/>");
+        out.println("<input type=\"hidden\" name=\"update\" value=\"yes\"/>");
 
-        out.println("<label>Your Rating: </label> &emsp;"
-                + "<input type=\"radio\" name=\"rating\" value=\"1\" checked/>1&emsp;"
-                + "<input type=\"radio\" name=\"rating\" value=\"2\" />2&emsp;"
-                + "<input type=\"radio\" name=\"rating\" value=\"3\" />3&emsp;"
-                + "<input type=\"radio\" name=\"rating\" value=\"4\" />4&emsp;"
-                + "<input type=\"radio\" name=\"rating\" value=\"5\" />5"
-                + "<br /><br />");
-        out.println("<label>Your Reason:</label> <br />");
-        out.println("<textarea rows=\"3\" cols=\"40\" name=\"reason\" form=\"form1\"></textarea>" + ((reason == null) ? "" : reason) + "<br />");
+        out.println("<label>Practice:</label>&emsp; <select name = \"pName\">"
+                + "<option value=\"Practice A\"" + ((pName != null && pName.equalsIgnoreCase("Practice A")) ? "selected" : "") + ">Practice A</option>"
+                + "<option value=\"Practice B\"" + ((pName != null && pName.equalsIgnoreCase("Practice B")) ? "selected" : "") + ">Practice B</option>"
+                + "<option value=\"Practice C\"" + ((pName != null && pName.equalsIgnoreCase("Practice C")) ? "selected" : "") + ">Practice C</option>"
+                + "<option value=\"Practice D\"" + ((pName != null && pName.equalsIgnoreCase("Practice D")) ? "selected" : "") + ">Practice D</option>"
+                + "<option value=\"Other\"" + ((pName != null && pName.equalsIgnoreCase("Other")) ? "selected" : "") + ">Other</option>"
+                + "</select><br />");
+        out.println("<label>Description:</label><br />"
+                + "<br /><textarea rows=\"5\" cols=\"50\" name=\"pDescription\" form=\"form0\">"
+                + ((pDescription == null) ? "" : pDescription)
+                + "</textarea><br />");
+
         out.println("</div><div style=\"text-align: center\"><br />");
-        out.println("<input type=\"submit\" value=\"Rate\"/>");
+        out.println("<input type=\"submit\" value=\"Submit\"/>");
         out.println("</div>");
         out.println("</fieldset>");
         out.println("</form>");
-
         out.println("<br /><a href=\"ShowArticleDetail?id=" + id + "\">Cancel</a><br />");
-
     }
 
-    private void addRating() {
-        try {
-            stmt = myDB.getConn().prepareStatement("INSERT INTO ConfidenceTable "
-                    + "VALUES (?, ?, ?, ?, ?)");
+    private void updateDatabase() {
+       try {
+            stmt = myDB.getConn().prepareStatement("INSERT INTO Practicetable VALUES  (?, ?, ?)"
+                    + "ON DUPLICATE KEY UPDATE"
+                    + "  M_Name = VALUES(M_Name),"
+                    + "  Description = VALUES(Description);");
             stmt.setString(1, id);
-            stmt.setString(2, iName);
-            stmt.setString(3, member.getName());
-            stmt.setString(4, rating);
-            stmt.setString(5, reason);
+            stmt.setString(2, pName);
+            stmt.setString(3, pDescription);
             System.out.println(stmt);
             stmt.executeUpdate();
         } catch (SQLException ex) {

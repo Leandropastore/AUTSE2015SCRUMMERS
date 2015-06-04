@@ -149,6 +149,8 @@ public class ModerationServlet extends MyServlet {
         out.println("</div>");
         out.println("</fieldset>");
         out.println("</form>");
+        
+        out.println("<br /><a href=\"ShowArticleDetail?id=" + id + "\">Cancel</a><br />");
     }
 
     private void updateDatabase() {

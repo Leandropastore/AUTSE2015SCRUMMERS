@@ -3,7 +3,9 @@ package classes;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.text.DecimalFormat;
 
 /*
  * To change this license header, choose License Headers in Project Properties.
@@ -55,5 +57,30 @@ public class MyDatabase {
             System.err.println(ex.getMessage());
         }
         return stmt;
+    }
+
+    public String getAverage(String table, String id) throws SQLException {
+
+        double sum = 0;
+        int count = 0;
+        DecimalFormat df = new DecimalFormat("####0.0");
+        try {
+            stmt = conn.prepareStatement("SELECT * FROM " + table + " WHERE ArticleId = ?");
+            stmt.setString(1, id);
+            System.out.println("stmt = " + stmt);
+            ResultSet rs = stmt.executeQuery();
+            rs.beforeFirst();
+            while (rs.next()) {
+                sum += Integer.parseInt(rs.getString("Rating"));
+                count++;
+            }
+        } catch (SQLException ex) {
+            System.out.println("ERROR: " + ex);
+        }
+        if (sum == 0) {
+            return "not avaliable";
+        } else {
+            return df.format(sum / count);
+        }
     }
 }

@@ -29,10 +29,16 @@ public class MyServlet extends HttpServlet {
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
      */
-    protected MyDatabase myDB;
+    protected MyDatabase myDB = new MyDatabase();
     protected PreparedStatement stmt;
     protected String id, title;
     protected String pageTitle = "Amazing Articles";
+    protected String ctrlPanel = "<a href=\"home_page.html\">Home</a>&emsp;&emsp;&emsp;"
+            + "<a href=\"login.html\">Login</a>&emsp;&emsp;&emsp;"
+            + "<a href=\"sign_up.html\">Create Account</a>&emsp;&emsp;&emsp;"
+            + "<a href=\"DisplayAll\">Articles</a>";
+    
+    protected Member member;
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
@@ -136,7 +142,7 @@ public class MyServlet extends HttpServlet {
 
         out.println("<html>");
         out.println("<head>");
-        out.println("<title>"+pageTitle+"</title>");
+        out.println("<title>" + pageTitle + "</title>");
         out.println("<meta http-equiv=\"Content-Type\" content=\"text/html; charset=UTF-8\">");
         out.println("<link type=\"text/css\" href=\"css/ui-lightness/jquery-ui-1.8.23.custom.css\" rel=\"stylesheet\" />");
         out.println("<link type=\"text/css\" href=\"css/common.css\" rel=\"stylesheet\"/>");
@@ -148,11 +154,8 @@ public class MyServlet extends HttpServlet {
         out.println("</div>");
         out.println("<div id=\"bodytopbottombox\">");
         out.println("<p>");
-        out.println("<a href=\"home_page.html\">Home</a>&emsp;&emsp;&emsp;");
-        out.println("<a href=\"login.html\">Login</a>&emsp;&emsp;&emsp;");
-        out.println("<a href=\"sign_up.html\">Create Account</a>&emsp;&emsp;&emsp;");
-        out.println("<a href=\"DisplayAll\">Articles</a></p>");
-        out.println("</div>");
+        out.println(ctrlPanel);
+        out.println("</p></div>");
         out.println("<div id=\"bodycontentbox\">");
         out.println("<br /><br />");
 
@@ -185,8 +188,44 @@ public class MyServlet extends HttpServlet {
         out.println("</body>");
         out.println("</html>");
     }
-    
-    protected void setPageTitle(String pt){
+
+    protected void setPageTitle(String pt) {
         pageTitle = pt;
+    }
+
+    protected void setControlPanel(String type) {
+
+        switch (type) {
+            case "administrator":
+                ctrlPanel = "<a href=\"home_page.html\">Home</a>&emsp;&emsp;&emsp;"
+                        + "<a href=\"LogoutServlet\">Log Out</a>&emsp;&emsp;&emsp;"
+                        + "<a href=\"create_staff_account.html\">Create Staff Account</a>&emsp;&emsp;&emsp;"
+                        + "<a href=\"DisplayAll\">All Articles</a>";
+                break;
+            case "moderator":
+                ctrlPanel = "<a href=\"home_page.html\">Home</a>&emsp;&emsp;&emsp;"
+                        + "<a href=\"LogoutServlet\">Log Out</a>&emsp;&emsp;&emsp;"
+                        + "<a href=\"ModerateList\">Articles for moderate</a>&emsp;&emsp;&emsp;"
+                        + "<a href=\"DisplayAll\">All Articles</a>";
+                break;
+            case "analyst":
+                ctrlPanel = "<a href=\"home_page.html\">Home</a>&emsp;&emsp;&emsp;"
+                        + "<a href=\"LogoutServlet\">Log Out</a>&emsp;&emsp;&emsp;"
+                        + "<a href=\"AnalyseList\">Articles for Analyse</a>&emsp;&emsp;&emsp;"
+                        + "<a href=\"DisplayAll\">All Articles</a>";
+                break;
+            case "contributor":
+                ctrlPanel = "<a href=\"home_page.html\">Home</a>&emsp;&emsp;&emsp;"
+                        + "<a href=\"LogoutServlet\">Log Out</a>&emsp;&emsp;&emsp;"
+                        + "<a href=\"UploadServlet\">Upload Article</a>&emsp;&emsp;&emsp;"
+                        + "<a href=\"DisplayAll\">All Articles</a>";
+                break;
+            default:
+                ctrlPanel = "<a href=\"home_page.html\">Home</a>&emsp;&emsp;&emsp;"
+                        + "<a href=\"login.html\">Login</a>&emsp;&emsp;&emsp;"
+                        + "<a href=\"sign_up.html\">Create Account</a>&emsp;&emsp;&emsp;"
+                        + "<a href=\"DisplayAll\">Articles</a>";
+
+        }
     }
 }

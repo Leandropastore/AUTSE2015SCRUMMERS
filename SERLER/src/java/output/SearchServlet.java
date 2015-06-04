@@ -95,7 +95,7 @@ public class SearchServlet extends MyServlet {
 
     private void printSearchBar(PrintWriter out) {
 
-        out.println("<form ACTION=\"SearchServlet\">");
+        out.println("<form ACTION=\"SearchServlet\" >");
         out.println("<fieldset>");
         out.println("<div style=\"text-align: justify\">");
 

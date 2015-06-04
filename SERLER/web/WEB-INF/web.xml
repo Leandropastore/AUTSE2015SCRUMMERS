@@ -33,10 +33,6 @@
         <servlet-class>output.SearchServlet</servlet-class>
     </servlet>
     <servlet>
-        <servlet-name>EditAuthors</servlet-name>
-        <servlet-class>input.EditAuthors</servlet-class>
-    </servlet>
-    <servlet>
         <servlet-name>EditBasic</servlet-name>
         <servlet-class>input.EditBasic</servlet-class>
     </servlet>
@@ -51,6 +47,22 @@
     <servlet>
         <servlet-name>ModerationServlet</servlet-name>
         <servlet-class>input.ModerationServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>MethodologyServlet</servlet-name>
+        <servlet-class>input.MethodologyServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>PracticeServlet</servlet-name>
+        <servlet-class>input.PracticeServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>LogoutServlet</servlet-name>
+        <servlet-class>output.LogoutServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>ResearchServlet</servlet-name>
+        <servlet-class>input.ResearchServlet</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>UploadServlet</servlet-name>
@@ -85,10 +97,6 @@
         <url-pattern>/SearchServlet</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
-        <servlet-name>EditAuthors</servlet-name>
-        <url-pattern>/EditAuthors</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
         <servlet-name>EditBasic</servlet-name>
         <url-pattern>/EditBasic</url-pattern>
     </servlet-mapping>
@@ -103,6 +111,22 @@
     <servlet-mapping>
         <servlet-name>ModerationServlet</servlet-name>
         <url-pattern>/ModerationServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>MethodologyServlet</servlet-name>
+        <url-pattern>/MethodologyServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>PracticeServlet</servlet-name>
+        <url-pattern>/PracticeServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>LogoutServlet</servlet-name>
+        <url-pattern>/LogoutServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ResearchServlet</servlet-name>
+        <url-pattern>/ResearchServlet</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>
