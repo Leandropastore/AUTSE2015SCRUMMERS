@@ -10,7 +10,6 @@ import classes.MyDatabase;
 import classes.MyServlet;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.sql.ResultSet;
 import java.sql.SQLException;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -38,7 +37,7 @@ public class ModerationServlet extends MyServlet {
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        myDB = new MyDatabase();
+        
         id = request.getParameter("id");
         status = request.getParameter("status");
 
@@ -47,17 +46,12 @@ public class ModerationServlet extends MyServlet {
 
         HttpSession session = request.getSession();
         member = (Member) session.getAttribute("member");
-
-//        try {
-//            stmt = myDB.getConn().prepareStatement("SELECT * FROM AllArticles WHERE ArticleId=?;");
-//            stmt.setString(1, id);
-//            ResultSet rs = stmt.executeQuery();
-//            if (rs.next()) {
-//                status = rs.getString("Status");
-//            }
-//        } catch (SQLException ex) {
-//            System.out.println("Error: \n" + ex);
-//        }
+        if (member == null) {
+            member = new Member("new user", "Non-member");
+        }
+        setControlPanel(member.getType());
+        setPageTitle("Moderation");
+        
         try (PrintWriter out = response.getWriter()) {
             printBeforeContent(out);
             switch (status) {
@@ -157,10 +151,14 @@ public class ModerationServlet extends MyServlet {
         System.out.println("++++++++++++++++++++updating");
         try {
             stmt = myDB.getConn().prepareStatement("Update allarticles SET "
-                    + "Status = ? "
+                    + "Status = ? ,"
+                    + "RejectedReason = ? ,"
+                    + "ModeratedBy = ? "
                     + "WHERE ArticleId = ?; ");
             stmt.setString(1, result);
-            stmt.setString(2, id);
+            stmt.setString(2, reason);
+            stmt.setString(3, member.getName());
+            stmt.setString(4, id);
             System.out.println(stmt);
             stmt.executeUpdate();
         } catch (SQLException ex) {

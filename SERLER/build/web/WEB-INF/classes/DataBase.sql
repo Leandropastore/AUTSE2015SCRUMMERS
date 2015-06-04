@@ -55,7 +55,7 @@ CREATE TABLE AllArticles
     PRIMARY KEY (ArticleId)
 );
 
-INSERT INTO AllArticles (Title, Authors, Journal, YearOfPublish, ResearchLv, Status, Contributor)
+INSERT INTO AllArticles (Title, Authors, Journal, YearOfPublish, ResearchLv, Status, Contributor,ModeratedBy,AnalysedBy)
 VALUES (
     "Empirical investigation of refactoring effect on software quality",
     "Mohammad Alshayeb",
@@ -63,10 +63,12 @@ VALUES (
     "2009",
     "Level 1",
     "released",
-    "admin"
+    "admin",
+    "andy li",
+    "andy li"
 );
 
-INSERT INTO AllArticles (Title, Authors, Journal, YearOfPublish, ResearchLv, Status, Contributor)
+INSERT INTO AllArticles (Title, Authors, Journal, YearOfPublish, ResearchLv, Status, Contributor,ModeratedBy, RejectedReason)
 VALUES (
     "A Rejected Article",
     "rejected author",
@@ -74,7 +76,9 @@ VALUES (
     "1000",
     "Level 1",
     "rejected",
-    "admin"
+    "admin",
+    "andy li",
+    "just testing the rejection"
 );
 
 INSERT INTO AllArticles (Title, Authors, Journal, YearOfPublish, ResearchLv, Status, Contributor)

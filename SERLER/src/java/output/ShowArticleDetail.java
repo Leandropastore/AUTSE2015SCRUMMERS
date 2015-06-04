@@ -6,17 +6,13 @@
 package output;
 
 import classes.Member;
-import classes.MyDatabase;
 import classes.MyServlet;
-import input.UploadServlet;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.text.DecimalFormat;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -124,6 +120,8 @@ public class ShowArticleDetail extends MyServlet {
             stmt = myDB.getConn().prepareStatement("SELECT * FROM AllArticles WHERE ArticleId = ?");
             stmt.setString(1, id);
             ResultSet rs = stmt.executeQuery();
+            String reason = "";
+            String moderatedBy = "";
             if (rs.next()) {
                 title = rs.getString("Title");
                 authors = rs.getString("Authors");
@@ -131,12 +129,20 @@ public class ShowArticleDetail extends MyServlet {
                 year = rs.getString("YearOfPublish");
                 level = rs.getString("ResearchLv");
                 status = rs.getString("Status");
+                reason = rs.getString("rejectedReason");
+                moderatedBy = rs.getString("moderatedBy");
                 out.println("Title: <br/>&emsp;" + title + "<br/><br/>");
                 out.println("Author(s): <br />&emsp;" + authors + "<br/><br/>");
                 out.println("Journal: <br/>&emsp;" + journal + "<br/><br/>");
                 out.println("Year of Publish: <br/>&emsp;" + year + "<br/><br/>");
                 out.println("Research Level: <br/>&emsp;" + level + "<br/><br/>");
 //                out.println("< a href=\" " + link + "\">" + title + "</a>");
+            }
+
+            if (status.equalsIgnoreCase("rejected")) {
+//                if(reason)
+                out.println("<br />------This article is rejected by:&emsp;"+moderatedBy);
+                out.println("<br />------Reason of rejection:&emsp;"+reason);
             }
             if (member.getType().equalsIgnoreCase("administrator") || member.getType().equalsIgnoreCase("analyst")) {
                 out.println("<a href=\"EditBasic?"
