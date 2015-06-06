@@ -6,6 +6,7 @@
 package input;
 
 import classes.Member;
+import classes.MyDatabase;
 import classes.MyServlet;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -18,9 +19,9 @@ import javax.servlet.http.HttpSession;
 
 /**
  *
- * @author Andy Li
+ * @author Leandro Pastore
  */
-public class EditMember extends MyServlet {
+public class CreateStaffAccount extends MyServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -31,47 +32,33 @@ public class EditMember extends MyServlet {
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
      */
-    private String name, password, email, type;
+    private String aType,accountName,email,password;
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-
+        accountName = request.getParameter("accountName");
+        aType = request.getParameter("aType");
+        email = request.getParameter("email");
+        password = request.getParameter("password");
         HttpSession session = request.getSession();
         member = (Member) session.getAttribute("member");
         if (member == null) {
-            member = new Member("guest", "Non-member");
+            member = new Member("new user", "Non-member");
         }
         setControlPanel(member.getType());
-        setPageTitle("Edit Member");
-        
-        name = request.getParameter("name");
-        password = request.getParameter("password");
-        email = request.getParameter("email");
-        type = request.getParameter("type");
+        setPageTitle("Account Creation");
 
-        if (member.getType().equalsIgnoreCase("administrator")) {
-            if (request.getParameter("update") == null
-                    || password.trim().length() == 0
-                    || email.trim().length() == 0) {
-
-                try (PrintWriter out = response.getWriter()) {
-                    printBeforeContent(out);
-
-                    printForm(out);
-
-                    printAfterContent(out);
-
-                }
-            } else {
-                updateDatabase();
-                RequestDispatcher dispatcher = getServletContext().
-                        getRequestDispatcher("/MemberList");
-                dispatcher.forward(request, response);
+        if ( accountName == null || password == null
+                || email == null) {
+            try (PrintWriter out = response.getWriter()) {
+                printBeforeContent(out);
+                printForm(out);
+                printAfterContent(out);
             }
-
         } else {
+            createAccount();
             RequestDispatcher dispatcher = getServletContext().
-                    getRequestDispatcher("/home_page.html");
+                    getRequestDispatcher("/CreateStaffAccount");
             dispatcher.forward(request, response);
         }
     }
@@ -116,42 +103,39 @@ public class EditMember extends MyServlet {
     }// </editor-fold>
 
     private void printForm(PrintWriter out) {
-        out.println("<form ACTION=\"EditMember\">");
+        out.println("<form ACTION=\"AdminCreateAccount\" id =\"form1\">");
         out.println("<fieldset>");
         out.println("<div style=\"text-align: justify\">");
-        out.println("<input type=\"hidden\" name=\"name\" value=\"" + name + "\"/>");
-        out.println("<input type=\"hidden\" name=\"update\" value=\"yes\"/>");
-        out.println("<label>Member Name: </label>&emsp; " + ((name == null) ? "" : name) + "<br /><br />");
-        out.println("<label>Password: </label>&emsp;<input type=\"text\" name=\"password\" value=\"" + ((password == null) ? "" : password) + "\"/><br /><br />");
-        out.println("<label>Email: </label>&emsp;<input type=\"email\" name=\"email\" value=\"" + ((email == null) ? "" : email) + "\"/><br /><br />");
 
-        out.println("<label>Account Type: </label>&emsp;");
-        out.println("<select name=\"type\">");
-        out.println("<option value=\"administrator\" " + ((type != null && type.equalsIgnoreCase("administrator")) ? "selected" : "") + ">administrator</option>");
-        out.println("<option value=\"moderator\" " + ((type != null && type.equalsIgnoreCase("moderator")) ? "selected" : "") + ">moderator</option>");
-        out.println("<option value=\"analyst\" " + ((type != null && type.equalsIgnoreCase("analyst")) ? "selected" : "") + ">analyst</option>");
-        out.println("<option value=\"contributor\" " + ((type != null && type.equalsIgnoreCase("contributor")) ? "selected" : "") + ">contributor</option>");
-        out.println("</select><br /><br />");
+        out.println("<label>Account name: </label> &emsp;"
+                + "<input type=\"text\" name=\"accountName\" value=\"\" />"
+                + "<br /><br />");
+        out.println("<label>Email: </label> &emsp;"
+                + "<input type=\"text\" name=\"email\" value=\"\" />"
+                + "<br /><br />");
+        out.println("<label>Account type:</label> &emsp; <select name = \"aType\">"
+                + "<option value=\"Moderator\"" + ((aType != null && aType.equalsIgnoreCase("Moderator")) ? "selected" : "") + ">Moderator</option>"
+                + "<option value=\"Analyst\"" + ((aType != null && aType.equalsIgnoreCase("Analyst")) ? "selected" : "") + ">Analyst</option>"
+                + "<option value=\"Administrator\"" + ((aType != null && aType.equalsIgnoreCase("Administrator")) ? "selected" : "") + ">Administrator</option>"
+                + "</select><br /><br />");
+        out.println("<label>Password: </label> &emsp;");
+        out.println("<input type=\"text\" name=\"password\" value=\"\" /><br />");
         out.println("</div><div style=\"text-align: center\"><br />");
-        out.println("<input type=\"submit\" value=\"Update\"/>");
+        out.println("<input type=\"submit\" value=\"Create\"/>");
         out.println("</div>");
         out.println("</fieldset>");
         out.println("</form>");
-
-        out.println("<br /><a href=\"MemberList\">Cancel</a><br />");
     }
 
-    private void updateDatabase() {
+    private void createAccount() {
+        myDB = new MyDatabase();
         try {
-            stmt = myDB.getConn().prepareStatement("Update accounts SET "
-                    + "Password = ?, "
-                    + "Email = ? , "
-                    + "AccountType = ? "
-                    + "WHERE AccountName = ?; ");
-            stmt.setString(1, password);
-            stmt.setString(2, email);
-            stmt.setString(3, type);
-            stmt.setString(4, name);
+            stmt = myDB.getConn().prepareStatement("");
+            stmt = myDB.getConn().prepareStatement("INSERT INTO accounts VALUES (?, ?, ?, ?)");
+            stmt.setString(1, accountName);
+            stmt.setString(2, password);
+            stmt.setString(3, email);
+            stmt.setString(4, aType);
             System.out.println(stmt);
             stmt.executeUpdate();
         } catch (SQLException ex) {

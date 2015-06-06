@@ -80,6 +80,14 @@
         <servlet-name>HomeServlet</servlet-name>
         <servlet-class>output.HomeServlet</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>CreateStaffAccount</servlet-name>
+        <servlet-class>input.CreateStaffAccount</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>AddMember</servlet-name>
+        <servlet-class>input.AddMember</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>UploadServlet</servlet-name>
         <url-pattern>/UploadServlet</url-pattern>
@@ -159,6 +167,14 @@
     <servlet-mapping>
         <servlet-name>HomeServlet</servlet-name>
         <url-pattern>/HomeServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>CreateStaffAccount</servlet-name>
+        <url-pattern>/CreateStaffAccount</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>AddMember</servlet-name>
+        <url-pattern>/AddMember</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

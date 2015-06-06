@@ -162,6 +162,7 @@ public class MyServlet extends HttpServlet {
                 ctrlPanel = "<a href=\"HomeServlet\">Home</a>&emsp;&emsp;&emsp;"
                         + "<a href=\"LogoutServlet\">Log Out</a>&emsp;&emsp;&emsp;"
                         + "<a href=\"MemberList\">Manage Accounts</a>&emsp;&emsp;&emsp;"
+                        + "<a href=\"AddMember\">Create Staff Account</a>&emsp;&emsp;&emsp;"
                         + "<a href=\"AdvancedSearchServlet\">Advanced Search</a>&emsp;&emsp;&emsp;"
                         + "<a href=\"DisplayAll\">All Articles</a>";
                 break;
@@ -189,7 +190,7 @@ public class MyServlet extends HttpServlet {
             default:
                 ctrlPanel = "<a href=\"HomeServlet\">Home</a>&emsp;&emsp;&emsp;"
                         + "<a href=\"LoginServlet\">Login</a>&emsp;&emsp;&emsp;"
-                        + "<a href=\"sign_up.html\">Create Account</a>&emsp;&emsp;&emsp;"
+                        + "<a href=\"AddMember\">Create Account</a>&emsp;&emsp;&emsp;"
                         + "<a href=\"SearchServlet\">Search</a>&emsp;&emsp;&emsp;"
                         + "<a href=\"DisplayAll\">Articles</a>";
 
