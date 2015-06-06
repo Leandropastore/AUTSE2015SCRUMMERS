@@ -170,10 +170,15 @@ public class ResearchServlet extends MyServlet {
                 + ((qDescription == null) ? "" : qDescription)
                 + "</textarea><br /><br />");
         out.println("<label>Method:</label>&emsp; <select name = \"methodName\">"
-                + "<option value=\"XP\"" + ((methodName != null && methodName.equalsIgnoreCase("XP")) ? "selected" : "") + ">XP</option>"
-                + "<option value=\"Scrum\"" + ((methodName != null && methodName.equalsIgnoreCase("Scrum")) ? "selected" : "") + ">Scrum</option>"
-                + "<option value=\"Waterfall\"" + ((methodName != null && methodName.equalsIgnoreCase("Waterfall")) ? "selected" : "") + ">Waterfall</option>"
-                + "<option value=\"Spiral\"" + ((methodName != null && methodName.equalsIgnoreCase("Spiral")) ? "selected" : "") + ">Spiral</option>"
+//                + "<option value=\"XP\"" + ((methodName != null && methodName.equalsIgnoreCase("XP")) ? "selected" : "") + ">XP</option>"
+//                + "<option value=\"Scrum\"" + ((methodName != null && methodName.equalsIgnoreCase("Scrum")) ? "selected" : "") + ">Scrum</option>"
+//                + "<option value=\"Waterfall\"" + ((methodName != null && methodName.equalsIgnoreCase("Waterfall")) ? "selected" : "") + ">Waterfall</option>"
+//                + "<option value=\"Spiral\"" + ((methodName != null && methodName.equalsIgnoreCase("Spiral")) ? "selected" : "") + ">Spiral</option>"
+//                + "<option value=\"Other\"" + ((methodName != null && methodName.equalsIgnoreCase("Other")) ? "selected" : "") + ">Other</option>"
+                + "<option value=\"practical\"" + ((methodName != null && methodName.equalsIgnoreCase("practical")) ? "selected" : "") + ">practical</option>"
+                + "<option value=\"theoretical\"" + ((methodName != null && methodName.equalsIgnoreCase("theoretical")) ? "selected" : "") + ">theoretical</option>"
+                + "<option value=\"qualitative\"" + ((methodName != null && methodName.equalsIgnoreCase("qualitative")) ? "selected" : "") + ">qualitative</option>"
+                + "<option value=\"qualititative\"" + ((methodName != null && methodName.equalsIgnoreCase("qualititative")) ? "selected" : "") + ">qualititative</option>"
                 + "<option value=\"Other\"" + ((methodName != null && methodName.equalsIgnoreCase("Other")) ? "selected" : "") + ">Other</option>"
                 + "</select><br />");
         out.println("<label>Method Description:</label><br />"

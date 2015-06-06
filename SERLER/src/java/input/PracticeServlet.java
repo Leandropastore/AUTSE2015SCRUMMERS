@@ -117,6 +117,8 @@ public class PracticeServlet extends MyServlet {
                 + "<option value=\"Practice B\"" + ((pName != null && pName.equalsIgnoreCase("Practice B")) ? "selected" : "") + ">Practice B</option>"
                 + "<option value=\"Practice C\"" + ((pName != null && pName.equalsIgnoreCase("Practice C")) ? "selected" : "") + ">Practice C</option>"
                 + "<option value=\"Practice D\"" + ((pName != null && pName.equalsIgnoreCase("Practice D")) ? "selected" : "") + ">Practice D</option>"
+                + "<option value=\"Refactoring\"" + ((pName != null && pName.equalsIgnoreCase("Refactoring")) ? "selected" : "") + ">Refactoring</option>"
+                + "<option value=\"Cloud Computing\"" + ((pName != null && pName.equalsIgnoreCase("Cloud Computing")) ? "selected" : "") + ">Cloud Computing</option>"
                 + "<option value=\"Other\"" + ((pName != null && pName.equalsIgnoreCase("Other")) ? "selected" : "") + ">Other</option>"
                 + "</select><br />");
         out.println("<label>Description:</label><br />"

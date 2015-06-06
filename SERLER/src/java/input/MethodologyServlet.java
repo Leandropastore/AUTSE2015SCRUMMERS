@@ -114,10 +114,19 @@ public class MethodologyServlet extends MyServlet {
         out.println("<input type=\"hidden\" name=\"update\" value=\"yes\"/>");
 
         out.println("<label>Methodology:</label>&emsp; <select name = \"mName\">"
-                + "<option value=\"Methodology A\"" + ((mName != null && mName.equalsIgnoreCase("Methodology A")) ? "selected" : "") + ">Methodology A</option>"
-                + "<option value=\"Methodology B\"" + ((mName != null && mName.equalsIgnoreCase("Methodology B")) ? "selected" : "") + ">Methodology B</option>"
-                + "<option value=\"Methodology C\"" + ((mName != null && mName.equalsIgnoreCase("Methodology C")) ? "selected" : "") + ">Methodology C</option>"
-                + "<option value=\"Methodology D\"" + ((mName != null && mName.equalsIgnoreCase("Methodology D")) ? "selected" : "") + ">Methodology D</option>"
+                + "<option value=\"Agile Software Development\"" + ((mName != null && mName.equalsIgnoreCase("Agile Software Development")) ? "selected" : "") + ">Agile Software Development</option>"
+                + "<option value=\"Crystal Methods\"" + ((mName != null && mName.equalsIgnoreCase("Crystal Methods")) ? "selected" : "") + ">Crystal Methods</option>"
+                + "<option value=\"Dynamic Systems Development Model\"" + ((mName != null && mName.equalsIgnoreCase("Dynamic Systems Development Model")) ? "selected" : "") + ">Dynamic Systems Development Model</option>"
+                + "<option value=\"Extreme Programming\"" + ((mName != null && mName.equalsIgnoreCase("Extreme Programming")) ? "selected" : "") + ">Extreme Programming</option>"
+                + "<option value=\"Feature Driven Development\"" + ((mName != null && mName.equalsIgnoreCase("Feature Driven Development")) ? "selected" : "") + ">Feature Driven Development</option>"
+                + "<option value=\"Joint Applocation Development\"" + ((mName != null && mName.equalsIgnoreCase("Joint Applocation Development")) ? "selected" : "") + ">Joint Applocation Development</option>"
+                + "<option value=\"Lean Development\"" + ((mName != null && mName.equalsIgnoreCase("Lean Development")) ? "selected" : "") + ">Lean Development</option>"
+                + "<option value=\"Rapid Application Development\"" + ((mName != null && mName.equalsIgnoreCase("Rapid Application Development")) ? "selected" : "") + ">Rapid Application Development</option>"
+                + "<option value=\"Rational Unified Development\"" + ((mName != null && mName.equalsIgnoreCase("Rational Unified Development")) ? "selected" : "") + ">Rational Unified Development</option>"
+                + "<option value=\"Scrum\"" + ((mName != null && mName.equalsIgnoreCase("Scrum")) ? "selected" : "") + ">Scrum</option>"
+                + "<option value=\"Spiral\"" + ((mName != null && mName.equalsIgnoreCase("Spiral")) ? "selected" : "") + ">Spiral</option>"
+                + "<option value=\"Systems Development Life Cycle\"" + ((mName != null && mName.equalsIgnoreCase("Systems Development Life Cycle")) ? "selected" : "") + ">Systems Development Life Cycle</option>"
+                + "<option value=\"Waterfall\"" + ((mName != null && mName.equalsIgnoreCase("Waterfall")) ? "selected" : "") + ">Waterfall</option>"
                 + "<option value=\"Other\"" + ((mName != null && mName.equalsIgnoreCase("Other")) ? "selected" : "") + ">Other</option>"
                 + "</select><br />");
         out.println("<label>Description:</label><br />"

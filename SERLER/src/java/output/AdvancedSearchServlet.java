@@ -33,7 +33,7 @@ public class AdvancedSearchServlet extends SearchServlet {
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
      */
-    private String author, journal, year1, year2, level, credibility, methodology, practice, evidenceItem, researchDesign;
+    private String author, journal, year1, year2, level, credibility, methodology, practice, evidenceItem;
     private String mode;
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
@@ -45,7 +45,7 @@ public class AdvancedSearchServlet extends SearchServlet {
         }
         setControlPanel(member.getType());
         setPageTitle("Advanced Search");
-        
+
         mode = request.getParameter("mode");
         title = request.getParameter("title");
         author = request.getParameter("author");
@@ -57,7 +57,7 @@ public class AdvancedSearchServlet extends SearchServlet {
         methodology = request.getParameter("methodology");
         practice = request.getParameter("practice");
         evidenceItem = request.getParameter("evidenceItem");
-        researchDesign = request.getParameter("researchDesign");
+//        researchDesign = request.getParameter("researchDesign");
 
         try (PrintWriter out = response.getWriter()) {
             printBeforeContent(out);
@@ -139,25 +139,52 @@ public class AdvancedSearchServlet extends SearchServlet {
         out.println("<fieldset>");
         out.println("<div style=\"text-align: justify\">");
 
-        out.println("<label>Search Mode:</label> "
+        out.println("<label>Search Mode:</label> &emsp;"
                 + "<input type=\"radio\" name=\"mode\" value=\"and\"/>AND&emsp;"
-                + "<input type=\"radio\" name=\"mode\" value=\"or\" checked />OR<br />");
-        out.println("<label>Title:</label> <input type=\"text\" name=\"title\" value=\"" + ((title == null) ? "" : title) + "\"/><br />");
-        out.println("<label>Author:</label> <input type=\"text\" name=\"author\" value=\"" + ((author == null) ? "" : author) + "\"/><br />");
-        out.println("<label>Journal:</label> <input type=\"text\" name=\"journal\" value=\"" + ((journal == null) ? "" : journal) + "\"/><br />");
-        out.println("<label>Year:</label> Form <input type=\"number\" name=\"year1\" value=\"" + ((year1 == null) ? "" : year1) + "\"/>"
-                + " to <input type=\"number\" name=\"year2\" value=\"" + ((year2 == null) ? "" : year2) + "\"/><br />");
-        out.println("<label>Research Level:</label> <input type=\"text\" name=\"level\" value=\"" + ((level == null) ? "" : level) + "\"/><br />");
-        out.println("<label>Credibility: >= </label> "
+                + "<input type=\"radio\" name=\"mode\" value=\"or\" checked />OR<br /><br />");
+        out.println("<label>Title:</label> &emsp;<input type=\"text\" name=\"title\" value=\"" + ((title == null) ? "" : title) + "\"/><br /><br />");
+        out.println("<label>Author:</label> &emsp;<input type=\"text\" name=\"author\" value=\"" + ((author == null) ? "" : author) + "\"/><br /><br />");
+        out.println("<label>Journal:</label>&emsp; <input type=\"text\" name=\"journal\" value=\"" + ((journal == null) ? "" : journal) + "\"/><br /><br />");
+        out.println("<label>Year:</label>&emsp; Form <input type=\"number\" name=\"year1\" value=\"" + ((year1 == null) ? "" : year1) + "\"/>"
+                + " to <input type=\"number\" name=\"year2\" value=\"" + ((year2 == null) ? "" : year2) + "\"/><br /><br />");
+        out.println("<label>Research Level:</label> &emsp;<input type=\"text\" name=\"level\" value=\"" + ((level == null) ? "" : level) + "\"/><br /><br />");
+        
+        out.println("<label>Credibility: >= </label> &emsp;"
                 + "<input type=\"radio\" name=\"credibility\" value=\"1\" />1&emsp;"
                 + "<input type=\"radio\" name=\"credibility\" value=\"2\" />2&emsp;"
                 + "<input type=\"radio\" name=\"credibility\" value=\"3\" />3&emsp;"
                 + "<input type=\"radio\" name=\"credibility\" value=\"4\" />4&emsp;"
-                + "<input type=\"radio\" name=\"credibility\" value=\"5\" />5<br />");
-        out.println("<label>Methodology:</label> <input type=\"text\" name=\"methodology\" value=\"" + ((methodology == null) ? "" : methodology) + "\"/><br />");
-        out.println("<label>Practice:</label> <input type=\"text\" name=\"practice\" value=\"" + ((practice == null) ? "" : practice) + "\"/><br />");
-        out.println("<label>Evidence Item:</label> <input type=\"text\" name=\"evidenceItem\" value=\"" + ((practice == null) ? "" : practice) + "\"/><br />");
-        out.println("<label>Research Design:</label> <input type=\"text\" name=\"researchDesign\" value=\"" + ((practice == null) ? "" : practice) + "\"/><br />");
+                + "<input type=\"radio\" name=\"credibility\" value=\"5\" />5<br /><br />");
+        
+        out.println("<label>Methodology:</label>&emsp; <select name = \"methodology\">"
+                + "<option value=\"Other\"" + ((methodology != null && methodology.equalsIgnoreCase("Other")) ? "selected" : "") + ">Other</option>"
+                + "<option value=\"Agile Software Development\"" + ((methodology != null && methodology.equalsIgnoreCase("Agile Software Development")) ? "selected" : "") + ">Agile Software Development</option>"
+                + "<option value=\"Crystal Methods\"" + ((methodology != null && methodology.equalsIgnoreCase("Crystal Methods")) ? "selected" : "") + ">Crystal Methods</option>"
+                + "<option value=\"Dynamic Systems Development Model\"" + ((methodology != null && methodology.equalsIgnoreCase("Dynamic Systems Development Model")) ? "selected" : "") + ">Dynamic Systems Development Model</option>"
+                + "<option value=\"Extreme Programming\"" + ((methodology != null && methodology.equalsIgnoreCase("Extreme Programming")) ? "selected" : "") + ">Extreme Programming</option>"
+                + "<option value=\"Feature Driven Development\"" + ((methodology != null && methodology.equalsIgnoreCase("Feature Driven Development")) ? "selected" : "") + ">Feature Driven Development</option>"
+                + "<option value=\"Joint Applocation Development\"" + ((methodology != null && methodology.equalsIgnoreCase("Joint Applocation Development")) ? "selected" : "") + ">Joint Applocation Development</option>"
+                + "<option value=\"Lean Development\"" + ((methodology != null && methodology.equalsIgnoreCase("Lean Development")) ? "selected" : "") + ">Lean Development</option>"
+                + "<option value=\"Rapid Application Development\"" + ((methodology != null && methodology.equalsIgnoreCase("Rapid Application Development")) ? "selected" : "") + ">Rapid Application Development</option>"
+                + "<option value=\"Rational Unified Development\"" + ((methodology != null && methodology.equalsIgnoreCase("Rational Unified Development")) ? "selected" : "") + ">Rational Unified Development</option>"
+                + "<option value=\"Scrum\"" + ((methodology != null && methodology.equalsIgnoreCase("Scrum")) ? "selected" : "") + ">Scrum</option>"
+                + "<option value=\"Spiral\"" + ((methodology != null && methodology.equalsIgnoreCase("Spiral")) ? "selected" : "") + ">Spiral</option>"
+                + "<option value=\"Systems Development Life Cycle\"" + ((methodology != null && methodology.equalsIgnoreCase("Systems Development Life Cycle")) ? "selected" : "") + ">Systems Development Life Cycle</option>"
+                + "<option value=\"Waterfall\"" + ((methodology != null && methodology.equalsIgnoreCase("Waterfall")) ? "selected" : "") + ">Waterfall</option>"
+                + "</select><br /><br />");
+        
+        out.println("<label>Practice:</label>&emsp; <select name = \"practice\">"
+                + "<option value=\"Other\"" + ((practice != null && practice.equalsIgnoreCase("Other")) ? "selected" : "") + ">Other</option>"
+                + "<option value=\"Refactoring\"" + ((practice != null && practice.equalsIgnoreCase("Refactoring")) ? "selected" : "") + ">Refactoring</option>"
+                + "<option value=\"Cloud Computing\"" + ((practice != null && practice.equalsIgnoreCase("Cloud Computing")) ? "selected" : "") + ">Cloud Computing</option>"
+                + "<option value=\"Practice A\"" + ((practice != null && practice.equalsIgnoreCase("Practice A")) ? "selected" : "") + ">Practice A</option>"
+                + "<option value=\"Practice B\"" + ((practice != null && practice.equalsIgnoreCase("Practice B")) ? "selected" : "") + ">Practice B</option>"
+                + "<option value=\"Practice C\"" + ((practice != null && practice.equalsIgnoreCase("Practice C")) ? "selected" : "") + ">Practice C</option>"
+                + "<option value=\"Practice D\"" + ((practice != null && practice.equalsIgnoreCase("Practice D")) ? "selected" : "") + ">Practice D</option>"
+                + "</select><br /><br />");
+        
+        out.println("<label>Evidence Item:</label> &emsp;<input type=\"text\" name=\"evidenceItem\" value=\"" + ((evidenceItem == null) ? "" : evidenceItem) + "\"/><br /><br />");
+//        out.println("<label>Research Design:</label> <input type=\"text\" name=\"researchDesign\" value=\"" + ((researchDesign == null) ? "" : researchDesign) + "\"/><br />");
         out.println("</div><div style=\"text-align: center\"><br />");
         out.println("<input type=\"submit\" value=\"Search\"/>");
         out.println("</div>");
@@ -177,7 +204,7 @@ public class AdvancedSearchServlet extends SearchServlet {
         methodology = methodology.trim().toLowerCase();
         practice = practice.trim().toLowerCase();
         evidenceItem = evidenceItem.trim().toLowerCase();
-        researchDesign = researchDesign.trim().toLowerCase();
+//        researchDesign = researchDesign.trim().toLowerCase();
 
         switch (mode) {
             case "and":
@@ -399,7 +426,7 @@ public class AdvancedSearchServlet extends SearchServlet {
             }
             if (credibility != null && searching) {
                 int rating = Integer.parseInt(credibility);
-                System.out.println("searching rating----"+rating);
+                System.out.println("searching rating----" + rating);
                 if (result.isEmpty()) {
                     stmt = myDB.getConn().prepareStatement("SELECT * FROM AllArticles");
                     System.out.println(stmt);
@@ -514,7 +541,7 @@ public class AdvancedSearchServlet extends SearchServlet {
                     System.out.println(stmt);
                     rs = stmt.executeQuery();
                     while (rs.next()) {
-                        String data = rs.getString("ItemName").toLowerCase();
+                        String data = rs.getString("Itemethodology").toLowerCase();
                         int rID = Integer.parseInt(rs.getString("ArticleID"));
                         if (data.equalsIgnoreCase(evidenceItem)) {
                             result.add(rID);
@@ -532,7 +559,7 @@ public class AdvancedSearchServlet extends SearchServlet {
                         stmt.setString(1, currentID);
                         rs = stmt.executeQuery();
                         if (rs.next()) {
-                            String data = rs.getString("ItemName").toLowerCase();
+                            String data = rs.getString("Itemethodology").toLowerCase();
                             if (data.equalsIgnoreCase(evidenceItem)) {
                                 found = true;
                             }
@@ -546,44 +573,44 @@ public class AdvancedSearchServlet extends SearchServlet {
                     }
                 }
             }
-            if (researchDesign.length() > 0 && searching) {
-                if (result.isEmpty()) {
-                    stmt = myDB.getConn().prepareStatement("SELECT * FROM ResearchDesignTable");
-                    System.out.println(stmt);
-                    rs = stmt.executeQuery();
-                    while (rs.next()) {
-                        String data = rs.getString("R_Name").toLowerCase();
-                        int rID = Integer.parseInt(rs.getString("ArticleID"));
-                        if (data.equalsIgnoreCase(practice)) {
-                            result.add(rID);
-                        }
-                    }
-                } else {
-                    HashSet<Integer> searchingSet = new HashSet<>();
-                    for (Integer i : result) {
-                        searchingSet.add(i);
-                    }
-                    for (Integer i : searchingSet) {
-                        boolean found = false;
-                        String currentID = "" + i;
-                        stmt = myDB.getConn().prepareStatement("SELECT * FROM ResearchDesignTable WHERE ArticleID = ?");
-                        stmt.setString(1, currentID);
-                        rs = stmt.executeQuery();
-                        if (rs.next()) {
-                            String data = rs.getString("R_Name").toLowerCase();
-                            if (data.equalsIgnoreCase(practice)) {
-                                found = true;
-                            }
-                        }
-                        if (!found) {
-                            result.remove(i);
-                        }
-                    }
-                    if (result.isEmpty()) {
-                        searching = false;
-                    }
-                }
-            }
+//            if (researchDesign.length() > 0 && searching) {
+//                if (result.isEmpty()) {
+//                    stmt = myDB.getConn().prepareStatement("SELECT * FROM ResearchDesignTable");
+//                    System.out.println(stmt);
+//                    rs = stmt.executeQuery();
+//                    while (rs.next()) {
+//                        String data = rs.getString("R_Name").toLowerCase();
+//                        int rID = Integer.parseInt(rs.getString("ArticleID"));
+//                        if (data.equalsIgnoreCase(practice)) {
+//                            result.add(rID);
+//                        }
+//                    }
+//                } else {
+//                    HashSet<Integer> searchingSet = new HashSet<>();
+//                    for (Integer i : result) {
+//                        searchingSet.add(i);
+//                    }
+//                    for (Integer i : searchingSet) {
+//                        boolean found = false;
+//                        String currentID = "" + i;
+//                        stmt = myDB.getConn().prepareStatement("SELECT * FROM ResearchDesignTable WHERE ArticleID = ?");
+//                        stmt.setString(1, currentID);
+//                        rs = stmt.executeQuery();
+//                        if (rs.next()) {
+//                            String data = rs.getString("R_Name").toLowerCase();
+//                            if (data.equalsIgnoreCase(practice)) {
+//                                found = true;
+//                            }
+//                        }
+//                        if (!found) {
+//                            result.remove(i);
+//                        }
+//                    }
+//                    if (result.isEmpty()) {
+//                        searching = false;
+//                    }
+//                }
+//            }
         } catch (SQLException ex) {
             System.out.println("Error: \n" + ex);
         }
@@ -624,9 +651,9 @@ public class AdvancedSearchServlet extends SearchServlet {
                     int rID = Integer.parseInt(rs.getString("ArticleID"));
                     for (String word : wordSet) {
                         if (data.contains(word)) {
-                            
+
                             result.add(rID);
-                            System.out.println(result+"===="+ data + "=Contains="+word);
+                            System.out.println(result + "====" + data + "=Contains=" + word);
                         }
                     }
                 }
@@ -727,25 +754,25 @@ public class AdvancedSearchServlet extends SearchServlet {
                 System.out.println(stmt);
                 rs = stmt.executeQuery();
                 while (rs.next()) {
-                    String data = rs.getString("ItemName").toLowerCase();
+                    String data = rs.getString("iName").toLowerCase();
                     int rID = Integer.parseInt(rs.getString("ArticleID"));
                     if (data.equalsIgnoreCase(practice)) {
                         result.add(rID);
                     }
                 }
             }
-            if (researchDesign.length() > 0) {
-                stmt = myDB.getConn().prepareStatement("SELECT * FROM ResearchDesignTable");
-                System.out.println(stmt);
-                rs = stmt.executeQuery();
-                while (rs.next()) {
-                    String data = rs.getString("R_Name").toLowerCase();
-                    int rID = Integer.parseInt(rs.getString("ArticleID"));
-                    if (data.equalsIgnoreCase(practice)) {
-                        result.add(rID);
-                    }
-                }
-            }
+//            if (researchDesign.length() > 0) {
+//                stmt = myDB.getConn().prepareStatement("SELECT * FROM ResearchDesignTable");
+//                System.out.println(stmt);
+//                rs = stmt.executeQuery();
+//                while (rs.next()) {
+//                    String data = rs.getString("R_Name").toLowerCase();
+//                    int rID = Integer.parseInt(rs.getString("ArticleID"));
+//                    if (data.equalsIgnoreCase(practice)) {
+//                        result.add(rID);
+//                    }
+//                }
+//            }
 
         } catch (SQLException ex) {
             System.out.println("Error: \n" + ex);
