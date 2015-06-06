@@ -40,7 +40,7 @@ public class EvidenceItemServlet extends MyServlet {
         HttpSession session = request.getSession();
         member = (Member) session.getAttribute("member");
         if (member == null) {
-            member = new Member("new user", "Non-member");
+            member = new Member("guest", "Non-member");
         }
         setControlPanel(member.getType());
         setPageTitle("Evidence Item");

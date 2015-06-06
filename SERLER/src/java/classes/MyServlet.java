@@ -199,31 +199,36 @@ public class MyServlet extends HttpServlet {
             case "administrator":
                 ctrlPanel = "<a href=\"home_page.html\">Home</a>&emsp;&emsp;&emsp;"
                         + "<a href=\"LogoutServlet\">Log Out</a>&emsp;&emsp;&emsp;"
-                        + "<a href=\"create_staff_account.html\">Create Staff Account</a>&emsp;&emsp;&emsp;"
+                        + "<a href=\"AccountList\">Manage Accounts</a>&emsp;&emsp;&emsp;"
+                        + "<a href=\"AdvancedSearchServlet\">Advanced Search</a>&emsp;&emsp;&emsp;"
                         + "<a href=\"DisplayAll\">All Articles</a>";
                 break;
             case "moderator":
                 ctrlPanel = "<a href=\"home_page.html\">Home</a>&emsp;&emsp;&emsp;"
                         + "<a href=\"LogoutServlet\">Log Out</a>&emsp;&emsp;&emsp;"
-                        + "<a href=\"ModerateList\">Articles for moderate</a>&emsp;&emsp;&emsp;"
+                        + "<a href=\"JobList\">Articles for moderate</a>&emsp;&emsp;&emsp;"
+                        + "<a href=\"AdvancedSearchServlet\">Advanced Search</a>&emsp;&emsp;&emsp;"
                         + "<a href=\"DisplayAll\">All Articles</a>";
                 break;
             case "analyst":
                 ctrlPanel = "<a href=\"home_page.html\">Home</a>&emsp;&emsp;&emsp;"
                         + "<a href=\"LogoutServlet\">Log Out</a>&emsp;&emsp;&emsp;"
-                        + "<a href=\"AnalyseList\">Articles for Analyse</a>&emsp;&emsp;&emsp;"
+                        + "<a href=\"JobList\">Articles for Analyse</a>&emsp;&emsp;&emsp;"
+                        + "<a href=\"AdvancedSearchServlet\">Advanced Search</a>&emsp;&emsp;&emsp;"
                         + "<a href=\"DisplayAll\">All Articles</a>";
                 break;
             case "contributor":
                 ctrlPanel = "<a href=\"home_page.html\">Home</a>&emsp;&emsp;&emsp;"
                         + "<a href=\"LogoutServlet\">Log Out</a>&emsp;&emsp;&emsp;"
                         + "<a href=\"UploadServlet\">Upload Article</a>&emsp;&emsp;&emsp;"
+                        + "<a href=\"AdvancedSearchServlet\">Advanced Search</a>&emsp;&emsp;&emsp;"
                         + "<a href=\"DisplayAll\">All Articles</a>";
                 break;
             default:
                 ctrlPanel = "<a href=\"home_page.html\">Home</a>&emsp;&emsp;&emsp;"
                         + "<a href=\"login.html\">Login</a>&emsp;&emsp;&emsp;"
                         + "<a href=\"sign_up.html\">Create Account</a>&emsp;&emsp;&emsp;"
+                        + "<a href=\"SearchServlet\">Search</a>&emsp;&emsp;&emsp;"
                         + "<a href=\"DisplayAll\">Articles</a>";
 
         }

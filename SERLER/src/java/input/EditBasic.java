@@ -5,6 +5,7 @@
  */
 package input;
 
+import classes.Member;
 import classes.MyServlet;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -13,6 +14,7 @@ import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 /**
  *
@@ -33,6 +35,14 @@ public class EditBasic extends MyServlet {
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        HttpSession session = request.getSession();
+        member = (Member) session.getAttribute("member");
+        if (member == null) {
+            member = new Member("guest", "Non-member");
+        }
+        setControlPanel(member.getType());
+        setPageTitle("Bibliographic Info");
+        
         id = request.getParameter("id");
         title = request.getParameter("title");
         authors = request.getParameter("authors");

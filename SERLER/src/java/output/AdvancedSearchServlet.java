@@ -5,6 +5,7 @@
  */
 package output;
 
+import classes.Member;
 import classes.MyDatabase;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -15,6 +16,7 @@ import java.util.StringTokenizer;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 /**
  *
@@ -36,6 +38,14 @@ public class AdvancedSearchServlet extends SearchServlet {
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        HttpSession session = request.getSession();
+        member = (Member) session.getAttribute("member");
+        if (member == null) {
+            member = new Member("guest", "Non-member");
+        }
+        setControlPanel(member.getType());
+        setPageTitle("Advanced Search");
+        
         mode = request.getParameter("mode");
         title = request.getParameter("title");
         author = request.getParameter("author");
@@ -207,7 +217,7 @@ public class AdvancedSearchServlet extends SearchServlet {
             }
             if (author.length() > 0 && searching) {
                 if (result.isEmpty()) {
-                    stmt = myDB.getConn().prepareStatement("SELECT * FROM AuthorTable");
+                    stmt = myDB.getConn().prepareStatement("SELECT * FROM AllArticles");
                     System.out.println(stmt);
                     rs = stmt.executeQuery();
                     StringTokenizer st = new StringTokenizer(author, " ");
@@ -215,7 +225,7 @@ public class AdvancedSearchServlet extends SearchServlet {
                         wordSet.add(st.nextToken().toLowerCase());
                     }
                     while (rs.next()) {
-                        String data = rs.getString("AName").toLowerCase();
+                        String data = rs.getString("Authors").toLowerCase();
                         int rID = Integer.parseInt(rs.getString("ArticleID"));
                         for (String word : wordSet) {
                             if (data.contains(word)) {
@@ -232,7 +242,7 @@ public class AdvancedSearchServlet extends SearchServlet {
                     for (Integer i : searchingSet) {
                         boolean found = false;
                         String currentID = "" + i;
-                        stmt = myDB.getConn().prepareStatement("SELECT * FROM AuthorTable WHERE ArticleID = ?");
+                        stmt = myDB.getConn().prepareStatement("SELECT * FROM AllArticles WHERE ArticleID = ?");
                         stmt.setString(1, currentID);
                         rs = stmt.executeQuery();
                         StringTokenizer st = new StringTokenizer(author, " ");
@@ -240,7 +250,7 @@ public class AdvancedSearchServlet extends SearchServlet {
                             wordSet.add(st.nextToken().toLowerCase());
                         }
                         while (rs.next()) {
-                            String data = rs.getString("AName").toLowerCase();
+                            String data = rs.getString("Authors").toLowerCase();
                             for (String word : wordSet) {
                                 if (data.contains(word)) {
                                     found = true;
@@ -258,7 +268,7 @@ public class AdvancedSearchServlet extends SearchServlet {
             }
             if (journal.length() > 0 && searching) {
                 if (result.isEmpty()) {
-                    stmt = myDB.getConn().prepareStatement("SELECT * FROM PorcessedDetails");
+                    stmt = myDB.getConn().prepareStatement("SELECT * FROM AllArticles");
                     System.out.println(stmt);
                     rs = stmt.executeQuery();
                     while (rs.next()) {
@@ -276,7 +286,7 @@ public class AdvancedSearchServlet extends SearchServlet {
                     for (Integer i : searchingSet) {
                         boolean found = false;
                         String currentID = "" + i;
-                        stmt = myDB.getConn().prepareStatement("SELECT * FROM PorcessedDetails WHERE ArticleID = ?");
+                        stmt = myDB.getConn().prepareStatement("SELECT * FROM AllArticles WHERE ArticleID = ?");
                         stmt.setString(1, currentID);
                         rs = stmt.executeQuery();
                         if (rs.next()) {
@@ -310,7 +320,7 @@ public class AdvancedSearchServlet extends SearchServlet {
 
                 if (yearBegin > 0 && yearBegin <= yearEnd) {
                     if (result.isEmpty()) {
-                        stmt = myDB.getConn().prepareStatement("SELECT * FROM PorcessedDetails");
+                        stmt = myDB.getConn().prepareStatement("SELECT * FROM AllArticles");
                         System.out.println(stmt);
                         System.out.println("from " + yearBegin + " to " + yearEnd);
                         rs = stmt.executeQuery();
@@ -329,7 +339,7 @@ public class AdvancedSearchServlet extends SearchServlet {
                         for (Integer i : searchingSet) {
                             boolean found = false;
                             String currentID = "" + i;
-                            stmt = myDB.getConn().prepareStatement("SELECT * FROM PorcessedDetails WHERE ArticleID = ?");
+                            stmt = myDB.getConn().prepareStatement("SELECT * FROM AllArticles WHERE ArticleID = ?");
                             stmt.setString(1, currentID);
                             rs = stmt.executeQuery();
                             if (rs.next()) {
@@ -350,7 +360,7 @@ public class AdvancedSearchServlet extends SearchServlet {
             }
             if (level.length() > 0 && searching) {
                 if (result.isEmpty()) {
-                    stmt = myDB.getConn().prepareStatement("SELECT * FROM PorcessedDetails");
+                    stmt = myDB.getConn().prepareStatement("SELECT * FROM AllArticles");
                     System.out.println(stmt);
                     rs = stmt.executeQuery();
                     while (rs.next()) {
@@ -368,7 +378,7 @@ public class AdvancedSearchServlet extends SearchServlet {
                     for (Integer i : searchingSet) {
                         boolean found = false;
                         String currentID = "" + i;
-                        stmt = myDB.getConn().prepareStatement("SELECT * FROM PorcessedDetails WHERE ArticleID = ?");
+                        stmt = myDB.getConn().prepareStatement("SELECT * FROM AllArticles WHERE ArticleID = ?");
                         stmt.setString(1, currentID);
                         rs = stmt.executeQuery();
                         if (rs.next()) {
@@ -602,7 +612,7 @@ public class AdvancedSearchServlet extends SearchServlet {
                 }
             }
             if (author.length() > 0) {
-                stmt = myDB.getConn().prepareStatement("SELECT * FROM AuthorTable");
+                stmt = myDB.getConn().prepareStatement("SELECT * FROM AllArticles");
                 System.out.println(stmt);
                 rs = stmt.executeQuery();
                 StringTokenizer st = new StringTokenizer(author, " ");
@@ -610,17 +620,19 @@ public class AdvancedSearchServlet extends SearchServlet {
                     wordSet.add(st.nextToken().toLowerCase());
                 }
                 while (rs.next()) {
-                    String data = rs.getString("AName").toLowerCase();
+                    String data = rs.getString("Authors").toLowerCase();
                     int rID = Integer.parseInt(rs.getString("ArticleID"));
                     for (String word : wordSet) {
                         if (data.contains(word)) {
+                            
                             result.add(rID);
+                            System.out.println(result+"===="+ data + "=Contains="+word);
                         }
                     }
                 }
             }
             if (journal.length() > 0) {
-                stmt = myDB.getConn().prepareStatement("SELECT * FROM PorcessedDetails");
+                stmt = myDB.getConn().prepareStatement("SELECT * FROM AllArticles");
                 System.out.println(stmt);
                 rs = stmt.executeQuery();
                 while (rs.next()) {
@@ -648,7 +660,7 @@ public class AdvancedSearchServlet extends SearchServlet {
                 }
 
                 if (yearBegin > 0 && yearBegin <= yearEnd) {
-                    stmt = myDB.getConn().prepareStatement("SELECT * FROM PorcessedDetails");
+                    stmt = myDB.getConn().prepareStatement("SELECT * FROM AllArticles");
                     System.out.println(stmt);
                     System.out.println("from " + yearBegin + " to " + yearEnd);
                     rs = stmt.executeQuery();
@@ -662,7 +674,7 @@ public class AdvancedSearchServlet extends SearchServlet {
                 }
             }
             if (level.length() > 0) {
-                stmt = myDB.getConn().prepareStatement("SELECT * FROM PorcessedDetails");
+                stmt = myDB.getConn().prepareStatement("SELECT * FROM AllArticles");
                 System.out.println(stmt);
                 rs = stmt.executeQuery();
                 while (rs.next()) {

@@ -40,6 +40,7 @@ public class LoginServlet extends MyServlet {
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        setPageTitle("Log in");
 
         name = request.getParameter("name");
         String password = request.getParameter("password");

@@ -38,16 +38,17 @@ public class ShowArticleDetail extends MyServlet {
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        id = request.getParameter("id");
-        System.out.println("id = " + id);
-//        title = request.getParameter("title");
         HttpSession session = request.getSession();
         member = (Member) session.getAttribute("member");
         if (member == null) {
-            member = new Member("new user", "Non-member");
+            member = new Member("guest", "Non-member");
         }
         setControlPanel(member.getType());
         setPageTitle("Article Details");
+
+        id = request.getParameter("id");
+        System.out.println("id = " + id);
+//        title = request.getParameter("title");
 
         try (PrintWriter out = response.getWriter()) {
             /* TODO output your page here. You may use following sample code. */
@@ -141,8 +142,8 @@ public class ShowArticleDetail extends MyServlet {
 
             if (status.equalsIgnoreCase("rejected")) {
 //                if(reason)
-                out.println("<br />------This article is rejected by:&emsp;"+moderatedBy);
-                out.println("<br />------Reason of rejection:&emsp;"+reason);
+                out.println("<br />------This article is rejected by:&emsp;" + moderatedBy);
+                out.println("<br />------Reason of rejection:&emsp;" + reason);
             }
             if (member.getType().equalsIgnoreCase("administrator") || member.getType().equalsIgnoreCase("analyst")) {
                 out.println("<a href=\"EditBasic?"
@@ -189,7 +190,11 @@ public class ShowArticleDetail extends MyServlet {
             out.println("</table>");
 
             if (!member.getType().equalsIgnoreCase("Non-member")) {
-                out.println("<br/><a href=\"CredibilityRating?id=" + id + "&title=" + title + "\">------Rate this article</a><br/>");
+                if (member.getType().equalsIgnoreCase("administrator") || member.getType().equalsIgnoreCase("analyst")) {
+                    out.println("<br/><a href=\"CredibilityRating?id=" + id + "&title=" + title + "\">------Rate this article</a><br/>");
+                } else if (status.equalsIgnoreCase("released")) {
+                    out.println("<br/><a href=\"CredibilityRating?id=" + id + "&title=" + title + "\">------Rate this article</a><br/>");
+                }
             }
         } catch (SQLException ex) {
             System.out.println("ERROR: " + ex);

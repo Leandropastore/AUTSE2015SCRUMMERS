@@ -35,10 +35,6 @@ public class MethodologyServlet extends MyServlet {
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        id = request.getParameter("id");
-        title = request.getParameter("title");
-        mName = request.getParameter("mName");
-        mDescription = request.getParameter("mDescription");
         HttpSession session = request.getSession();
         member = (Member) session.getAttribute("member");
         if (member == null) {
@@ -46,6 +42,12 @@ public class MethodologyServlet extends MyServlet {
         }
         setControlPanel(member.getType());
         setPageTitle("Methodology");
+        
+        id = request.getParameter("id");
+        title = request.getParameter("title");
+        mName = request.getParameter("mName");
+        mDescription = request.getParameter("mDescription");
+        
         try (PrintWriter out = response.getWriter()) {
             if (request.getParameter("update") == null
                     ||mName == null || mName.trim().length() == 0

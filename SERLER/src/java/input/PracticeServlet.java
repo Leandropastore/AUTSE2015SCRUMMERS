@@ -35,17 +35,18 @@ public class PracticeServlet extends MyServlet {
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        HttpSession session = request.getSession();
+        member = (Member) session.getAttribute("member");
+        if (member == null) {
+            member = new Member("guest", "Non-member");
+        }
+        setControlPanel(member.getType());
+        setPageTitle("Practice");
+        
         id = request.getParameter("id");
         title = request.getParameter("title");
         pName = request.getParameter("pName");
         pDescription = request.getParameter("pDescription");
-        HttpSession session = request.getSession();
-        member = (Member) session.getAttribute("member");
-        if (member == null) {
-            member = new Member("new user", "Non-member");
-        }
-        setControlPanel(member.getType());
-        setPageTitle("Methodology");
         try (PrintWriter out = response.getWriter()) {
             if (request.getParameter("update") == null
                     ||pName == null || pName.trim().length() == 0

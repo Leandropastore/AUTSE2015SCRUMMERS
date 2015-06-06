@@ -37,6 +37,14 @@ public class ModerationServlet extends MyServlet {
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        HttpSession session = request.getSession();
+        member = (Member) session.getAttribute("member");
+        if (member == null) {
+            member = new Member("guest", "Non-member");
+        }
+        setControlPanel(member.getType());
+        setPageTitle("Moderation");
+        
         
         id = request.getParameter("id");
         status = request.getParameter("status");
@@ -44,14 +52,6 @@ public class ModerationServlet extends MyServlet {
         result = request.getParameter("result");
         reason = request.getParameter("reason");
 
-        HttpSession session = request.getSession();
-        member = (Member) session.getAttribute("member");
-        if (member == null) {
-            member = new Member("new user", "Non-member");
-        }
-        setControlPanel(member.getType());
-        setPageTitle("Moderation");
-        
         try (PrintWriter out = response.getWriter()) {
             printBeforeContent(out);
             switch (status) {

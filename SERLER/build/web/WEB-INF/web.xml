@@ -37,10 +37,6 @@
         <servlet-class>input.EditBasic</servlet-class>
     </servlet>
     <servlet>
-        <servlet-name>AdvancedSearchServlet</servlet-name>
-        <servlet-class>output.AdvancedSearchServlet</servlet-class>
-    </servlet>
-    <servlet>
         <servlet-name>CredibilityRating</servlet-name>
         <servlet-class>input.CredibilityRating</servlet-class>
     </servlet>
@@ -63,6 +59,10 @@
     <servlet>
         <servlet-name>ResearchServlet</servlet-name>
         <servlet-class>input.ResearchServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>JobList</servlet-name>
+        <servlet-class>output.JobList</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>UploadServlet</servlet-name>
@@ -101,10 +101,6 @@
         <url-pattern>/EditBasic</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
-        <servlet-name>AdvancedSearchServlet</servlet-name>
-        <url-pattern>/AdvancedSearchServlet</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
         <servlet-name>CredibilityRating</servlet-name>
         <url-pattern>/CredibilityRating</url-pattern>
     </servlet-mapping>
@@ -127,6 +123,10 @@
     <servlet-mapping>
         <servlet-name>ResearchServlet</servlet-name>
         <url-pattern>/ResearchServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>JobList</servlet-name>
+        <url-pattern>/JobList</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

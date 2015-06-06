@@ -42,24 +42,24 @@ public class UploadServlet extends MyServlet {
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+
+        HttpSession session = request.getSession();
+        member = (Member) session.getAttribute("member");
+        if (member == null) {
+            member = new Member("guest", "Non-member");
+        }
+        setControlPanel(member.getType());
+        setPageTitle("Upload Article");
+        
+
         title = request.getParameter("title");
         authors = request.getParameter("authors");
         journal = request.getParameter("journal");
         year = request.getParameter("year");
         researchLv = request.getParameter("researchLv");
-        rater = request.getParameter("name");
+        rater = member.getName();
         rating = request.getParameter("credibility");
         reason = request.getParameter("reason");
-        
-        HttpSession session = request.getSession();
-        member = (Member) session.getAttribute("member");
-        if (member != null) {
-            rater = member.getName();
-        }else{
-            System.out.println("NO MEMBER!!!!!!!!!!!!!");
-        }
-
-        myDB = new MyDatabase();
 
         if (title == null || rating == null
                 || title.trim().length() == 0

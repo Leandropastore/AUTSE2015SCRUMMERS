@@ -5,6 +5,7 @@
  */
 package output;
 
+import classes.Member;
 import classes.MyDatabase;
 import classes.MyServlet;
 import java.io.IOException;
@@ -17,6 +18,7 @@ import java.util.StringTokenizer;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 /**
  *
@@ -37,6 +39,14 @@ public class SearchServlet extends MyServlet {
     protected DecimalFormat df = new DecimalFormat("####0.0");
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        HttpSession session = request.getSession();
+        member = (Member) session.getAttribute("member");
+        if (member == null) {
+            member = new Member("guest", "Non-member");
+        }
+        setControlPanel(member.getType());
+        setPageTitle("Search");
+        
         String keywords = request.getParameter("keywords");
         String field = request.getParameter("field");
         String test = request.getParameter("test");
@@ -118,7 +128,6 @@ public class SearchServlet extends MyServlet {
 
     private void doSearch(PrintWriter out, String keywords, String field) {
         result = new HashSet<>();
-        myDB = new MyDatabase();
         String column = "";
         HashSet<String> wordSet = new HashSet<>();
         StringTokenizer st = new StringTokenizer(keywords, " ");
@@ -133,8 +142,8 @@ public class SearchServlet extends MyServlet {
                     column = "Title";
                     break;
                 case "author":
-                    stmt = myDB.getConn().prepareStatement("SELECT * FROM AuthorTable");
-                    column = "AName";
+                    stmt = myDB.getConn().prepareStatement("SELECT * FROM AllArticles");
+                    column = "Authors";
                     break;
                 case "methodology":
                     stmt = myDB.getConn().prepareStatement("SELECT * FROM MethodologyTable");
@@ -178,7 +187,7 @@ public class SearchServlet extends MyServlet {
                 String rRating = "";
 
                 for (Integer i : result) {
-                    stmt = myDB.getConn().prepareStatement("SELECT * FROM porcesseddetails WHERE ArticleId = ?");
+                    stmt = myDB.getConn().prepareStatement("SELECT * FROM AllArticles WHERE ArticleId = ?");
                     stmt.setString(1, i.toString());
                     ResultSet rs = stmt.executeQuery();
                     if (rs.next()) {
@@ -186,8 +195,8 @@ public class SearchServlet extends MyServlet {
                         rJournal = rs.getString("Journal");
                         rYear = rs.getString("YearOfPublish");
                         String id0 = rs.getString("ArticleId");
-                        rTitle = getTitle(id0);
-                        rAuthors = getAuthors(id0);
+                        rTitle = rs.getString("Title");
+                        rAuthors = rs.getString("Authors");
                         rRating = df.format(getRating(id0));
                         out.println("<tr><th>&emsp;" + "<a href=\"ShowArticleDetail?id=" + id0 + "\">" + id0 + "</a>"
                                 + "&emsp;</th><th>&emsp;<a href=\"ShowArticleDetail?id=" + id0 + "\">" + rTitle + "</a>"
@@ -210,22 +219,6 @@ public class SearchServlet extends MyServlet {
         }
     }
 
-    protected String getAuthors(String id) {
-        String authorsList = "";
-        try {
-            stmt = myDB.getConn().prepareStatement("SELECT * FROM AuthorTable WHERE ArticleID = ?");
-            stmt.setString(1, id);
-            System.out.println(stmt);
-            ResultSet result = stmt.executeQuery();
-            while (result.next()) {
-                authorsList += result.getString("AName") + ", ";
-            }
-
-        } catch (SQLException ex) {
-            System.out.println(ex);
-        }
-        return authorsList;
-    }
 
     protected double getRating(String id) {
 
@@ -249,20 +242,5 @@ public class SearchServlet extends MyServlet {
         return (sum / count);
     }
 
-    protected String getTitle(String id) {
-        String s = "unknow";
-        try {
-            stmt = myDB.getConn().prepareStatement("SELECT * FROM AllArticles WHERE ArticleID = ?");
-            stmt.setString(1, id);
-            ResultSet result = stmt.executeQuery();
-            if (result.next()) {
-                s = result.getString("Title");
-            }
-
-        } catch (SQLException ex) {
-            System.out.println(ex);
-        }
-        return s;
-    }
 
 }

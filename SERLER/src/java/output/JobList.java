@@ -3,13 +3,13 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package input;
+package output;
 
 import classes.Member;
-import classes.MyDatabase;
 import classes.MyServlet;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -21,7 +21,7 @@ import javax.servlet.http.HttpSession;
  *
  * @author Andy Li
  */
-public class CredibilityRating extends MyServlet {
+public class JobList extends MyServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -32,8 +32,6 @@ public class CredibilityRating extends MyServlet {
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
      */
-    private String rater, rating, reason;
-
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         HttpSession session = request.getSession();
@@ -41,29 +39,25 @@ public class CredibilityRating extends MyServlet {
         if (member == null) {
             member = new Member("guest", "Non-member");
         }
-        setControlPanel(member.getType());
-        setPageTitle("Credibility Rating");
-
-        id = request.getParameter("id");
-        title = request.getParameter("title");
-//        rater = request.getParameter("rater");
-        rating = request.getParameter("rating");
-        reason = request.getParameter("reason");
-
-        if ( reason == null || reason.trim().length() == 0
-                || rating == null) {
-            try (PrintWriter out = response.getWriter()) {
-                /* TODO output your page here. You may use following sample code. */
-                printBeforeContent(out);
-                out.println("Giving the Credibility Rating to:<br/>&emsp;" + title);
-                printForm(out);
-                printAfterContent(out);
+        if (member.getType().equalsIgnoreCase("moderator") || member.getType().equalsIgnoreCase("analyst")) {
+            setControlPanel(member.getType());
+            if (member.getType().equalsIgnoreCase("moderator")) {
+                setPageTitle("Articles for Moderate");
+            } else if (member.getType().equalsIgnoreCase("analyst")) {
+                setPageTitle("Articles for Analyse");
             }
+            try (PrintWriter out = response.getWriter()) {
+                printBeforeContent(out);
+
+                printList(out);
+
+                printAfterContent(out);
+
+            }
+
         } else {
-            addRating();
-            request.setAttribute("id", id);
             RequestDispatcher dispatcher = getServletContext().
-                    getRequestDispatcher("/ShowArticleDetail");
+                    getRequestDispatcher("/DisplayAll");
             dispatcher.forward(request, response);
         }
     }
@@ -107,47 +101,46 @@ public class CredibilityRating extends MyServlet {
         return "Short description";
     }// </editor-fold>
 
-    private void printForm(PrintWriter out) {
-//        System.out.println(rater);
-//        System.out.println(rating);
-//        System.out.println(reason);
-        out.println("<form ACTION=\"CredibilityRating\" id =\"form1\">");
-        out.println("<fieldset>");
-        out.println("<div style=\"text-align: justify\">");
-        out.println("<input type=\"hidden\" name=\"id\" value=\"" + id + "\"/>");
-        out.println("<input type=\"hidden\" name=\"title\" value=\"" + title + "\"/>");
-
-        out.println("<label>Your Rating: </label> &emsp;"
-                + "<input type=\"radio\" name=\"rating\" value=\"1\" checked/>1&emsp;"
-                + "<input type=\"radio\" name=\"rating\" value=\"2\" />2&emsp;"
-                + "<input type=\"radio\" name=\"rating\" value=\"3\" />3&emsp;"
-                + "<input type=\"radio\" name=\"rating\" value=\"4\" />4&emsp;"
-                + "<input type=\"radio\" name=\"rating\" value=\"5\" />5"
-                + "<br /><br />");
-        out.println("<label>Your Reason:</label> <br />");
-        out.println("<textarea rows=\"3\" cols=\"40\" name=\"reason\" form=\"form1\"></textarea>" + ((reason == null) ? "" : reason) + "<br />");
-        out.println("</div><div style=\"text-align: center\"><br />");
-        out.println("<input type=\"submit\" value=\"Rate\"/>");
-        out.println("</div>");
-        out.println("</fieldset>");
-        out.println("</form>");
-
-        out.println("<br /><a href=\"ShowArticleDetail?id=" + id + "\">Cancel</a><br />");
-    }
-
-    private void addRating() {
-        myDB = new MyDatabase();
+    private void printList(PrintWriter out) {
         try {
-            stmt = myDB.getConn().prepareStatement("");
-            stmt = myDB.getConn().prepareStatement("INSERT INTO CredibilityTable VALUES (?, ?, ?, ?)");
-            stmt.setString(1, id);
-            stmt.setString(2, member.getName());
-            stmt.setString(3, rating);
-            stmt.setString(4, reason);
+
+            boolean isEmpty = true;
+            out.println("<style>table, th, td {border: 1px solid black;}</style>");
+            out.println("<table>");
+            out.println("<tr><th>&emsp;ID</th><th>&emsp;Title</th><th>&emsp;Arthors</th><th>&emsp;Year of Publish</th><th>&emsp;Journal</th></tr>");
+            String rTitle = "";
+            String rAuthors = "";
+            String rYear = "";
+            String rJournal = "";
+
+            stmt = myDB.getConn().prepareStatement("SELECT * FROM AllArticles");
             System.out.println(stmt);
-            stmt.executeUpdate();
+            ResultSet rs = stmt.executeQuery();
+            while (rs.next()) {
+                if ((member.getType().equalsIgnoreCase("moderator") && rs.getString("Status").equalsIgnoreCase("new"))
+                        || (member.getType().equalsIgnoreCase("analyst") && rs.getString("Status").equalsIgnoreCase("accepted"))) {
+                    isEmpty = false;
+                    rJournal = rs.getString("Journal");
+                    rYear = rs.getString("YearOfPublish");
+                    String id0 = rs.getString("ArticleId");
+                    rTitle = rs.getString("Title");
+                    rAuthors = rs.getString("Authors");
+                    out.println("<tr><th>&emsp;" + "<a href=\"ShowArticleDetail?id=" + id0 + "\">" + id0 + "</a>"
+                            + "&emsp;</th><th>&emsp;<a href=\"ShowArticleDetail?id=" + id0 + "\">" + rTitle + "</a>"
+                            + "&emsp;</th><th>&emsp;" + rAuthors
+                            + "&emsp;</th><th>&emsp;" + rYear
+                            + "&emsp;</th><th>&emsp;" + rJournal
+                            + "&emsp;</th></tr>");
+                }
+            }
+            out.println("</table>");
+            if(isEmpty){
+                    out.println("<br/><H3>There is No article for you to work on.</H3><BR/>");
+            }
+
         } catch (SQLException ex) {
-            System.err.println(ex.getMessage());
+            System.out.println("Error: \n" + ex);
+
         }
     }
 
