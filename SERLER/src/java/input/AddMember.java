@@ -172,7 +172,12 @@ public class AddMember extends MyServlet {
         out.println("</fieldset>");
         out.println("</form>");
 
-        out.println("<br /><a href=\"MemberList\">Cancel</a><br />");
+        if (member.getType().equalsIgnoreCase("administrator")) {
+            out.println("<br /><a href=\"MemberList\">Cancel</a><br />");
+        } else {
+
+            out.println("<br /><a href=\"HomeServlet\">Cancel</a><br />");
+        }
     }
 
     private boolean checkName() {

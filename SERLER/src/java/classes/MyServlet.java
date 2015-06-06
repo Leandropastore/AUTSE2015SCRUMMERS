@@ -35,7 +35,7 @@ public class MyServlet extends HttpServlet {
     protected String pageTitle = "Amazing Articles";
     protected String ctrlPanel = "<a href=\"HomeServlet\">Home</a>&emsp;&emsp;&emsp;"
             + "<a href=\"LoginServlet\">Login</a>&emsp;&emsp;&emsp;"
-            + "<a href=\"sign_up.html\">Create Account</a>&emsp;&emsp;&emsp;"
+            + "<a href=\"AddMember\">Create Account</a>&emsp;&emsp;&emsp;"
             + "<a href=\"SearchServlet\">Search</a>&emsp;&emsp;&emsp;"
             + "<a href=\"DisplayAll\">Articles</a>";
 
