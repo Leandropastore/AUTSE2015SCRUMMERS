@@ -167,9 +167,13 @@ public class UploadServlet extends MyServlet {
         out.println("<input type=\"radio\" name=\"credibility\" value=\"4\" />4&emsp;");
         out.println("<input type=\"radio\" name=\"credibility\" value=\"5\" />5<br /><br />");
         out.println("<label>Your Reason: </label><input type=\"text\" name=\"reason\" value=\"\"/><br /><br /><br />");
+        
         out.println("</div><div style=\"text-align: center\"><br />");
         out.println("<input type=\"submit\" name=\"btnSend\" value=\"Add Article\"/>");
         out.println("</div></fieldset></form></div>");
+        
+        
+        out.println("<br /><a href=\"HomeServlet\">Cancel</a><br />");
 
     }
 

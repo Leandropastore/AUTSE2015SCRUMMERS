@@ -5,10 +5,11 @@
  */
 package output;
 
+import classes.Member;
+import classes.MyServlet;
 import java.io.IOException;
-import javax.servlet.RequestDispatcher;
+import java.io.PrintWriter;
 import javax.servlet.ServletException;
-import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -17,7 +18,7 @@ import javax.servlet.http.HttpSession;
  *
  * @author Andy Li
  */
-public class LogoutServlet extends HttpServlet {
+public class HomeServlet extends MyServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -30,15 +31,31 @@ public class LogoutServlet extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        HttpSession session = request.getSession();
-        session.removeAttribute("member");
 
-        RequestDispatcher dispatcher = getServletContext().
-                getRequestDispatcher("/HomeServlet");
-        dispatcher.forward(request, response);
+        HttpSession session = request.getSession();
+        member = (Member) session.getAttribute("member");
+        if (member == null) {
+            member = new Member("guest", "Non-member");
+        }
+        setControlPanel(member.getType());
+        setPageTitle("Home");
+
+        try (PrintWriter out = response.getWriter()) {
+            printBeforeContent(out);
+            if(member.getName().equalsIgnoreCase("guest")){
+            out.println("<H3>Hello Guest,</H3>");
+            }else{
+                out.println("<H3>Welcome Back, " + member.getName()+"</H3>");
+            }
+            printContent(out);
+
+            printAfterContent(out);
+
+        }
+
     }
 
-    // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
+// <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
      * Handles the HTTP <code>GET</code> method.
      *
@@ -76,5 +93,17 @@ public class LogoutServlet extends HttpServlet {
     public String getServletInfo() {
         return "Short description";
     }// </editor-fold>
+
+    private void printContent(PrintWriter out) {
+        out.println("<br /><br /><br /><br /><br />");
+        out.println("Welcome to Amazing Articles! "
+                + "If you are looking for articles about development methods, you have come to the right place! "
+                + "Here you can find a very friendly community that you can share information with."
+                + "<br />In case you want to get even more involved with this amazing community, you can create an account and become a contributor. "
+                + "<br /><br /> Join us! It's free!"
+                + "");
+
+        out.println("<br /><br /><br /><br /><br />");
+    }
 
 }

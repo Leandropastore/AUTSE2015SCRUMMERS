@@ -9,6 +9,10 @@
         <servlet-class>output.DisplayAll</servlet-class>
     </servlet>
     <servlet>
+        <servlet-name>AdvancedSearchServlet</servlet-name>
+        <servlet-class>output.AdvancedSearchServlet</servlet-class>
+    </servlet>
+    <servlet>
         <servlet-name>ShowArticleDetail</servlet-name>
         <servlet-class>output.ShowArticleDetail</servlet-class>
     </servlet>
@@ -64,6 +68,18 @@
         <servlet-name>JobList</servlet-name>
         <servlet-class>output.JobList</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>MemberList</servlet-name>
+        <servlet-class>output.MemberList</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>EditMember</servlet-name>
+        <servlet-class>input.EditMember</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>HomeServlet</servlet-name>
+        <servlet-class>output.HomeServlet</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>UploadServlet</servlet-name>
         <url-pattern>/UploadServlet</url-pattern>
@@ -71,6 +87,10 @@
     <servlet-mapping>
         <servlet-name>DisplayAll</servlet-name>
         <url-pattern>/DisplayAll</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>AdvancedSearchServlet</servlet-name>
+        <url-pattern>/AdvancedSearchServlet</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>ShowArticleDetail</servlet-name>
@@ -128,12 +148,24 @@
         <servlet-name>JobList</servlet-name>
         <url-pattern>/JobList</url-pattern>
     </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>MemberList</servlet-name>
+        <url-pattern>/MemberList</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>EditMember</servlet-name>
+        <url-pattern>/EditMember</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>HomeServlet</servlet-name>
+        <url-pattern>/HomeServlet</url-pattern>
+    </servlet-mapping>
     <session-config>
         <session-timeout>
             30
         </session-timeout>
     </session-config>
     <welcome-file-list>
-        <welcome-file>home_page.html</welcome-file>
+        <welcome-file>HomeServlet</welcome-file>
     </welcome-file-list>
 </web-app>

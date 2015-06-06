@@ -34,54 +34,57 @@ public class LoginServlet extends MyServlet {
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
      */
-    private PreparedStatement stmt;
-    private MyDatabase myDB;
-    private String name, type;
+    private String name, password, type;
+    private boolean customerFound, correctPassword;
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         setPageTitle("Log in");
 
         name = request.getParameter("name");
-        String password = request.getParameter("password");
-        MyDatabase myDB = new MyDatabase();
+        password = request.getParameter("password");
 
-        boolean customerFound;
-        boolean correctPassword = false;
-        try {
-            synchronized (this) // synchronize access to stmt
-            {
-                stmt = myDB.getConn().prepareStatement("SELECT * FROM ACCOUNTS WHERE accountName = ?");
-                stmt.setString(1, name);
-                System.out.println(stmt);
-                ResultSet rs = stmt.executeQuery();
-                customerFound = rs.next();//true if there is a record
-                if (customerFound) {
-                    correctPassword = (password.equals(rs.getString("password")));
-                    type = rs.getString("accountType");
-                }
+        checkLogin();
+
+        if (name == null || password == null) {
+            try (PrintWriter out = response.getWriter()) {
+                printBeforeContent(out);
+                printForm(out);
+                printAfterContent(out);
             }
-        } catch (SQLException e) {
-            System.err.println("SQL Exception during query: " + e);
-            customerFound = false;
-        }
-        response.setContentType("text/html;charset=UTF-8");
-        try (PrintWriter out = response.getWriter()) {
-            /* TODO output your page here. You may use following sample code. */
-            printBeforeContent(out);
+        } else {
+            checkLogin();
 
-            if (!customerFound) {
-                out.println("You are not registed yet, please create your account");
-            } else {
+            try (PrintWriter out = response.getWriter()) {
+                /* TODO output your page here. You may use following sample code. */
                 if (correctPassword) {
-                    out.println("Welcome back " + name + ".");
-                    toControlPanel(request, response);
+                    if (type == null) {
+                        name = "guest";
+                        type = "non-member";
+                    }
+                    member = new Member(name, type);
+                    HttpSession session = request.getSession(true);
+                    session.setAttribute("member", member);
+                    RequestDispatcher dispatcher = getServletContext().
+                            getRequestDispatcher("/HomeServlet");
+                    dispatcher.forward(request, response);
                 } else {
-                    out.println("Wrong password, try again");
+                    if (!customerFound) {
+                        printBeforeContent(out);
+                        out.println("The account name is not registed yet, please create your account");
+                        printForm(out);
+
+                        printAfterContent(out);
+                    } else {
+                        printBeforeContent(out);
+                        out.println("Wrong password, please try again");
+                        printForm(out);
+
+                        printAfterContent(out);
+                    }
                 }
             }
 
-            printAfterContent(out);
         }
     }
 
@@ -124,33 +127,44 @@ public class LoginServlet extends MyServlet {
         return "Short description";
     }// </editor-fold>
 
-    private void toControlPanel(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
-        Member member = new Member(name, type);
-        HttpSession session = request.getSession(true);
-        session.setAttribute("member", member);
-        String link = "/login_failed.html";
-        type = type.toLowerCase();
-        System.out.println("type = "+type);
-        switch(type){
-            case "administrator":
-                link = "/admin_ctrl_pnl.html";
-                break;
-            case "moderator":
-                link = "/moderator_ctrl_pnl.html";
-                break;
-            case "analyst":
-                link = "/analyst_ctrl_pnl.html";
-                break;
-            case "contributor":
-                link = "/contributor_ctrl_pnl.html";
-                break;
-            default:
-                break;
+    private void checkLogin() {
+        correctPassword = false;
+        customerFound = false;
+        try {
+            synchronized (this) // synchronize access to stmt
+            {
+                stmt = myDB.getConn().prepareStatement("SELECT * FROM ACCOUNTS WHERE accountName = ?");
+                stmt.setString(1, name);
+                System.out.println(stmt);
+                ResultSet rs = stmt.executeQuery();
+                customerFound = rs.next();//true if there is a record
+                if (customerFound) {
+                    correctPassword = (password.equals(rs.getString("password")));
+                    type = rs.getString("accountType");
+                }
+            }
+        } catch (SQLException e) {
+            System.err.println("SQL Exception during query: " + e);
+            customerFound = false;
         }
-        RequestDispatcher dispatcher = getServletContext().
-                getRequestDispatcher(link);
-        dispatcher.forward(request, response);
-
     }
+
+    private void printForm(PrintWriter out) {
+
+        out.println("<form ACTION=\"LoginServlet\">");
+        out.println("<fieldset>");
+        out.println("<div style=\"text-align: justify\">");
+        out.println("<label>Account Name: </label>&emsp;<input type=\"text\" name=\"name\" value=\"" + ((name == null) ? "" : name) + "\"/><br /><br />");
+        out.println("<label>Password: </label>&emsp;<input type=\"password\" name=\"password\" value=\"\"/><br /><br />");
+
+        out.println("</div><div style=\"text-align: center\"><br />");
+        out.println("<input type=\"submit\" value=\"Login\"/>"
+                + "<button type=\"reset\" name=\"btnClean\">Clean</button>");
+        out.println("</div>");
+        out.println("</fieldset>");
+        out.println("</form>");
+
+        out.println("<br /><a href=\"HomeServlet\">Cancel</a><br />");
+    }
+
 }

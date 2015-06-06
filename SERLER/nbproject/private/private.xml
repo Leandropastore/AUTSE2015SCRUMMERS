@@ -3,8 +3,16 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/D:/Documents/GitHub/AUTSE2015SCRUMMERS/SERLER/src/java/input/EditBasic.java</file>
-            <file>file:/D:/Documents/GitHub/AUTSE2015SCRUMMERS/SERLER/src/java/output/DisplayAll.java</file>
+            <file>file:/D:/Documents/GitHub/AUTSE2015SCRUMMERS/SERLER/web/home_page.html</file>
+            <file>file:/D:/Documents/GitHub/AUTSE2015SCRUMMERS/SERLER/src/java/input/PracticeServlet.java</file>
+            <file>file:/D:/Documents/GitHub/AUTSE2015SCRUMMERS/SERLER/src/java/input/EditMember.java</file>
+            <file>file:/D:/Documents/GitHub/AUTSE2015SCRUMMERS/SERLER/src/java/output/HomeServlet.java</file>
+            <file>file:/D:/Documents/GitHub/AUTSE2015SCRUMMERS/SERLER/src/java/input/LoginServlet.java</file>
+            <file>file:/D:/Documents/GitHub/AUTSE2015SCRUMMERS/SERLER/src/java/input/ModerationServlet.java</file>
+            <file>file:/D:/Documents/GitHub/AUTSE2015SCRUMMERS/SERLER/src/java/output/LogoutServlet.java</file>
+            <file>file:/D:/Documents/GitHub/AUTSE2015SCRUMMERS/SERLER/src/java/classes/MyServlet.java</file>
+            <file>file:/D:/Documents/GitHub/AUTSE2015SCRUMMERS/SERLER/src/java/input/UploadServlet.java</file>
+            <file>file:/D:/Documents/GitHub/AUTSE2015SCRUMMERS/SERLER/web/WEB-INF/web.xml</file>
         </group>
     </open-files>
 </project-private>

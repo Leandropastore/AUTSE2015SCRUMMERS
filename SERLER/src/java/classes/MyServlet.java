@@ -33,11 +33,12 @@ public class MyServlet extends HttpServlet {
     protected PreparedStatement stmt;
     protected String id, title;
     protected String pageTitle = "Amazing Articles";
-    protected String ctrlPanel = "<a href=\"home_page.html\">Home</a>&emsp;&emsp;&emsp;"
-            + "<a href=\"login.html\">Login</a>&emsp;&emsp;&emsp;"
+    protected String ctrlPanel = "<a href=\"HomeServlet\">Home</a>&emsp;&emsp;&emsp;"
+            + "<a href=\"LoginServlet\">Login</a>&emsp;&emsp;&emsp;"
             + "<a href=\"sign_up.html\">Create Account</a>&emsp;&emsp;&emsp;"
+            + "<a href=\"SearchServlet\">Search</a>&emsp;&emsp;&emsp;"
             + "<a href=\"DisplayAll\">Articles</a>";
-    
+
     protected Member member;
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
@@ -113,32 +114,6 @@ public class MyServlet extends HttpServlet {
 
     public void printBeforeContent(PrintWriter out) {
         out.println("<!DOCTYPE html>");
-        /*
-         out.println("<html>");
-         out.println("<head>");
-         out.println("<title>All Articles</title>");
-         out.println("<meta http-equiv=\"Content-Type\" content=\"text/html; charset=UTF-8\">");         
-
-         out.println("<link type=\"text/css\" href=\"css/ui-lightness/jquery-ui-1.8.23.custom.css\" rel=\"stylesheet\" />");
-         out.println("<link type=\"text/css\" href=\"css/common.css\" rel=\"stylesheet\"/>");
-
-         out.println("</head>");
-         out.println("<body>");
-
-         out.println("<div align=\"center\" id=\"layout\">");
-         out.println("<div style=\"border:1px solid black;text-align:center;width:700px;\">");
-         out.println("<h1>Amazing Agile</h1>");
-         out.println("</div>");
-         out.println("<div style=\"border:1px solid black;text-align:center;width:700px;\">");
-         out.println("<p>");
-         out.println("<a href=\"home_page.html\">Home</a>&emsp;&emsp;&emsp;");
-         out.println("<a href=\"login.html\">Login</a>&emsp;&emsp;&emsp;");
-         out.println("<a href=\"sign_up.html\">Create Account</a>&emsp;&emsp;&emsp;");
-         out.println("<a href=\"DisplayAll\">Articles</a></p>");
-         out.println("</div>");
-         out.println("<div style=\"border:1px solid black;text-align:left;width:700px;\">");
-         out.println("<br /><br /><br />");
-         */
 
         out.println("<html>");
         out.println("<head>");
@@ -162,20 +137,7 @@ public class MyServlet extends HttpServlet {
     }
 
     public void printAfterContent(PrintWriter out) {
-        /*
-         out.println("<br /><br /><br />");
-         out.println("</div>");
-         out.println("<div style=\"border:1px solid black;text-align:center;width:700px;\">");
-         out.println("<p>");
-         out.println("<a href=\"about_us.html\">About Us</a>&emsp;&emsp;&emsp;");
-         out.println("<a href=\"contact_us.html\">Contact Us</a>");
-         out.println("</p>");
-         out.println("</div>");
-         out.println("</div>");
 
-         out.println("</body>");
-         out.println("</html>");
-         */
         out.println("<br /><br />");
         out.println("</div>");
         out.println("<div id=\"bodytopbottombox\">");
@@ -197,36 +159,36 @@ public class MyServlet extends HttpServlet {
 
         switch (type) {
             case "administrator":
-                ctrlPanel = "<a href=\"home_page.html\">Home</a>&emsp;&emsp;&emsp;"
+                ctrlPanel = "<a href=\"HomeServlet\">Home</a>&emsp;&emsp;&emsp;"
                         + "<a href=\"LogoutServlet\">Log Out</a>&emsp;&emsp;&emsp;"
-                        + "<a href=\"AccountList\">Manage Accounts</a>&emsp;&emsp;&emsp;"
+                        + "<a href=\"MemberList\">Manage Accounts</a>&emsp;&emsp;&emsp;"
                         + "<a href=\"AdvancedSearchServlet\">Advanced Search</a>&emsp;&emsp;&emsp;"
                         + "<a href=\"DisplayAll\">All Articles</a>";
                 break;
             case "moderator":
-                ctrlPanel = "<a href=\"home_page.html\">Home</a>&emsp;&emsp;&emsp;"
+                ctrlPanel = "<a href=\"HomeServlet\">Home</a>&emsp;&emsp;&emsp;"
                         + "<a href=\"LogoutServlet\">Log Out</a>&emsp;&emsp;&emsp;"
                         + "<a href=\"JobList\">Articles for moderate</a>&emsp;&emsp;&emsp;"
                         + "<a href=\"AdvancedSearchServlet\">Advanced Search</a>&emsp;&emsp;&emsp;"
                         + "<a href=\"DisplayAll\">All Articles</a>";
                 break;
             case "analyst":
-                ctrlPanel = "<a href=\"home_page.html\">Home</a>&emsp;&emsp;&emsp;"
+                ctrlPanel = "<a href=\"HomeServlet\">Home</a>&emsp;&emsp;&emsp;"
                         + "<a href=\"LogoutServlet\">Log Out</a>&emsp;&emsp;&emsp;"
                         + "<a href=\"JobList\">Articles for Analyse</a>&emsp;&emsp;&emsp;"
                         + "<a href=\"AdvancedSearchServlet\">Advanced Search</a>&emsp;&emsp;&emsp;"
                         + "<a href=\"DisplayAll\">All Articles</a>";
                 break;
             case "contributor":
-                ctrlPanel = "<a href=\"home_page.html\">Home</a>&emsp;&emsp;&emsp;"
+                ctrlPanel = "<a href=\"HomeServlet\">Home</a>&emsp;&emsp;&emsp;"
                         + "<a href=\"LogoutServlet\">Log Out</a>&emsp;&emsp;&emsp;"
                         + "<a href=\"UploadServlet\">Upload Article</a>&emsp;&emsp;&emsp;"
                         + "<a href=\"AdvancedSearchServlet\">Advanced Search</a>&emsp;&emsp;&emsp;"
                         + "<a href=\"DisplayAll\">All Articles</a>";
                 break;
             default:
-                ctrlPanel = "<a href=\"home_page.html\">Home</a>&emsp;&emsp;&emsp;"
-                        + "<a href=\"login.html\">Login</a>&emsp;&emsp;&emsp;"
+                ctrlPanel = "<a href=\"HomeServlet\">Home</a>&emsp;&emsp;&emsp;"
+                        + "<a href=\"LoginServlet\">Login</a>&emsp;&emsp;&emsp;"
                         + "<a href=\"sign_up.html\">Create Account</a>&emsp;&emsp;&emsp;"
                         + "<a href=\"SearchServlet\">Search</a>&emsp;&emsp;&emsp;"
                         + "<a href=\"DisplayAll\">Articles</a>";

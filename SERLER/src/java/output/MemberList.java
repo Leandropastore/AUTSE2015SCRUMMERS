@@ -6,13 +6,12 @@
 package output;
 
 import classes.Member;
-import classes.MyDatabase;
 import classes.MyServlet;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -22,7 +21,7 @@ import javax.servlet.http.HttpSession;
  *
  * @author Andy Li
  */
-public class DisplayAll extends MyServlet {
+public class MemberList extends MyServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -33,8 +32,6 @@ public class DisplayAll extends MyServlet {
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
      */
-    private PreparedStatement stmt;
-
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         HttpSession session = request.getSession();
@@ -43,31 +40,28 @@ public class DisplayAll extends MyServlet {
             member = new Member("guest", "Non-member");
         }
         setControlPanel(member.getType());
-        setPageTitle("All Articles");
-        
+        setPageTitle("Manage Accouts");
 
-        try (PrintWriter out = response.getWriter()) {
-            /* TODO output your page here. You may use following sample code. */
+        if (member.getType().equalsIgnoreCase("administrator")) {
+            
+            try (PrintWriter out = response.getWriter()) {
+                printBeforeContent(out);
+                AddMember(out);
+                printAccounts(out);
 
-            printBeforeContent(out);
-            out.println("<br />YOU ARE " + member.getType() + "<br />");
-            printContent(out);
+                printAfterContent(out);
 
-            out.println("<br /><br /><br /><br /><br /><br />");
+            }
 
-            // adding links for testing
-//            addArticle(out);
-//            addEvidenceItem(out);
-//            ConfidenceRating(out);
-//            ResearchDesign(out);
-//            EvidenceSource(out);
-//            AddSearch(out);
-
-            printAfterContent(out);
+        } else {
+            RequestDispatcher dispatcher = getServletContext().
+                    getRequestDispatcher("/home_page.html");
+            dispatcher.forward(request, response);
         }
+
     }
 
-    // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
+// <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
      * Handles the HTTP <code>GET</code> method.
      *
@@ -106,27 +100,33 @@ public class DisplayAll extends MyServlet {
         return "Short description";
     }// </editor-fold>
 
-    private void printContent(PrintWriter out) {
+    private void printAccounts(PrintWriter out) {
         try {
-            stmt = myDB.getConn().prepareStatement("SELECT * FROM AllArticles");
+            stmt = myDB.getConn().prepareStatement("SELECT * FROM Accounts");
             System.out.println(stmt);
             ResultSet rs = stmt.executeQuery();
 
             out.println("<style>table, th, td {border: 1px solid black;}</style>");
             out.println("<table>");
-            out.println("<tr><th>&emsp;ID</th><th>&emsp;Title</th><th>&emsp;Status</th></tr>");
+            out.println("<tr><th>&emsp;Member Name </th><th>&emsp;Email</th><th>&emsp;Account Type</th><th>&emsp;&emsp;</th></tr>");
             while (rs.next()) {
                 System.out.println(stmt + "-----has rs");
-                String id = rs.getString("ArticleId");
-                String title = rs.getString("Title");
-                String status = rs.getString("Status");
-                String link = "\"ShowArticleDetail?id=" + id + "\"";
+                String name = rs.getString("AccountName");
+                String password = rs.getString("Password");
+                String email = rs.getString("Email");
+                String type = rs.getString("AccountType");
+                String link = "\"EditMember?name=" + name 
+                        + "&password=" + password
+                        + "&email=" + email
+                        + "&type=" + type
+                        + "\"";
 //                if (member != null && member.getType().equalsIgnoreCase("moderator")) {
 //                    link = "\"ModerationServlet?id=" + id + "&status=" + status + "\"";
 //                }
-                out.println("<tr><th>&emsp;" + "<a href=" + link + ">" + id
-                        + "</a>&emsp;</th><th>" + "&emsp;<a href=" + link + ">" + title + "</a>&emsp;"
-                        + "&emsp;</th><th>&emsp;" + status
+                out.println("<tr><th>&emsp;" + name
+                        + "&emsp;</th><th>&emsp;" + email
+                        + "&emsp;</th><th>&emsp;" + type
+                        + "&emsp;</th><th>&emsp;<a href=" + link + ">Edit</a>"
                         + "&emsp;</th></tr>");
             }
             out.println("</table>");
@@ -136,35 +136,8 @@ public class DisplayAll extends MyServlet {
         }
     }
 
-    private void addArticle(PrintWriter out) {
-        out.println("<a href=\"upload_article.html\">Upload an Article</a>");
+    private void AddMember(PrintWriter out) {
+        out.println("<br /><a href=\"AddMember\">Add New Mamber</a>");
         out.println("<br /><br />");
     }
-
-    private void addEvidenceItem(PrintWriter out) {
-        out.println("<a href=\"evidence_item.html\">Add an Evidence Item</a>");
-        out.println("<br /><br />");
-    }
-
-    private void ConfidenceRating(PrintWriter out) {
-        out.println("<a href=\"confidence_rating.html\">Rate an Evidence Item</a>");
-        out.println("<br /><br />");
-    }
-
-    private void ResearchDesign(PrintWriter out) {
-        out.println("<a href=\"research_design.html\">Add Research Design</a>");
-        out.println("<br /><br />");
-    }
-
-    private void EvidenceSource(PrintWriter out) {
-        out.println("<a href=\"UploadServlet\">Add Evidence Source</a>");
-        out.println("<br /><br />");
-    }
-
-    private void AddSearch(PrintWriter out) {
-        out.println("<a href=\"SearchServlet\">Search</a><br />");
-        out.println("<a href=\"AdvancedSearchServlet\">Advanced Search</a>");
-        out.println("<br />");
-    }
-
 }
