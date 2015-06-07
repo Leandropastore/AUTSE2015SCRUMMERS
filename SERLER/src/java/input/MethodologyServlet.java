@@ -152,7 +152,9 @@ public class MethodologyServlet extends MyServlet {
             stmt.setString(1, id);
             stmt.setString(2, mName);
             stmt.setString(3, mDescription);
+            System.out.println("+++++++++++++++++++++++++++++++++++++");
             System.out.println(stmt);
+            System.out.println("+++++++++++++++++++++++++++++++++++++");
             stmt.executeUpdate();
         } catch (SQLException ex) {
             System.err.println(ex.getMessage());

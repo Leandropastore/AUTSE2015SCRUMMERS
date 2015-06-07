@@ -1,4 +1,17 @@
 DROP TABLE IF EXISTS Accounts;
+DROP TABLE IF EXISTS AllArticles;
+DROP TABLE IF EXISTS RejectedArticles;
+DROP TABLE IF EXISTS PorcessedDetails;
+DROP TABLE IF EXISTS AuthorTable;
+DROP TABLE IF EXISTS CredibilityTable;
+DROP TABLE IF EXISTS MethodologyTable;
+DROP TABLE IF EXISTS PracticeTable;
+DROP TABLE IF EXISTS EvidenceItemTable;
+DROP TABLE IF EXISTS ConfidenceTable;
+DROP TABLE IF EXISTS ResearchDesignTable;
+DROP TABLE IF EXISTS MetricTable;
+
+
 CREATE TABLE Accounts
 (
     AccountName varchar(255) NOT NULL UNIQUE,
@@ -38,7 +51,6 @@ INSERT INTO Accounts VALUES
     "moderator"
 );
 
-DROP TABLE IF EXISTS AllArticles;
 CREATE TABLE AllArticles
 (
     ArticleId int NOT NULL UNIQUE AUTO_INCREMENT,
@@ -92,7 +104,6 @@ VALUES (
     "admin"
 );
 
-DROP TABLE IF EXISTS RejectedArticles;
 CREATE TABLE RejectedArticles
 (
     ArticleId int NOT NULL UNIQUE,
@@ -110,9 +121,6 @@ VALUES (
     "I hate this article"
 );
 
-DROP TABLE IF EXISTS PorcessedDetails;
-DROP TABLE IF EXISTS AuthorTable;
-DROP TABLE IF EXISTS CredibilityTable;
 CREATE TABLE CredibilityTable
 (
     ArticleID int NOT NULL,
@@ -139,7 +147,6 @@ INSERT INTO CredibilityTable VALUES
 );
 
 
-DROP TABLE IF EXISTS MethodologyTable;
 CREATE TABLE MethodologyTable
 (
     ArticleID int NOT NULL,
@@ -156,7 +163,6 @@ INSERT INTO MethodologyTable VALUES
 );
 
 
-DROP TABLE IF EXISTS PracticeTable;
 CREATE TABLE PracticeTable
 (
     ArticleID int NOT NULL,
@@ -173,7 +179,6 @@ INSERT INTO PracticeTable VALUES
 );
 
 
-DROP TABLE IF EXISTS EvidenceItemTable;
 CREATE TABLE EvidenceItemTable
 (
     ArticleID int NOT NULL,
@@ -207,7 +212,6 @@ INSERT INTO EvidenceItemTable VALUES
 );
 
 
-DROP TABLE IF EXISTS ConfidenceTable;
 CREATE TABLE ConfidenceTable
 (
     ArticleID int NOT NULL,
@@ -228,7 +232,6 @@ INSERT INTO ConfidenceTable VALUES
 );
 
 
-DROP TABLE IF EXISTS ResearchDesignTable;
 CREATE TABLE ResearchDesignTable
 (
     ArticleID int NOT NULL,
@@ -254,7 +257,6 @@ INSERT INTO ResearchDesignTable VALUES
     "Professor"
 );
 
-DROP TABLE IF EXISTS MetricTable;
 /*
 DROP TABLE IF EXISTS MetricTable;
 CREATE TABLE MetricTable

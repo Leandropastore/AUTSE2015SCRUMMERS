@@ -177,10 +177,10 @@ public class AdvancedSearchServlet extends SearchServlet {
                 + "<option value=\"Other\"" + ((practice != null && practice.equalsIgnoreCase("Other")) ? "selected" : "") + ">Other</option>"
                 + "<option value=\"Refactoring\"" + ((practice != null && practice.equalsIgnoreCase("Refactoring")) ? "selected" : "") + ">Refactoring</option>"
                 + "<option value=\"Cloud Computing\"" + ((practice != null && practice.equalsIgnoreCase("Cloud Computing")) ? "selected" : "") + ">Cloud Computing</option>"
-                + "<option value=\"Practice A\"" + ((practice != null && practice.equalsIgnoreCase("Practice A")) ? "selected" : "") + ">Practice A</option>"
-                + "<option value=\"Practice B\"" + ((practice != null && practice.equalsIgnoreCase("Practice B")) ? "selected" : "") + ">Practice B</option>"
-                + "<option value=\"Practice C\"" + ((practice != null && practice.equalsIgnoreCase("Practice C")) ? "selected" : "") + ">Practice C</option>"
-                + "<option value=\"Practice D\"" + ((practice != null && practice.equalsIgnoreCase("Practice D")) ? "selected" : "") + ">Practice D</option>"
+//                + "<option value=\"Practice A\"" + ((practice != null && practice.equalsIgnoreCase("Practice A")) ? "selected" : "") + ">Practice A</option>"
+//                + "<option value=\"Practice B\"" + ((practice != null && practice.equalsIgnoreCase("Practice B")) ? "selected" : "") + ">Practice B</option>"
+//                + "<option value=\"Practice C\"" + ((practice != null && practice.equalsIgnoreCase("Practice C")) ? "selected" : "") + ">Practice C</option>"
+//                + "<option value=\"Practice D\"" + ((practice != null && practice.equalsIgnoreCase("Practice D")) ? "selected" : "") + ">Practice D</option>"
                 + "</select><br /><br />");
         
         out.println("<label>Evidence Item:</label> &emsp;<input type=\"text\" name=\"evidenceItem\" value=\"" + ((evidenceItem == null) ? "" : evidenceItem) + "\"/><br /><br />");

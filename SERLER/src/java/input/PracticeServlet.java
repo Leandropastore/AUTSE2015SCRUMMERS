@@ -113,13 +113,13 @@ public class PracticeServlet extends MyServlet {
         out.println("<input type=\"hidden\" name=\"update\" value=\"yes\"/>");
 
         out.println("<label>Practice:</label>&emsp; <select name = \"pName\">"
-                + "<option value=\"Practice A\"" + ((pName != null && pName.equalsIgnoreCase("Practice A")) ? "selected" : "") + ">Practice A</option>"
-                + "<option value=\"Practice B\"" + ((pName != null && pName.equalsIgnoreCase("Practice B")) ? "selected" : "") + ">Practice B</option>"
-                + "<option value=\"Practice C\"" + ((pName != null && pName.equalsIgnoreCase("Practice C")) ? "selected" : "") + ">Practice C</option>"
-                + "<option value=\"Practice D\"" + ((pName != null && pName.equalsIgnoreCase("Practice D")) ? "selected" : "") + ">Practice D</option>"
+//                + "<option value=\"Practice A\"" + ((pName != null && pName.equalsIgnoreCase("Practice A")) ? "selected" : "") + ">Practice A</option>"
+//                + "<option value=\"Practice B\"" + ((pName != null && pName.equalsIgnoreCase("Practice B")) ? "selected" : "") + ">Practice B</option>"
+//                + "<option value=\"Practice C\"" + ((pName != null && pName.equalsIgnoreCase("Practice C")) ? "selected" : "") + ">Practice C</option>"
+//                + "<option value=\"Practice D\"" + ((pName != null && pName.equalsIgnoreCase("Practice D")) ? "selected" : "") + ">Practice D</option>"
+                + "<option value=\"Other\"" + ((pName != null && pName.equalsIgnoreCase("Other")) ? "selected" : "") + ">Other</option>"
                 + "<option value=\"Refactoring\"" + ((pName != null && pName.equalsIgnoreCase("Refactoring")) ? "selected" : "") + ">Refactoring</option>"
                 + "<option value=\"Cloud Computing\"" + ((pName != null && pName.equalsIgnoreCase("Cloud Computing")) ? "selected" : "") + ">Cloud Computing</option>"
-                + "<option value=\"Other\"" + ((pName != null && pName.equalsIgnoreCase("Other")) ? "selected" : "") + ">Other</option>"
                 + "</select><br />");
         out.println("<label>Description:</label><br />"
                 + "<br /><textarea rows=\"5\" cols=\"50\" name=\"pDescription\" form=\"form0\">"
@@ -143,7 +143,9 @@ public class PracticeServlet extends MyServlet {
             stmt.setString(1, id);
             stmt.setString(2, pName);
             stmt.setString(3, pDescription);
+            System.out.println("+++++++++++++++++++++++++++++++++++++");
             System.out.println(stmt);
+            System.out.println("+++++++++++++++++++++++++++++++++++++");
             stmt.executeUpdate();
         } catch (SQLException ex) {
             System.err.println(ex.getMessage());

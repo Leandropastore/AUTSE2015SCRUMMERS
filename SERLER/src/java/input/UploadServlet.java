@@ -6,7 +6,6 @@
 package input;
 
 import classes.Member;
-import classes.MyDatabase;
 import classes.MyServlet;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -34,11 +33,9 @@ public class UploadServlet extends MyServlet {
      * @throws IOException if an I/O error occurs
      */
     private PreparedStatement stmt;
-    private MyDatabase myDB;
 
     private String authors, journal, year, researchLv;
     private String rater, rating, reason;
-    private Member member;
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
@@ -50,7 +47,6 @@ public class UploadServlet extends MyServlet {
         }
         setControlPanel(member.getType());
         setPageTitle("Upload Article");
-        
 
         title = request.getParameter("title");
         authors = request.getParameter("authors");
@@ -149,7 +145,7 @@ public class UploadServlet extends MyServlet {
         out.println("<label>Authors: </label><input type=\"text\" name=\"authors\" value=\"\"/><br /><br />");
         out.println("<label>Journal: </label><input type=\"text\" name=\"journal\" value=\"\"/><br /><br />");
         out.println("<label>Year: </label><input type=\"number\" name=\"year\" value=\"\"/><br /><br />");
-        
+
         out.println("<label>Research level: </label>");
         out.println("<select name=\"researchLv\">");
         out.println("<option value=\"Level 1\">Level 1</option>");
@@ -157,7 +153,7 @@ public class UploadServlet extends MyServlet {
         out.println("<option value=\"Level 3\">Level 3</option>");
         out.println("<option value=\"Level 4\">Level 4</option>");
         out.println("</select><br /><br />");
-        
+
         out.println("<label>Credibility rating: </label><br /><br />");
 //        out.println("<label>Your Name: </label><input type=\"text\" name=\"name\" value=\"\"/><br /><br />");
         out.println("<label>Your Rating: </label>");
@@ -167,12 +163,11 @@ public class UploadServlet extends MyServlet {
         out.println("<input type=\"radio\" name=\"credibility\" value=\"4\" />4&emsp;");
         out.println("<input type=\"radio\" name=\"credibility\" value=\"5\" />5<br /><br />");
         out.println("<label>Your Reason: </label><input type=\"text\" name=\"reason\" value=\"\"/><br /><br /><br />");
-        
+
         out.println("</div><div style=\"text-align: center\"><br />");
         out.println("<input type=\"submit\" name=\"btnSend\" value=\"Add Article\"/>");
         out.println("</div></fieldset></form></div>");
-        
-        
+
         out.println("<br /><a href=\"HomeServlet\">Cancel</a><br />");
 
     }
@@ -181,7 +176,7 @@ public class UploadServlet extends MyServlet {
         try {
             stmt = myDB.getConn().prepareStatement("INSERT INTO AllArticles "
                     + "(Title, Authors, Journal, YearOfPublish, ResearchLv, Status, Contributor)"
-                    + "VALUES (?, ?, ?, ?, ?, ?,?)");
+                    + "VALUES (?, ?, ?, ?, ?, ?,?);");
             stmt.setString(1, title);
             stmt.setString(2, authors);
             stmt.setString(3, journal);
@@ -189,16 +184,20 @@ public class UploadServlet extends MyServlet {
             stmt.setString(5, researchLv);
             stmt.setString(6, "new");
             stmt.setString(7, rater);
+            System.out.println("+++++++++++++++++++++++++++++++++++++");
             System.out.println(stmt);
+            System.out.println("+++++++++++++++++++++++++++++++++++++");
             stmt.executeUpdate();
-            
+
             id = getId(title);
-            stmt = myDB.getConn().prepareStatement("INSERT INTO CredibilityTable VALUES(?, ?, ?,?)");
+            stmt = myDB.getConn().prepareStatement("INSERT INTO CredibilityTable VALUES(?, ?, ?,?);");
             stmt.setString(1, id);
             stmt.setString(2, rater);
             stmt.setString(3, rating);
             stmt.setString(4, reason);
+            System.out.println("+++++++++++++++++++++++++++++++++++++");
             System.out.println(stmt);
+            System.out.println("+++++++++++++++++++++++++++++++++++++");
             stmt.executeUpdate();
         } catch (SQLException ex) {
             System.err.println(ex.getMessage());
@@ -207,18 +206,17 @@ public class UploadServlet extends MyServlet {
 
     private String getId(String title) {
         String result = "";
-         try {
+        try {
             stmt = myDB.getConn().prepareStatement("SELECT * FROM AllArticles WHERE Title = ?");
             stmt.setString(1, title);
-            System.out.println(stmt);
             ResultSet rs = stmt.executeQuery();
-            if(rs.next()){
+            if (rs.next()) {
                 result = rs.getString("ArticleID");
             }
         } catch (SQLException ex) {
             System.err.println(ex.getMessage());
         }
-         return result;
+        return result;
     }
 
 }

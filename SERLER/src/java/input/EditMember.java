@@ -152,7 +152,9 @@ public class EditMember extends MyServlet {
             stmt.setString(2, email);
             stmt.setString(3, type);
             stmt.setString(4, name);
+            System.out.println("+++++++++++++++++++++++++++++++++++++");
             System.out.println(stmt);
+            System.out.println("+++++++++++++++++++++++++++++++++++++");
             stmt.executeUpdate();
         } catch (SQLException ex) {
             System.err.println(ex.getMessage());

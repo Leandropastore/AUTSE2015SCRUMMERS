@@ -144,7 +144,9 @@ public class CredibilityRating extends MyServlet {
             stmt.setString(2, member.getName());
             stmt.setString(3, rating);
             stmt.setString(4, reason);
+            System.out.println("+++++++++++++++++++++++++++++++++++++");
             System.out.println(stmt);
+            System.out.println("+++++++++++++++++++++++++++++++++++++");
             stmt.executeUpdate();
         } catch (SQLException ex) {
             System.err.println(ex.getMessage());

@@ -154,7 +154,9 @@ public class EvidenceItemServlet extends MyServlet {
             stmt.setString(9, iWhy);
             stmt.setString(10, iResult);
             stmt.setString(11, iIntegrity);
+            System.out.println("+++++++++++++++++++++++++++++++++++++");
             System.out.println(stmt);
+            System.out.println("+++++++++++++++++++++++++++++++++++++");
             stmt.executeUpdate();
         } catch (SQLException ex) {
             System.err.println(ex.getMessage());

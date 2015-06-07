@@ -146,7 +146,9 @@ public class EditBasic extends MyServlet {
             stmt.setString(3, year);
             stmt.setString(4, level);
             stmt.setString(5, id);
+            System.out.println("+++++++++++++++++++++++++++++++++++++");
             System.out.println(stmt);
+            System.out.println("+++++++++++++++++++++++++++++++++++++");
             stmt.executeUpdate();
         } catch (SQLException ex) {
             System.err.println(ex.getMessage());

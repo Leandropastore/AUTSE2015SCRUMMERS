@@ -10,6 +10,7 @@ package classes;
  * @author Andy Li
  */
 public class Member {
+
     private String name, type;
 
     public Member(String name, String type) {
@@ -31,6 +32,8 @@ public class Member {
 
     public void setType(String type) {
         this.type = type;
+
+
     }
     
     

@@ -145,7 +145,9 @@ public class ResearchServlet extends MyServlet {
             stmt.setString(6, metricsName);
             stmt.setString(7, metricsDescription);
             stmt.setString(8, participants);
+            System.out.println("+++++++++++++++++++++++++++++++++++++");
             System.out.println(stmt);
+            System.out.println("+++++++++++++++++++++++++++++++++++++");
             stmt.executeUpdate();
         } catch (SQLException ex) {
             System.err.println(ex.getMessage());

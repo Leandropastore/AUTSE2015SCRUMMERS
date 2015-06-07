@@ -139,13 +139,15 @@ public class ConfidenceServlet extends MyServlet {
     private void addRating() {
         try {
             stmt = myDB.getConn().prepareStatement("INSERT INTO ConfidenceTable "
-                    + "VALUES (?, ?, ?, ?, ?)");
+                    + "VALUES (?, ?, ?, ?, ?);");
             stmt.setString(1, id);
             stmt.setString(2, iName);
             stmt.setString(3, member.getName());
             stmt.setString(4, rating);
             stmt.setString(5, reason);
+            System.out.println("+++++++++++++++++++++++++++++++++++++");
             System.out.println(stmt);
+            System.out.println("+++++++++++++++++++++++++++++++++++++");
             stmt.executeUpdate();
         } catch (SQLException ex) {
             System.err.println(ex.getMessage());

@@ -340,11 +340,15 @@ public class ShowArticleDetail extends MyServlet {
                 }
                 out.println("</table>");
                 if (!member.getType().equalsIgnoreCase("Non-member")) {
-                    out.println("<br/><a href=\"ConfidenceServlet?"
-                            + "id=" + id
-                            + "&title=" + title
-                            + "&iName=" + iName
-                            + "\">------Rate this Evidence Item</a><br/>");
+                    if (member.getType().equalsIgnoreCase("administrator")
+                            || member.getType().equalsIgnoreCase("analyst")
+                            || status.equalsIgnoreCase("released")) {
+                        out.println("<br/><a href=\"ConfidenceServlet?"
+                                + "id=" + id
+                                + "&title=" + title
+                                + "&iName=" + iName
+                                + "\">------Rate this Evidence Item</a><br/>");
+                    }
                 }
             } catch (SQLException ex) {
                 System.out.println("ERROR: " + ex);

@@ -205,7 +205,9 @@ public class AddMember extends MyServlet {
             stmt.setString(2, password);
             stmt.setString(3, email);
             stmt.setString(4, type);
+            System.out.println("+++++++++++++++++++++++++++++++++++++");
             System.out.println(stmt);
+            System.out.println("+++++++++++++++++++++++++++++++++++++");
             stmt.executeUpdate();
         } catch (SQLException ex) {
             System.err.println(ex.getMessage());

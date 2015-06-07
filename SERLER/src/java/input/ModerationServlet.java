@@ -6,7 +6,6 @@
 package input;
 
 import classes.Member;
-import classes.MyDatabase;
 import classes.MyServlet;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -33,7 +32,6 @@ public class ModerationServlet extends MyServlet {
      * @throws IOException if an I/O error occurs
      */
     private String status, result, reason;
-    private Member member;
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
@@ -159,7 +157,9 @@ public class ModerationServlet extends MyServlet {
             stmt.setString(2, reason);
             stmt.setString(3, member.getName());
             stmt.setString(4, id);
+            System.out.println("+++++++++++++++++++++++++++++++++++++");
             System.out.println(stmt);
+            System.out.println("+++++++++++++++++++++++++++++++++++++");
             stmt.executeUpdate();
         } catch (SQLException ex) {
             System.err.println(ex.getMessage());

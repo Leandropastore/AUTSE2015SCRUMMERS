@@ -6,7 +6,6 @@
 package output;
 
 import classes.Member;
-import classes.MyDatabase;
 import classes.MyServlet;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -50,7 +49,7 @@ public class DisplayAll extends MyServlet {
             /* TODO output your page here. You may use following sample code. */
 
             printBeforeContent(out);
-            out.println("<br />YOU ARE " + member.getType() + "<br />");
+            out.println("<br />Hello, " + member.getName() + "<br /><br />");
             printContent(out);
 
             out.println("<br /><br /><br /><br /><br /><br />");
@@ -114,7 +113,7 @@ public class DisplayAll extends MyServlet {
 
             out.println("<style>table, th, td {border: 1px solid black;}</style>");
             out.println("<table>");
-            out.println("<tr><th>&emsp;ID</th><th>&emsp;Title</th><th>&emsp;Status</th></tr>");
+            out.println("<tr><th>&emsp;ID</th><th>&emsp;Title</th><th>&emsp;Status&emsp;&emsp;</th></tr>");
             while (rs.next()) {
                 System.out.println(stmt + "-----has rs");
                 String id = rs.getString("ArticleId");
