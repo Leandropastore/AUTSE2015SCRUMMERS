@@ -30,35 +30,50 @@ VALUES(
 
 /* 
 Enter info for a suitable research paper
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+*/
+/* 
 Empirical investigation of refactoring effect on software quality
 */
 
-INSERT INTO AllArticles (Title, Authors, Journal, YearOfPublish, ResearchLv, Status, Contributor)VALUES ('Empirical investigation of refactoring effect on software quality', 'Mohammad Alshayeb', 'Information and Software Technology', '2009', 'Level 1', 'new','contributor');
-INSERT INTO CredibilityTable VALUES('1', 'contributor', '3','It is a good article');
-Update allarticles SET Status = 'accepted' ,RejectedReason = '' ,ModeratedBy = 'moderator' WHERE ArticleId = '1';
-INSERT INTO methodologytable VALUES  ('1', 'Other', 'Conducting experiment by performed refactoring on software')ON DUPLICATE KEY UPDATE  M_Name = VALUES(M_Name),  Description = VALUES(Description);
-INSERT INTO Practicetable VALUES  ('1', 'Refactoring', 'Refactoring is the process of improving the design of existing code by changing its internal structure without affecting its external behavior')ON DUPLICATE KEY UPDATE  M_Name = VALUES(M_Name),  Description = VALUES(Description);
-INSERT INTO EvidenceItemTable VALUES ('1', 'research on refactoring', 'improvement on software quality', 'Mohammad Alshayeb and his students', 'performed refactoring on three softwares', 'their lab', '2009', 'measure the quality of the software before and after refactoring', 'to find out if the software quality is improved', 'there in not conclusive evidence to support that refactoring improve software qualiy', 'just research on three software is no enough, further investigation is required ')ON DUPLICATE KEY UPDATE  iName = VALUES(iName),  iBenefit = VALUES(iBenefit),  iWho = VALUES(iWho),  iWhat = VALUES(iWhat),  iWhere = VALUES(iWhere),  iWhen = VALUES(iWhen),  iHow = VALUES(iHow),  iWhy = VALUES(iWhy),  iResult = VALUES(iResult),  iIntegrity = VALUES(iIntegrity);
-INSERT INTO ConfidenceTable VALUES ('1', 'research on refactoring', 'analyst', '3', 'the amount of data is no enough');
-INSERT INTO ResearchDesignTable VALUES ('1', 'refactoring does not improve software quality', 'investigate the effect of refactoring on software quality', 'practical', 'perform refactoring on three software', 'Quality', 'adaptability, maintainability, understandability,\r\nreusability, and testability.', 'Professor and Students')ON DUPLICATE KEY UPDATE  qName = VALUES(qName),  qDescription = VALUES(qDescription),  methodName = VALUES(methodName),  methodDescription = VALUES(methodDescription),  metricsName = VALUES(metricsName),  metricsDescription = VALUES(metricsDescription),  participants = VALUES(participants);
-Update allarticles SET Status = 'analysed' ,AnalysedBy = 'analyst' WHERE ArticleId = '1';
-Update allarticles SET Status = 'released' WHERE ArticleId = '1';
+INSERT INTO AllArticles (ArticleID, Title, Authors, Journal, YearOfPublish, ResearchLv, Status, Contributor)VALUES ('51', 'Empirical investigation of refactoring effect on software quality', 'Mohammad Alshayeb', 'Information and Software Technology', '2009', 'Level 1', 'new','contributor');
+INSERT INTO CredibilityTable VALUES('51', 'contributor', '3','It is a good article');
+Update allarticles SET Status = 'accepted' ,RejectedReason = '' ,ModeratedBy = 'moderator' WHERE ArticleId = '51';
+INSERT INTO methodologytable VALUES  ('51', 'Other', 'Conducting experiment by performed refactoring on software')ON DUPLICATE KEY UPDATE  M_Name = VALUES(M_Name),  Description = VALUES(Description);
+INSERT INTO Practicetable VALUES  ('51', 'Refactoring', 'Refactoring is the process of improving the design of existing code by changing its internal structure without affecting its external behavior')ON DUPLICATE KEY UPDATE  M_Name = VALUES(M_Name),  Description = VALUES(Description);
+INSERT INTO EvidenceItemTable VALUES ('51', 'research on refactoring', 'improvement on software quality', 'Mohammad Alshayeb and his students', 'performed refactoring on three softwares', 'their lab', '2009', 'measure the quality of the software before and after refactoring', 'to find out if the software quality is improved', 'there in not conclusive evidence to support that refactoring improve software qualiy', 'just research on three software is no enough, further investigation is required ')ON DUPLICATE KEY UPDATE  iName = VALUES(iName),  iBenefit = VALUES(iBenefit),  iWho = VALUES(iWho),  iWhat = VALUES(iWhat),  iWhere = VALUES(iWhere),  iWhen = VALUES(iWhen),  iHow = VALUES(iHow),  iWhy = VALUES(iWhy),  iResult = VALUES(iResult),  iIntegrity = VALUES(iIntegrity);
+INSERT INTO ConfidenceTable VALUES ('51', 'research on refactoring', 'analyst', '3', 'the amount of data is no enough');
+INSERT INTO ResearchDesignTable VALUES ('51', 'refactoring does not improve software quality', 'investigate the effect of refactoring on software quality', 'practical', 'perform refactoring on three software', 'Quality', 'adaptability, maintainability, understandability,\r\nreusability, and testability.', 'Professor and Students')ON DUPLICATE KEY UPDATE  qName = VALUES(qName),  qDescription = VALUES(qDescription),  methodName = VALUES(methodName),  methodDescription = VALUES(methodDescription),  metricsName = VALUES(metricsName),  metricsDescription = VALUES(metricsDescription),  participants = VALUES(participants);
+Update allarticles SET Status = 'analysed' ,AnalysedBy = 'analyst' WHERE ArticleId = '51';
+Update allarticles SET Status = 'released' WHERE ArticleId = '51';
 
 /* 
 Determinants of software quality: A survey of information systems project managers
 */
-INSERT INTO AllArticles (Title, Authors, Journal, YearOfPublish, ResearchLv, Status, Contributor)VALUES ('Determinants of software quality: A survey of information systems project managers', 'Narasimhaiah Gorla, Shang-Che Lin', 'Information and Software Technology', '2009', 'Level 2', 'new','contributor');
-INSERT INTO CredibilityTable VALUES('2', 'contributor', '4','it help me understand the software quality');
-Update allarticles SET Status = 'accepted' ,RejectedReason = '' ,ModeratedBy = 'moderator' WHERE ArticleId = '2';
-INSERT INTO methodologytable VALUES  ('2', 'Other', 'conducting a Survey')ON DUPLICATE KEY UPDATE  M_Name = VALUES(M_Name),  Description = VALUES(Description);
-INSERT INTO Practicetable VALUES  ('2', 'Other', 'Software quality - how can we define the quality of a software')ON DUPLICATE KEY UPDATE  M_Name = VALUES(M_Name),  Description = VALUES(Description);
-INSERT INTO EvidenceItemTable VALUES ('2', 'Data from a survey', 'determine what the software quality is ', 'Narasimhaiah Gorla, Shang-Che Lin', 'software quality', 'USA', '2009', 'conducting survey to the project managers of IS ', 'those project have experience on software quality', 'list of software quality factors is determined', 'the research have high integrity')ON DUPLICATE KEY UPDATE  iName = VALUES(iName),  iBenefit = VALUES(iBenefit),  iWho = VALUES(iWho),  iWhat = VALUES(iWhat),  iWhere = VALUES(iWhere),  iWhen = VALUES(iWhen),  iHow = VALUES(iHow),  iWhy = VALUES(iWhy),  iResult = VALUES(iResult),  iIntegrity = VALUES(iIntegrity);
-INSERT INTO ConfidenceTable VALUES ('2', 'Data from a survey', 'analyst', '5', 'it is very detailed');
-INSERT INTO ResearchDesignTable VALUES ('2', 'how to determine the software quality', 'how can software quality be measured', 'theoretical', 'ask the IS project managers list of questions to get their idea of software quality', 'survey data', 'information gather from the survey', 'Other')ON DUPLICATE KEY UPDATE  qName = VALUES(qName),  qDescription = VALUES(qDescription),  methodName = VALUES(methodName),  methodDescription = VALUES(methodDescription),  metricsName = VALUES(metricsName),  metricsDescription = VALUES(metricsDescription),  participants = VALUES(participants);
-Update allarticles SET Status = 'analysed' ,AnalysedBy = 'analyst' WHERE ArticleId = '2';
-Update allarticles SET Status = 'released' WHERE ArticleId = '2';
+INSERT INTO AllArticles (ArticleID,Title, Authors, Journal, YearOfPublish, ResearchLv, Status, Contributor)VALUES ('52', 'Determinants of software quality: A survey of information systems project managers', 'Narasimhaiah Gorla, Shang-Che Lin', 'Information and Software Technology', '2009', 'Level 2', 'new','contributor');
+INSERT INTO CredibilityTable VALUES('52', 'contributor', '4','it help me understand the software quality');
+Update allarticles SET Status = 'accepted' ,RejectedReason = '' ,ModeratedBy = 'moderator' WHERE ArticleId = '52';
+INSERT INTO methodologytable VALUES  ('52', 'Other', 'conducting a Survey')ON DUPLICATE KEY UPDATE  M_Name = VALUES(M_Name),  Description = VALUES(Description);
+INSERT INTO Practicetable VALUES  ('52', 'Other', 'Software quality - how can we define the quality of a software')ON DUPLICATE KEY UPDATE  M_Name = VALUES(M_Name),  Description = VALUES(Description);
+INSERT INTO EvidenceItemTable VALUES ('52', 'Data from a survey', 'determine what the software quality is ', 'Narasimhaiah Gorla, Shang-Che Lin', 'software quality', 'USA', '2009', 'conducting survey to the project managers of IS ', 'those project have experience on software quality', 'list of software quality factors is determined', 'the research have high integrity')ON DUPLICATE KEY UPDATE  iName = VALUES(iName),  iBenefit = VALUES(iBenefit),  iWho = VALUES(iWho),  iWhat = VALUES(iWhat),  iWhere = VALUES(iWhere),  iWhen = VALUES(iWhen),  iHow = VALUES(iHow),  iWhy = VALUES(iWhy),  iResult = VALUES(iResult),  iIntegrity = VALUES(iIntegrity);
+INSERT INTO ConfidenceTable VALUES ('52', 'Data from a survey', 'analyst', '5', 'it is very detailed');
+INSERT INTO ResearchDesignTable VALUES ('52', 'how to determine the software quality', 'how can software quality be measured', 'theoretical', 'ask the IS project managers list of questions to get their idea of software quality', 'survey data', 'information gather from the survey', 'Other')ON DUPLICATE KEY UPDATE  qName = VALUES(qName),  qDescription = VALUES(qDescription),  methodName = VALUES(methodName),  methodDescription = VALUES(methodDescription),  metricsName = VALUES(metricsName),  metricsDescription = VALUES(metricsDescription),  participants = VALUES(participants);
+Update allarticles SET Status = 'analysed' ,AnalysedBy = 'analyst' WHERE ArticleId = '52';
+Update allarticles SET Status = 'released' WHERE ArticleId = '52';
 
-
+/*
+The Making of Cloud Applications An Empirical Study on Software Development for the Cloud
+*/
+INSERT INTO AllArticles (ArticleID,Title, Authors, Journal, YearOfPublish, ResearchLv, Status, Contributor)VALUES ('53', 'The Making of Cloud Applications An Empirical Study on Software Development for the Cloud', 'Jurgen Cito, Philipp Leitner, Thomas Fritz, Harald C. Gall', 'Communications of the ACM', '2014', 'Level 2', 'new','contributor');
+INSERT INTO CredibilityTable VALUES('53', 'contributor', '4','it help me understand the software quality');
+Update allarticles SET Status = 'accepted' ,RejectedReason = '' ,ModeratedBy = 'moderator' WHERE ArticleId = '53';
+INSERT INTO methodologytable VALUES ('53', 'Other', 'conducting interveiw and Survey') ON DUPLICATE KEY UPDATE  M_Name = VALUES(M_Name),  Description = VALUES(Description);
+INSERT INTO Practicetable VALUES ('53', 'Cloud Computing', 'Cloud computing allows application software to be operated using internet-enabled devices. Clouds can be classified as public, private, and hybrid')ON DUPLICATE KEY UPDATE  M_Name = VALUES(M_Name),  Description = VALUES(Description);
+INSERT INTO EvidenceItemTable VALUES ('53', 'Data from interview and survey', 'understand the inter-relation between cloud computing and software development', ' Jurgen Cito, Philipp Leitner, Thomas Fritz, Harald C. Gall', 'cloud computing and software development', 'around the world', '2014', 'interview with experienced developers, survey to the github user ', 'knowing how the people think about cloud computing and software development', 'collected information from the interview and survey', 'the research have high integrity')ON DUPLICATE KEY UPDATE  iName = VALUES(iName),  iBenefit = VALUES(iBenefit),  iWho = VALUES(iWho),  iWhat = VALUES(iWhat),  iWhere = VALUES(iWhere),  iWhen = VALUES(iWhen),  iHow = VALUES(iHow),  iWhy = VALUES(iWhy),  iResult = VALUES(iResult),  iIntegrity = VALUES(iIntegrity);
+INSERT INTO ConfidenceTable VALUES ('53', 'Data from interview and survey', 'analyst', '5', 'it is very detailed');
+INSERT INTO ResearchDesignTable VALUES ('53', 'How cloud computing affect software development', 'How do processes, communication and collaboration change for professional software developers when moving to the cloud? What kind of tools and data do developers utilize for building cloud software? How does cloud computing impact how developers design and architect applications?', ' practical', 'conduting interview and survey', 'interview and survey data', 'information gather from the interview and survey', 'Other')ON DUPLICATE KEY UPDATE  qName = VALUES(qName),  qDescription = VALUES(qDescription),  methodName = VALUES(methodName),  methodDescription = VALUES(methodDescription),  metricsName = VALUES(metricsName),  metricsDescription = VALUES(metricsDescription),  participants = VALUES(participants);
+Update allarticles SET Status = 'analysed' ,AnalysedBy = 'analyst' WHERE ArticleId = '53';
+Update allarticles SET Status = 'released' WHERE ArticleId = '53';
 
 
 /* TESTING DATA*/

@@ -106,7 +106,7 @@ CREATE TABLE ResearchDesignTable
 (
     ArticleID int NOT NULL,
     qName varchar(255) NOT NULL,
-    qDescription varchar(255),
+    qDescription varchar(4000),
     methodName varchar(255),
     methodDescription varchar(4000),
     metricsName varchar(255),

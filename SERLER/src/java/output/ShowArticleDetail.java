@@ -382,8 +382,8 @@ public class ShowArticleDetail extends MyServlet {
 
                     out.println("Research Question:&emsp;" + qName + "<br/>&emsp;" + qDescription + "<br/>");
                     out.println("<br/>Method:&emsp;" + methodName + "<br/>&emsp;" + methodDescription + "<br/>");
-                    out.println("<br/>Metric;" + metricsName + "<br/>&emsp;" + metricsDescription + "<br/>");
-                    out.println("<br/>Nature of the Participants:&emsp" + qName + "<br/>&emsp;" + qDescription + "<br/>");
+                    out.println("<br/>Metric:&emsp;" + metricsName + "<br/>&emsp;" + metricsDescription + "<br/>");
+                    out.println("<br/>Nature of the Participants:&emsp;" + participants + "<br/><br/>");
                 }
             }
             if (member.getType().equalsIgnoreCase("administrator") || member.getType().equalsIgnoreCase("analyst")) {
