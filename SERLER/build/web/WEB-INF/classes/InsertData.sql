@@ -64,7 +64,7 @@ Update allarticles SET Status = 'released' WHERE ArticleId = '52';
 /*
 The Making of Cloud Applications An Empirical Study on Software Development for the Cloud
 */
-INSERT INTO AllArticles (ArticleID,Title, Authors, Journal, YearOfPublish, ResearchLv, Status, Contributor)VALUES ('53', 'The Making of Cloud Applications An Empirical Study on Software Development for the Cloud', 'Jurgen Cito, Philipp Leitner, Thomas Fritz, Harald C. Gall', 'Communications of the ACM', '2014', 'Level 2', 'new','contributor');
+INSERT INTO AllArticles (ArticleID,Title, Authors, Journal, YearOfPublish, ResearchLv, Status, Contributor)VALUES ('53', 'The Making of Cloud Applications An Empirical Study on Software Development for the Cloud', 'Jurgen Cito, Philipp Leitner, Thomas Fritz, Harald C. Gall', 'arXiv.org', '2014', 'Level 2', 'new','contributor');
 INSERT INTO CredibilityTable VALUES('53', 'contributor', '4','it help me understand the software quality');
 Update allarticles SET Status = 'accepted' ,RejectedReason = '' ,ModeratedBy = 'moderator' WHERE ArticleId = '53';
 INSERT INTO methodologytable VALUES ('53', 'Other', 'conducting interveiw and Survey') ON DUPLICATE KEY UPDATE  M_Name = VALUES(M_Name),  Description = VALUES(Description);
